@@ -1,0 +1,2 @@
+echo 'skip linting'
+exit 0

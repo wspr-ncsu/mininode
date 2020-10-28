@@ -1,0 +1,7 @@
+{
+  "name": "vue-cli-test",
+  "description": "vue-cli e2e test",
+  "author": "John Doe <john@doe.com>",
+  "devDependencies": {
+  }
+}

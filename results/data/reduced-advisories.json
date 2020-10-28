@@ -1,0 +1,644 @@
+{
+  "prototype pollution": {
+    "total": 137452,
+    "high": 113218,
+    "medium": 24212,
+    "low": 22
+  },
+  "regex denial of service": {
+    "total": 73114,
+    "high": 18736,
+    "medium": 37590,
+    "low": 16788
+  },
+  "arbitrary file overwrite": {
+    "total": 3349,
+    "high": 3203,
+    "medium": 146,
+    "low": 0
+  },
+  "arbitrary code execution": {
+    "total": 5933,
+    "high": 5877,
+    "medium": 33,
+    "low": 23
+  },
+  "denial of service": {
+    "total": 24613,
+    "high": 3299,
+    "medium": 18877,
+    "low": 2437
+  },
+  "remote memory exposure": {
+    "total": 3420,
+    "high": 0,
+    "medium": 3420,
+    "low": 0
+  },
+  "uninitialized memory exposure": {
+    "total": 8614,
+    "high": 1828,
+    "medium": 5837,
+    "low": 949
+  },
+  "time of check time of use": {
+    "total": 832,
+    "high": 0,
+    "medium": 832,
+    "low": 0
+  },
+  "timing attack": {
+    "total": 1330,
+    "high": 0,
+    "medium": 1324,
+    "low": 6
+  },
+  "information exposure": {
+    "total": 3109,
+    "high": 526,
+    "medium": 2497,
+    "low": 86
+  },
+  "insecure randomness": {
+    "total": 2104,
+    "high": 338,
+    "medium": 1766,
+    "low": 0
+  },
+  "command injection": {
+    "total": 434,
+    "high": 434,
+    "medium": 0,
+    "low": 0
+  },
+  "improper minification": {
+    "total": 1551,
+    "high": 1551,
+    "medium": 0,
+    "low": 0
+  },
+  "potential script injection": {
+    "total": 56,
+    "high": 0,
+    "medium": 56,
+    "low": 0
+  },
+  "cross-site scripting": {
+    "total": 8141,
+    "high": 2275,
+    "medium": 5816,
+    "low": 50
+  },
+  "arbitrary code injection": {
+    "total": 3551,
+    "high": 2524,
+    "medium": 1027,
+    "low": 0
+  },
+  "arbitrary command injection": {
+    "total": 877,
+    "high": 873,
+    "medium": 4,
+    "low": 0
+  },
+  "access restriction bypass": {
+    "total": 514,
+    "high": 3,
+    "medium": 511,
+    "low": 0
+  },
+  "non-constant time string comparison": {
+    "total": 448,
+    "high": 0,
+    "medium": 448,
+    "low": 0
+  },
+  "root path disclosure": {
+    "total": 676,
+    "high": 0,
+    "medium": 676,
+    "low": 0
+  },
+  "directory traversal": {
+    "total": 789,
+    "high": 168,
+    "medium": 621,
+    "low": 0
+  },
+  "insecure use of /tmp folder": {
+    "total": 620,
+    "high": 0,
+    "medium": 0,
+    "low": 620
+  },
+  "arbitrary file write via archive extraction (zip slip)": {
+    "total": 294,
+    "high": 294,
+    "medium": 0,
+    "low": 0
+  },
+  "insecure use of tmp files": {
+    "total": 349,
+    "high": 0,
+    "medium": 349,
+    "low": 0
+  },
+  "prototype  pollution": {
+    "total": 155,
+    "high": 0,
+    "medium": 0,
+    "low": 155
+  },
+  "configuration override": {
+    "total": 148,
+    "high": 0,
+    "medium": 148,
+    "low": 0
+  },
+  "multiple content injection vulnerabilities": {
+    "total": 169,
+    "high": 0,
+    "medium": 169,
+    "low": 0
+  },
+  "vbscript content injection": {
+    "total": 187,
+    "high": 0,
+    "medium": 187,
+    "low": 0
+  },
+  "code execution due to deserialization": {
+    "total": 51,
+    "high": 0,
+    "medium": 51,
+    "low": 0
+  },
+  "content & code injection": {
+    "total": 145,
+    "high": 145,
+    "medium": 0,
+    "low": 0
+  },
+  "content injection due to quoteless attributes": {
+    "total": 241,
+    "high": 0,
+    "medium": 241,
+    "low": 0
+  },
+  "cross site scripting": {
+    "total": 28,
+    "high": 0,
+    "medium": 28,
+    "low": 0
+  },
+  "symlink file overwrite": {
+    "total": 343,
+    "high": 343,
+    "medium": 0,
+    "low": 0
+  },
+  "sandbox bypass": {
+    "total": 345,
+    "high": 345,
+    "medium": 0,
+    "low": 0
+  },
+  "identity spoofing": {
+    "total": 8,
+    "high": 8,
+    "medium": 0,
+    "low": 0
+  },
+  "insecure credential storage": {
+    "total": 190,
+    "high": 0,
+    "medium": 0,
+    "low": 190
+  },
+  "buffer overflow": {
+    "total": 485,
+    "high": 0,
+    "medium": 485,
+    "low": 0
+  },
+  "unsigned request headers": {
+    "total": 53,
+    "high": 0,
+    "medium": 53,
+    "low": 0
+  },
+  "signature verification bypass": {
+    "total": 70,
+    "high": 0,
+    "medium": 70,
+    "low": 0
+  },
+  "filter bypass": {
+    "total": 32,
+    "high": 0,
+    "medium": 32,
+    "low": 0
+  },
+  "cross-site scripting due to improper file and directory names escaping": {
+    "total": 87,
+    "high": 0,
+    "medium": 87,
+    "low": 0
+  },
+  "open redirect": {
+    "total": 235,
+    "high": 94,
+    "medium": 19,
+    "low": 122
+  },
+  "improper input validation": {
+    "total": 72,
+    "high": 0,
+    "medium": 72,
+    "low": 0
+  },
+  "potentially loose security restrictions": {
+    "total": 48,
+    "high": 0,
+    "medium": 0,
+    "low": 48
+  },
+  "denial of service through invalid if-modified-since/last-modified headers": {
+    "total": 48,
+    "high": 48,
+    "medium": 0,
+    "low": 0
+  },
+  "cors bypass": {
+    "total": 48,
+    "high": 0,
+    "medium": 0,
+    "low": 48
+  },
+  "prototype override": {
+    "total": 123,
+    "high": 123,
+    "medium": 0,
+    "low": 0
+  },
+  "reverse tabnabbing": {
+    "total": 590,
+    "high": 0,
+    "medium": 590,
+    "low": 0
+  },
+  "code injection": {
+    "total": 27,
+    "high": 27,
+    "medium": 0,
+    "low": 0
+  },
+  "npm token leak": {
+    "total": 135,
+    "high": 0,
+    "medium": 135,
+    "low": 0
+  },
+  "invalid curve attack": {
+    "total": 33,
+    "high": 33,
+    "medium": 0,
+    "low": 0
+  },
+  "message signature bypass": {
+    "total": 33,
+    "high": 0,
+    "medium": 33,
+    "low": 0
+  },
+  "improper authentication": {
+    "total": 33,
+    "high": 0,
+    "medium": 33,
+    "low": 0
+  },
+  "forgeable public/private tokens": {
+    "total": 77,
+    "high": 42,
+    "medium": 35,
+    "low": 0
+  },
+  "improper access control": {
+    "total": 71,
+    "high": 0,
+    "medium": 71,
+    "low": 0
+  },
+  "remote code execution": {
+    "total": 9,
+    "high": 2,
+    "medium": 7,
+    "low": 0
+  },
+  "sandbox escaping": {
+    "total": 79,
+    "high": 79,
+    "medium": 0,
+    "low": 0
+  },
+  "remote shell command injection": {
+    "total": 62,
+    "high": 0,
+    "medium": 62,
+    "low": 0
+  },
+  "sql injection": {
+    "total": 153,
+    "high": 40,
+    "medium": 113,
+    "low": 0
+  },
+  "jsonp callback attack": {
+    "total": 290,
+    "high": 0,
+    "medium": 290,
+    "low": 0
+  },
+  "content security policy  bypass": {
+    "total": 95,
+    "high": 0,
+    "medium": 95,
+    "low": 0
+  },
+  "arbitrary command execution": {
+    "total": 24,
+    "high": 1,
+    "medium": 23,
+    "low": 0
+  },
+  "clickjacking": {
+    "total": 107,
+    "high": 0,
+    "medium": 107,
+    "low": 0
+  },
+  "symlink attack due to predictable tmp folder names": {
+    "total": 10,
+    "high": 0,
+    "medium": 10,
+    "low": 0
+  },
+  "broken cors": {
+    "total": 12,
+    "high": 12,
+    "medium": 0,
+    "low": 0
+  },
+  "arbitrary file read": {
+    "total": 60,
+    "high": 60,
+    "medium": 0,
+    "low": 0
+  },
+  "privilege escalation": {
+    "total": 34,
+    "high": 20,
+    "medium": 14,
+    "low": 0
+  },
+  "url spoofing": {
+    "total": 31,
+    "high": 0,
+    "medium": 31,
+    "low": 0
+  },
+  "html injection": {
+    "total": 13,
+    "high": 0,
+    "medium": 13,
+    "low": 0
+  },
+  "cross-site request forgery": {
+    "total": 75,
+    "high": 33,
+    "medium": 42,
+    "low": 0
+  },
+  "resources downloaded over insecure protocol": {
+    "total": 25,
+    "high": 22,
+    "medium": 3,
+    "low": 0
+  },
+  "insecure token validation": {
+    "total": 10,
+    "high": 10,
+    "medium": 0,
+    "low": 0
+  },
+  "elliptic curve key disclosure": {
+    "total": 2,
+    "high": 2,
+    "medium": 0,
+    "low": 0
+  },
+  "hash injection": {
+    "total": 43,
+    "high": 43,
+    "medium": 0,
+    "low": 0
+  },
+  "sql injection in order/limit": {
+    "total": 11,
+    "high": 11,
+    "medium": 0,
+    "low": 0
+  },
+  "sql injection in order": {
+    "total": 5,
+    "high": 5,
+    "medium": 0,
+    "low": 0
+  },
+  "man-in-the-middle": {
+    "total": 106,
+    "high": 93,
+    "medium": 13,
+    "low": 0
+  },
+  "xss in itemtitle parameter": {
+    "total": 9,
+    "high": 9,
+    "medium": 0,
+    "low": 0
+  },
+  "authentication bypass": {
+    "total": 33,
+    "high": 20,
+    "medium": 13,
+    "low": 0
+  },
+  "cryptographic backdoor": {
+    "total": 3,
+    "high": 0,
+    "medium": 3,
+    "low": 0
+  },
+  "improper authorization": {
+    "total": 71,
+    "high": 34,
+    "medium": 37,
+    "low": 0
+  },
+  "rate limiting bypass": {
+    "total": 10,
+    "high": 0,
+    "medium": 10,
+    "low": 0
+  },
+  "dns rebinding": {
+    "total": 50,
+    "high": 0,
+    "medium": 0,
+    "low": 50
+  },
+  "sql injection via geojson": {
+    "total": 2,
+    "high": 2,
+    "medium": 0,
+    "low": 0
+  },
+  "use after free": {
+    "total": 58,
+    "high": 58,
+    "medium": 0,
+    "low": 0
+  },
+  "sensitive data exposure": {
+    "total": 10,
+    "high": 0,
+    "medium": 0,
+    "low": 10
+  },
+  "arbitrary script injection": {
+    "total": 2,
+    "high": 0,
+    "medium": 2,
+    "low": 0
+  },
+  "insufficient entropy": {
+    "total": 34,
+    "high": 0,
+    "medium": 34,
+    "low": 0
+  },
+  "insufficient validation": {
+    "total": 3,
+    "high": 0,
+    "medium": 3,
+    "low": 0
+  },
+  "insecure default configuration": {
+    "total": 8,
+    "high": 0,
+    "medium": 8,
+    "low": 0
+  },
+  "authorization bypass": {
+    "total": 6,
+    "high": 0,
+    "medium": 6,
+    "low": 0
+  },
+  "information disclosure": {
+    "total": 10,
+    "high": 0,
+    "medium": 10,
+    "low": 0
+  },
+  "unauthorized ssl connection due to lack of cert authentication": {
+    "total": 7,
+    "high": 0,
+    "medium": 7,
+    "low": 0
+  },
+  "shell command injection": {
+    "total": 3,
+    "high": 3,
+    "medium": 0,
+    "low": 0
+  },
+  "sensitive information exposure": {
+    "total": 1,
+    "high": 0,
+    "medium": 1,
+    "low": 0
+  },
+  "arbitrary file write": {
+    "total": 1,
+    "high": 1,
+    "medium": 0,
+    "low": 0
+  },
+  "malicious package": {
+    "total": 2,
+    "high": 2,
+    "medium": 0,
+    "low": 0
+  },
+  "ssl validation disabled by default": {
+    "total": 1,
+    "high": 0,
+    "medium": 0,
+    "low": 1
+  },
+  "rosetta-flash jsonp vulnerability": {
+    "total": 7,
+    "high": 0,
+    "medium": 7,
+    "low": 0
+  },
+  "credentials saved as clear-text in log": {
+    "total": 2,
+    "high": 0,
+    "medium": 2,
+    "low": 0
+  },
+  "multiple vulnerabilities in embedded binary version of libxml2": {
+    "total": 1,
+    "high": 0,
+    "medium": 1,
+    "low": 0
+  },
+  "sql injection due to unescaped object keys": {
+    "total": 2,
+    "high": 2,
+    "medium": 0,
+    "low": 0
+  },
+  "ldap injection": {
+    "total": 1,
+    "high": 0,
+    "medium": 1,
+    "low": 0
+  },
+  "insecure defaults": {
+    "total": 1,
+    "high": 0,
+    "medium": 1,
+    "low": 0
+  },
+  "deserialization of untrusted data": {
+    "total": 2,
+    "high": 0,
+    "medium": 2,
+    "low": 0
+  },
+  "credential exposure": {
+    "total": 1,
+    "high": 0,
+    "medium": 1,
+    "low": 0
+  },
+  "csv injection": {
+    "total": 3,
+    "high": 0,
+    "medium": 3,
+    "low": 0
+  }
+}

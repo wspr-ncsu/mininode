@@ -1,0 +1,161 @@
+name,high,medium,low,total
+information exposure,507,2497,86,3088
+configuration override,0,148,0,148
+denial of service,3084,18102,2437,21312
+cross-site scripting,1804,3793,50,5142
+prototype pollution,88441,27841,22,91103
+malicious package,2,0,0,2
+remote code execution,2,7,0,9
+regex denial of service,14653,29644,14709,42163
+credential exposure,0,1,0,1
+arbitrary file read,60,0,0,60
+arbitrary code execution,5324,17,23,5324
+insecure randomness,338,1723,0,2039
+improper access control,0,71,0,71
+improper authentication,0,33,0,33
+path traversal,0,0,0,0
+directory traversal,128,616,0,728
+authorization bypass,0,6,0,6
+sql injection,40,87,0,115
+reverse tabnabbing,0,306,0,306
+invalid curve attack,33,0,0,33
+message signature bypass,0,33,0,33
+command injection,434,0,0,434
+improper authorization,34,37,0,37
+relative path traversal,0,0,0,0
+arbitrary code injection,2482,1021,0,3451
+dns rebinding,0,0,50,50
+privilege escalation,20,14,0,26
+arbitrary command injection,868,4,0,872
+account enumeration,0,0,0,0
+authentication bypass,20,13,0,33
+access restriction bypass,3,511,0,514
+man-in-the-middle,93,13,0,106
+cross-site request forgery,36,28,0,36
+open redirect,94,19,122,235
+cross site scripting,0,28,0,28
+user impersonation,0,0,0,0
+filter bypass,0,32,0,32
+arbitrary file overwrite,3203,146,0,3240
+insecure default configuration,0,18,0,18
+insecure credential storage,0,0,190,190
+buffer over-read,0,0,0,0
+signature verification bypass,0,70,0,70
+html injection,0,13,0,13
+deserialization of untrusted data,0,2,0,2
+rate limiting bypass,0,10,0,10
+cross-site-scripting,0,0,0,0
+unauthorized file access,0,0,0,0
+insufficient validation,0,3,0,3
+timing attack,0,1323,6,1329
+use after free,58,0,0,58
+sensitive data exposure,0,0,10,10
+csv injection,0,3,0,3
+hash injection,43,0,0,43
+arbitrary file write via archive extraction (zip slip),293,0,0,293
+content injection,0,0,0,0
+insufficient entropy,0,34,0,34
+improper key verification,0,0,0,0
+arbitrary file write via archive extraction,0,0,0,0
+server-side request forgery,0,0,0,0
+cryptographic backdoor,0,3,0,3
+arbitrary command execution,1,23,0,24
+improper verification of signature,0,0,0,0
+prototype  pollution,0,0,155,155
+arbitrary string injection,0,0,0,0
+time of check time of use,0,832,0,832
+uninitialized memory exposure,1606,4594,946,6433
+sandbox bypass,345,0,0,345
+prototype override,123,0,0,123
+insecure credential comparison,0,0,0,0
+improper input validation,0,72,0,72
+xml external entity   injection,0,0,0,0
+arbitrary file write,1,0,0,1
+resources downloaded over insecure protocol,21,3,0,24
+buffer overflow,0,485,0,485
+variables overwrite,0,0,0,0
+url spoofing,0,31,0,31
+shell command injection,3,0,0,3
+xml injection,0,0,0,0
+identity spoofing,8,0,0,8
+template injection,0,0,0,0
+insecure token validation,10,0,0,10
+insecure defaults,180,1,0,181
+sandbox escaping,79,0,0,79
+out of memory crash,0,0,0,0
+insecure hashing algorithm,0,0,0,0
+crlf injection,0,0,0,0
+arbitrary execution,0,0,0,0
+cross-application scripting,0,0,0,0
+http whitelist bypass,0,0,0,0
+information disclosure,0,10,0,10
+insecure use of tmp files,0,349,0,349
+unsafe use of eval(),0,0,0,0
+mishandled logout function,0,0,0,0
+elliptic curve key disclosure,2,0,0,2
+arbitrary file upload,0,0,0,0
+prototype override protection bypass,0,0,0,0
+jsonp callback attack,0,290,0,290
+unsigned request headers,0,53,0,53
+symlink attack due to predictable tmp folder names,0,10,0,10
+content security policy  bypass,0,95,0,95
+arbitrary script injection,0,2,0,2
+clickjacking,0,107,0,107
+unsafe object deserialization,0,0,0,0
+protection bypass,0,0,0,0
+unauthorized ssl connection due to lack of cert authentication,0,7,0,7
+cross-site scripting  via tooltip,0,0,0,0
+forgeable public/private tokens,42,35,0,77
+broken cors,12,0,0,12
+css injection,0,0,1,1
+sensitive information exposure,0,1,0,1
+code injection,27,0,0,27
+content & code injection,144,0,0,144
+non-constant time string comparison,0,448,0,448
+insecure use of /tmp folder,0,0,620,620
+spoofing attack due to unvalidated kdc,0,0,0,0
+insecure defaults allow mitm,0,0,0,0
+cross-site scripting  in pillbox,0,0,0,0
+xss in primary functions,0,0,0,0
+xss in client rendered block templates,0,0,0,0
+dom-based xss,0,0,0,0
+xss in itemtitle parameter,9,0,0,9
+sql injection via geojson,2,0,0,2
+private data disclosure,0,0,0,0
+ssl validation disabled by default,0,0,1,1
+npm token leak,0,135,0,135
+remote memory exposure,0,3323,0,3323
+sql injection in order/limit,11,0,0,11
+credentials saved as clear-text in log,0,2,0,2
+multiple vulnerabilities in embedded binary version of libxml2,0,1,0,1
+authentication bypass in try mode,0,0,0,0
+content injection via tilejson name,0,0,0,0
+potentially loose security restrictions,0,0,48,48
+sql injection due to unescaped object keys,2,0,0,2
+denial of service through invalid if-modified-since/last-modified headers,48,0,0,48
+content injection due to quoteless attributes,0,241,0,241
+authentication weakness,0,0,0,0
+potential cross-site scripting,0,0,0,0
+root path disclosure,0,676,0,676
+symlink file overwrite,343,0,0,343
+cors bypass,0,0,48,48
+content injection via tilejson attribute,0,0,0,0
+insecure comparison,0,0,0,0
+remote shell command injection,0,62,0,62
+ldap injection,0,1,0,1
+improper minification,1551,0,0,1551
+cross-site scripting due to improper file and directory names escaping,0,87,0,87
+sql injection in order,5,0,0,5
+hidden directories leakage,0,0,0,0
+validation bypass,0,0,0,0
+arbitrary javascript code injection,0,0,0,0
+cors token disclosure,0,0,0,0
+potential script injection,0,56,0,56
+rosetta-flash jsonp vulnerability,0,7,0,7
+heap-based buffer overflow,0,0,0,0
+multiple content injection vulnerabilities,0,169,0,169
+vbscript content injection,0,187,0,187
+code execution due to deserialization,0,51,0,51
+potential command injection,0,0,0,0
+unauthenticated remote command injection,0,0,0,0
+api admin auth weakness,0,0,0,0

@@ -1,0 +1,49 @@
+{
+  "_args": [
+    [
+      "flatmap-stream@0.1.0",
+      "/Users/haydarkarrar/Desktop/event-stream-5999958dfc1b0a80e6caeac4cdc76b3b828bdfe2"
+    ]
+  ],
+  "_from": "flatmap-stream@0.1.0",
+  "_id": "flatmap-stream@0.1.0",
+  "_inBundle": false,
+  "_integrity": "sha512-Nlic4ZRYxikqnK5rj3YoxDVKGGtUjcNDUtvQ7XsdGLZmMwdUYnXf10o1zcXtzEZTBgc6GxeRpQxV/Wu3WPIIHA==",
+  "_location": "/flatmap-stream",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "version",
+    "registry": true,
+    "raw": "flatmap-stream@0.1.0",
+    "name": "flatmap-stream",
+    "escapedName": "flatmap-stream",
+    "rawSpec": "0.1.0",
+    "saveSpec": null,
+    "fetchSpec": "0.1.0"
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/flatmap-stream/-/flatmap-stream-0.1.0.tgz",
+  "_spec": "0.1.0",
+  "_where": "/Users/haydarkarrar/Desktop/event-stream-5999958dfc1b0a80e6caeac4cdc76b3b828bdfe2",
+  "author": {
+    "name": "Antonio Macias"
+  },
+  "bugs": {
+    "url": "https://github.com/hugeglass/flatmap-stream/issues"
+  },
+  "description": "",
+  "homepage": "https://github.com/hugeglass/flatmap-stream#readme",
+  "license": "MIT",
+  "main": "index.min.js",
+  "name": "flatmap-stream",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hugeglass/flatmap-stream.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "0.1.0"
+}

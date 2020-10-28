@@ -1,0 +1,108 @@
+name,total,high,medium,low
+prototype pollution,137452,113218,24212,22
+regex denial of service,73114,18736,37590,16788
+arbitrary file overwrite,3349,3203,146,0
+arbitrary code execution,5933,5877,33,23
+denial of service,24613,3299,18877,2437
+remote memory exposure,3420,0,3420,0
+uninitialized memory exposure,8614,1828,5837,949
+time of check time of use,832,0,832,0
+timing attack,1330,0,1324,6
+information exposure,3109,526,2497,86
+insecure randomness,2104,338,1766,0
+command injection,434,434,0,0
+improper minification,1551,1551,0,0
+potential script injection,56,0,56,0
+cross-site scripting,8141,2275,5816,50
+arbitrary code injection,3551,2524,1027,0
+arbitrary command injection,877,873,4,0
+access restriction bypass,514,3,511,0
+non-constant time string comparison,448,0,448,0
+root path disclosure,676,0,676,0
+directory traversal,789,168,621,0
+insecure use of /tmp folder,620,0,0,620
+arbitrary file write via archive extraction (zip slip),294,294,0,0
+insecure use of tmp files,349,0,349,0
+prototype  pollution,155,0,0,155
+configuration override,148,0,148,0
+multiple content injection vulnerabilities,169,0,169,0
+vbscript content injection,187,0,187,0
+code execution due to deserialization,51,0,51,0
+content & code injection,145,145,0,0
+content injection due to quoteless attributes,241,0,241,0
+cross site scripting,28,0,28,0
+symlink file overwrite,343,343,0,0
+sandbox bypass,345,345,0,0
+identity spoofing,8,8,0,0
+insecure credential storage,190,0,0,190
+buffer overflow,485,0,485,0
+unsigned request headers,53,0,53,0
+signature verification bypass,70,0,70,0
+filter bypass,32,0,32,0
+cross-site scripting due to improper file and directory names escaping,87,0,87,0
+open redirect,235,94,19,122
+improper input validation,72,0,72,0
+potentially loose security restrictions,48,0,0,48
+denial of service through invalid if-modified-since/last-modified headers,48,48,0,0
+cors bypass,48,0,0,48
+prototype override,123,123,0,0
+reverse tabnabbing,590,0,590,0
+code injection,27,27,0,0
+npm token leak,135,0,135,0
+invalid curve attack,33,33,0,0
+message signature bypass,33,0,33,0
+improper authentication,33,0,33,0
+forgeable public/private tokens,77,42,35,0
+improper access control,71,0,71,0
+remote code execution,9,2,7,0
+sandbox escaping,79,79,0,0
+remote shell command injection,62,0,62,0
+sql injection,153,40,113,0
+jsonp callback attack,290,0,290,0
+content security policy  bypass,95,0,95,0
+arbitrary command execution,24,1,23,0
+clickjacking,107,0,107,0
+symlink attack due to predictable tmp folder names,10,0,10,0
+broken cors,12,12,0,0
+arbitrary file read,60,60,0,0
+privilege escalation,34,20,14,0
+url spoofing,31,0,31,0
+html injection,13,0,13,0
+cross-site request forgery,75,33,42,0
+resources downloaded over insecure protocol,25,22,3,0
+insecure token validation,10,10,0,0
+elliptic curve key disclosure,2,2,0,0
+hash injection,43,43,0,0
+sql injection in order/limit,11,11,0,0
+sql injection in order,5,5,0,0
+man-in-the-middle,106,93,13,0
+xss in itemtitle parameter,9,9,0,0
+authentication bypass,33,20,13,0
+cryptographic backdoor,3,0,3,0
+improper authorization,71,34,37,0
+rate limiting bypass,10,0,10,0
+dns rebinding,50,0,0,50
+sql injection via geojson,2,2,0,0
+use after free,58,58,0,0
+sensitive data exposure,10,0,0,10
+arbitrary script injection,2,0,2,0
+insufficient entropy,34,0,34,0
+insufficient validation,3,0,3,0
+insecure default configuration,8,0,8,0
+authorization bypass,6,0,6,0
+information disclosure,10,0,10,0
+unauthorized ssl connection due to lack of cert authentication,7,0,7,0
+shell command injection,3,3,0,0
+sensitive information exposure,1,0,1,0
+arbitrary file write,1,1,0,0
+malicious package,2,2,0,0
+ssl validation disabled by default,1,0,0,1
+rosetta-flash jsonp vulnerability,7,0,7,0
+credentials saved as clear-text in log,2,0,2,0
+multiple vulnerabilities in embedded binary version of libxml2,1,0,1,0
+sql injection due to unescaped object keys,2,2,0,0
+ldap injection,1,0,1,0
+insecure defaults,1,0,1,0
+deserialization of untrusted data,2,0,2,0
+credential exposure,1,0,1,0
+csv injection,3,0,3,0

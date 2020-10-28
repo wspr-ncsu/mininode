@@ -1,0 +1,19 @@
+{
+  "name": "producer",
+  "version": "1.0.0",
+  "description": "",
+  "main": "producer.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Igibek Koishybayev",
+  "license": "ISC",
+  "dependencies": {
+    "all-the-package-names": "^1.3693.0",
+    "bee-queue": "^1.2.2",
+    "jsonfile": "^5.0.0",
+    "mongodb": "^3.1.10",
+    "package-stream": "^3.1.0",
+    "yargs": "^14.0.0"
+  }
+}

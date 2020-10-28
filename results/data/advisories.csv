@@ -1,0 +1,1723 @@
+category,severity,name,validation-coarse,validation-fine,measurement-coarse
+Information Exposure,H,pem,1,1,44
+Configuration Override,M,helmet-csp,8,9,57
+Denial of Service (DoS),H,http-live-simulator,0,0,0
+Cross-site Scripting (XSS),H,pdfjs-dist,0,2,121
+Cross-site Scripting (XSS),M,@novnc/novnc,0,0,0
+Prototype Pollution,H,handlebars,9795,9731,47340
+Cross-site Scripting (XSS),H,dompurify,3,3,150
+Malicious Package,H,discord.js-user,0,0,0
+Cross-site Scripting (XSS),M,@botpress/channel-web,0,0,0
+Remote Code Execution (RCE),M,notevil,1,1,5
+Regular Expression Denial of Service (ReDoS),M,csv-parse,76,77,1010
+Credential Exposure,M,ibm_db,0,0,0
+Denial of Service (DoS),H,@commercial/subtext,0,0,0
+Denial of Service (DoS),H,@hapi/subtext,1,1,0
+Denial of Service (DoS),H,subtext,52,52,1080
+Arbitrary File Read,H,html-pdf,0,0,69
+Cross-site Scripting (XSS),M,ids-enterprise,0,0,1
+Arbitrary Code Execution,H,gitlabhook,0,0,0
+Cross-site Scripting (XSS),L,http_server,0,0,0
+Insecure Randomness,H,generator-jhipster,0,0,0
+Insecure Randomness,H,generator-jhipster-kotlin,0,0,0
+Improper Access Control,L,cryptpad,0,0,0
+Malicious Package,H,evil-package,0,0,0
+Remote Code Execution (RCE),H,total.js,0,0,0
+Improper Authentication,H,total.js,0,0,0
+Path Traversal,H,total.js,0,0,0
+Improper Access Control,H,total.js,0,0,0
+Directory Traversal,M,larvitbase-www,0,0,1
+Information Exposure,L,seneca,9,8,181
+Cross-site Scripting (XSS),M,mavon-editor,0,0,14
+Regular Expression Denial of Service (ReDoS),M,simple-markdown,0,0,21
+Malicious Package,H,axios-http,0,0,0
+Malicious Package,H,axioss,0,0,0
+Malicious Package,H,body-parse-xml,0,0,0
+Malicious Package,H,file-logging,0,0,0
+Malicious Package,H,import-mysql,0,0,0
+Malicious Package,H,js-base64-int,0,0,0
+Malicious Package,H,js-regular,0,0,0
+Malicious Package,H,k0a_multer,0,0,0
+Malicious Package,H,koa-body-parse,0,0,0
+Malicious Package,H,mogobd,0,0,0
+Malicious Package,H,mogodb,0,0,0
+Malicious Package,H,mogodb-core,0,0,0
+Malicious Package,H,mogoose,0,0,0
+Malicious Package,H,mysql-koa,0,0,0
+Malicious Package,H,node-ftp,0,0,0
+Malicious Package,H,node-spdy,0,0,0
+Malicious Package,H,serializes,0,0,0
+Malicious Package,H,serilize,0,0,0
+Malicious Package,H,sparkies,0,0,0
+Cross-site Scripting (XSS),L,webtorrent,0,0,49
+Cross-site Scripting (XSS),H,vant,0,0,48
+Authorization Bypass,M,graphql-shield,0,0,8
+Path Traversal,M,public,0,0,0
+Cross-site Scripting (XSS),M,@ckeditor/ckeditor5-link,0,0,0
+SQL Injection,M,connect-pg-simple,0,0,16
+Reverse Tabnabbing,M,quill,0,0,121
+Cross-site Scripting (XSS),M,status-board,0,0,0
+Cross-site Scripting (XSS),M,status-board,0,0,0
+Cross-site Scripting (XSS),H,cyberchef,0,0,0
+Directory Traversal,H,statichttpserver,0,0,0
+Regular Expression Denial of Service (ReDoS),M,stylelint,38,37,2610
+Cross-site Scripting (XSS),M,selectize-plugin-a11y,0,0,0
+Arbitrary Code Execution,H,eslint-utils,1449,1435,8476
+Invalid Curve Attack,H,openpgp,4,4,43
+Message Signature Bypass,M,openpgp,4,4,43
+Improper Authentication,M,openpgp,4,4,43
+Denial of Service (DoS),M,serialize-to-js,1,1,161
+Command Injection,H,wizard-syncronizer,0,0,0
+Arbitrary Code Execution,H,value-censorship,0,0,0
+Arbitrary Code Execution,H,cocos-utils,0,0,0
+Malicious Package,H,bb-builder,0,0,0
+Prototype Pollution,H,mithril,0,0,0
+Improper Authorization,H,googleapis,2,2,37
+Relative Path Traversal,M,larvitbase-api,0,0,0
+Arbitrary Code Injection,H,local-devices,0,0,0
+SQL Injection,H,sequelize,0,0,0
+Arbitrary Code Injection,H,addax,0,0,0
+Arbitrary Code Injection,H,wxchangba,0,0,0
+Malicious Package,H,device-mqtt,0,0,0
+Malicious Package,H,pensi-scheduler,0,0,0
+Malicious Package,H,pyramid-proportion,0,0,0
+Malicious Package,H,slush-fullstack-framework,0,0,0
+Malicious Package,H,zemen,0,0,0
+Malicious Package,H,jquery-airload,0,0,0
+Malicious Package,H,ngx-context-menu,0,0,0
+Denial of Service (DoS),M,grpc-ts-health-check,0,0,0
+Malicious Package,H,cal_rd,0,0,0
+Malicious Package,H,sailclothjs,0,0,0
+Malicious Package,H,uploader-plugin,0,0,0
+Cross-site Scripting (XSS),M,select2,0,0,36
+Cross-site Scripting (XSS),H,editor.md,0,0,0
+Cross-site Scripting (XSS),M,nodebb,0,0,0
+Remote Code Execution (RCE),H,haraka,0,0,0
+DNS Rebinding,L,webtorrent,0,0,49
+Cross-site Scripting (XSS),M,min-http-server,0,0,0
+Privilege Escalation,H,electron,30,31,163
+Arbitrary Command Injection,H,node-wifi,0,0,3
+Arbitrary Code Execution,H,domokeeper,0,0,0
+Account Enumeration,M,parse-server,0,0,3
+Denial of Service (DoS),H,parse-server,0,0,3
+Cross-site Scripting (XSS),M,plotly.js,0,0,0
+Cross-site Scripting (XSS),M,@risingstack/protect,0,0,0
+Cross-site Scripting (XSS),M,http-file-server,0,0,0
+Cross-site Scripting (XSS),H,console-feed,0,0,0
+Directory Traversal,M,@vivaxy/here,0,0,0
+Malicious Package,H,json-serializer,0,0,0
+Arbitrary Code Injection,H,tomato,0,0,0
+Malicious Package,H,browserift,0,0,0
+Malicious Package,H,maleficent,0,0,0
+Arbitrary Code Injection,H,expressfs,0,0,0
+Authentication Bypass,H,otpauth,0,0,1
+Access Restriction Bypass,H,msrcrypto,0,0,0
+Malicious Package,H,fast-requests,0,0,0
+Malicious Package,H,cage-js,0,0,0
+Directory Traversal,H,atompm,0,0,0
+Malicious Package,H,load-from-cwd-or-npm,0,0,0
+Malicious Package,H,rate-map,0,0,0
+Cross-site Scripting (XSS),M,bpmn-js-properties-panel,0,0,8
+Cross-site Scripting (XSS),M,cmmn-js-properties-panel,0,0,0
+Cross-site Scripting (XSS),M,dmn-js-properties-panel,0,0,0
+Directory Traversal,H,restify-swagger-jsdoc,0,0,0
+Improper Authorization,M,googleapis,2,2,37
+Malicious Package,H,nodes.js,0,0,0
+Malicious Package,H,ali-contributor,0,0,0
+Malicious Package,H,ali-contributors,0,0,0
+Malicious Package,H,alico,0,0,0
+Malicious Package,H,alipayjsapi,0,0,0
+Malicious Package,H,antd-cloud,0,0,0
+Malicious Package,H,appx-compiler,0,0,0
+Malicious Package,H,cicada-render,0,0,0
+Malicious Package,H,diamond-clien,0,0,0
+Malicious Package,H,hpmm,0,0,0
+Malicious Package,H,hsf-clients,0,0,0
+Malicious Package,H,leetlog,0,0,0
+Malicious Package,H,luna-mock,0,0,0
+Malicious Package,H,malicious-do-not-install,0,0,0
+Malicious Package,H,midway-dataproxy,0,0,0
+Malicious Package,H,midway-xtpl,0,0,0
+Malicious Package,H,my-very-own-package,0,0,0
+Malicious Package,H,next-util,0,0,0
+Malicious Package,H,node-buc,0,0,0
+Malicious Package,H,only-test-not-install,0,0,0
+Malicious Package,H,qingting,0,0,0
+Malicious Package,H,retcodelog,0,0,0
+Malicious Package,H,river-mock,0,0,0
+Malicious Package,H,secure_identity_login_module,0,0,0
+Malicious Package,H,tiar,0,0,0
+Directory Traversal,M,zero,0,0,0
+Cross-site Scripting (XSS),M,jquery.json-viewer,0,0,0
+Man-in-the-Middle (MitM),H,yarn,6,6,123
+Path Traversal,H,http-file-server,0,0,0
+Reverse Tabnabbing,M,quill,0,0,121
+Cross-site Scripting (XSS),H,eco,0,0,8
+Information Exposure,M,kibana,0,0,0
+Cross-site Request Forgery (CSRF),M,kibana,0,0,0
+Cross-site Scripting (XSS),M,oidc-provider,0,0,0
+Cross-site Scripting (XSS),M,kibana,0,0,0
+Regular Expression Denial of Service (ReDoS),M,marked,852,834,14880
+Arbitrary Code Execution,M,domokeeper,0,0,0
+Cross-site Scripting (XSS),M,mathjax,0,0,0
+Cross-site Scripting (XSS),M,kibana,0,0,0
+Open Redirect,M,kibana,0,0,0
+Prototype Pollution,H,@sailshq/lodash,42,44,178
+Prototype Pollution,H,lodash,15811,15642,161391
+Regular Expression Denial of Service (ReDoS),M,marked,383,386,5800
+Cross-site Scripting (XSS),H,mxgraph,0,0,1
+Cross-site Scripting (XSS),M,takeapeek,0,0,0
+Open Redirect,M,apostrophe,0,0,2
+Arbitrary Code Execution,H,require-node,0,0,0
+Prototype Pollution,H,deeply,1,1,26
+Cross-site Scripting (XSS),M,graylog-web-interface,0,0,0
+Malicious Package,H,rpc-websocket,0,0,0
+Malicious Package,H,blingjs,0,0,0
+Malicious Package,H,freshdom,0,0,0
+Malicious Package,H,jasmin,0,0,0
+Malicious Package,H,rc-calendar-jhorst,0,0,0
+Malicious Package,H,@impala/bmap,0,0,0
+Malicious Package,H,angular-bmap,0,0,0
+Malicious Package,H,angular-material-sidenav-rnd,0,0,0
+Malicious Package,H,another-date-picker,0,0,0
+Malicious Package,H,another-date-range-picker,0,0,0
+Malicious Package,H,awesome_react_utility,0,0,0
+Malicious Package,H,codify,0,0,0
+Malicious Package,H,coffee-project,0,0,0
+Malicious Package,H,cordova-plugin-china-picker,0,0,0
+Malicious Package,H,css_transform_step,0,0,0
+Malicious Package,H,css_transform_support,0,0,0
+Malicious Package,H,dossier,0,0,0
+Malicious Package,H,dynamo-schema,0,0,0
+Malicious Package,H,impala,0,0,0
+Malicious Package,H,modlibrary,0,0,0
+Malicious Package,H,nginxbeautifier,0,0,0
+Malicious Package,H,oauth-validator,0,0,0
+Malicious Package,H,react-dates-sc,0,0,0
+Malicious Package,H,react-server-native,0,0,0
+Malicious Package,H,s3asy,0,0,0
+Malicious Package,H,simple-alipay,0,0,0
+Malicious Package,H,xoc,0,0,0
+Malicious Package,H,dictum.js,0,0,0
+Malicious Package,H,axois,0,0,0
+Malicious Package,H,regenraotr,0,0,0
+Malicious Package,H,regenrator,0,0,0
+Malicious Package,H,soket.io,0,0,0
+Malicious Package,H,soket.js,0,0,0
+Path Traversal,H,serve-here.js,0,0,0
+Cross-site Scripting (XSS),M,keystone,1,1,1
+Cross-site Scripting (XSS),H,keystone,1,1,1
+SQL Injection,H,sequelize,12,12,74
+SQL Injection,H,sequelize,0,0,0
+Cross-site Scripting (XSS),M,@berslucas/liljs,0,0,0
+Prototype Pollution,H,set-value,0,0,0
+Prototype Pollution,H,mixin-deep,0,0,0
+Prototype Pollution,H,assign-deep,0,0,0
+Malicious Package,H,smartsearchwp,0,0,0
+SQL injection,H,untitled-model,0,0,0
+Cross Site Scripting (XSS),M,diagram-js,0,0,0
+Cross Site Scripting (XSS),M,diagram-js-direct-editing,0,0,29
+Cross-site Scripting (XSS),M,swagger-ui,0,0,0
+Cross-site Scripting (XSS),M,swagger-ui,0,0,0
+Cross-site Scripting (XSS),M,swagger-ui,1,1,5
+SQL Injection,H,resquel,0,0,0
+Cross-site Scripting (XSS),M,swagger-ui,5,5,51
+Denial of Service (DoS),M,keycloak-connect,0,0,0
+Reverse Tabnabbing,M,swagger-ui,5,5,51
+User Impersonation,M,converse.js,0,0,0
+Cross-site Request Forgery (CSRF),H,keystone,1,1,1
+Cross-site Scripting (XSS),M,ids-enterprise,0,0,1
+Cross-site Scripting (XSS),M,ids-enterprise,0,0,1
+Malicious Package,H,colro-name,0,0,0
+Malicious Package,H,angular-location-update,0,0,0
+Malicious Package,H,ember-power-timepicker,0,0,0
+Malicious Package,H,geoheat,0,0,0
+Malicious Package,H,github-jquery-widgets,0,0,0
+Malicious Package,H,grunt-radic,0,0,0
+Malicious Package,H,grunt-radical,0,0,0
+Malicious Package,H,jekyll-for-github-projects,0,0,0
+Malicious Package,H,leaflet-gpx,0,0,0
+Malicious Package,H,libubx,0,0,0
+Malicious Package,H,motiv.scss,0,0,0
+Malicious Package,H,mx-nested-menu,0,0,0
+Malicious Package,H,ng-ui-library,0,0,0
+Malicious Package,H,ngx-pica,0,0,0
+Malicious Package,H,pm-controls,0,0,0
+Malicious Package,H,precode.js,0,0,0
+Malicious Package,H,radic-util,0,0,0
+Malicious Package,H,radicjs,0,0,0
+Malicious Package,H,react-datepicker-plus,0,0,0
+Malicious Package,H,scroool,0,0,0
+Malicious Package,H,vue-backbone,0,0,0
+Information Exposure,H,cordova-android,0,0,1
+Cross-site Scripting (XSS),M,dojo,0,0,0
+Cross-site Scripting (XSS),M,dojo,0,0,0
+Malicious Package,H,electron-native-notify,0,0,0
+Arbitrary Code Injection,M,wiki-plugin-datalog,0,0,0
+SQL Injection,H,sails-mysql,0,0,0
+Prototype Pollution,H,@apollo/gateway,0,0,0
+Cross-site Scripting (XSS),M,ag-grid-community,0,0,0
+Malicious Package,H,angluar-cli,0,0,0
+Malicious Package,H,epress,0,0,0
+Malicious Package,H,font-scrubber,0,0,0
+Malicious Package,H,commqnder,0,0,0
+Malicious Package,H,blubird,0,0,0
+Malicious Package,H,commmander,0,0,0
+Cross-site Scripting (XSS),M,ids-enterprise,0,0,1
+Malicious Package,H,hulp,0,0,0
+Malicious Package,H,kraken-api,0,0,0
+Malicious Package,H,tensorplow,0,0,0
+Malicious Package,H,rimrafall,0,0,0
+Malicious Package,H,bowe,0,0,0
+Malicious Package,H,whiteproject,0,0,0
+Malicious Package,H,colour-string,0,0,0
+Malicious Package,H,foever,0,0,0
+Malicious Package,H,froever,0,0,0
+Malicious Package,H,jqeury,0,0,0
+Malicious Package,H,jquerz,0,0,0
+Malicious Package,H,logsymbles,0,0,0
+Malicious Package,H,require-ports,0,0,0
+Malicious Package,H,uglyfi-js,0,0,0
+Malicious Package,H,yeoman-genrator,0,0,0
+Denial of Service (DoS),M,ipfs-bitswap,0,0,27
+Malicious Package,H,bowee,0,0,0
+SQL Injection,M,loopback,0,0,0
+Filter Bypass,M,express-validator,1,1,35
+Cross-site Scripting (XSS),M,verdaccio,0,0,4
+Cross-site Scripting (XSS),M,verdaccio,0,0,4
+Prototype Pollution,H,lutils-merge,0,0,1
+Malicious Package,H,destroyer-of-worlds,0,0,0
+Malicious Package,H,donotinstallthis,0,0,0
+Directory Traversal,H,algo-httpserv,0,0,0
+Prototype Pollution,H,smart-extend,0,0,10
+Directory Traversal,H,serve,12,12,685
+Regular Expression Denial of Service (ReDoS),H,useragent,79,83,19205
+Arbitrary File Overwrite,H,fstream,937,937,8996
+Cross-site Scripting (XSS),M,bootbox,0,0,12
+Cross-site Scripting (XSS),M,fomantic-ui,0,0,0
+Cross-site Scripting (XSS),M,semantic-ui,0,0,24
+Cross-site Scripting (XSS),M,semantic-ui-search,0,0,0
+Malicious Package,H,carloprojectdiscord,0,0,0
+Malicious Package,H,carloprojectlesang,0,0,0
+Malicious Package,H,discord_debug_log,0,0,0
+Remote Code Execution (RCE),H,pi_video_recording,0,0,0
+Cross-site Scripting (XSS),M,mermaid,1,1,41
+Malicious Package,H,4equest,0,0,0
+Malicious Package,H,aasync,0,0,0
+Malicious Package,H,asinc,0,0,0
+Malicious Package,H,asnc,0,0,0
+Malicious Package,H,asnyc,0,0,0
+Malicious Package,H,asycn,0,0,0
+Malicious Package,H,asymc,0,0,0
+Malicious Package,H,asynnc,0,0,0
+Malicious Package,H,asyync,0,0,0
+Malicious Package,H,aysnc,0,0,0
+Malicious Package,H,calk,0,0,0
+Malicious Package,H,chak,0,0,0
+Malicious Package,H,commnader,0,0,0
+Malicious Package,H,eact,0,0,0
+Malicious Package,H,equest,0,0,0
+Malicious Package,H,erquest,0,0,0
+Malicious Package,H,experss,0,0,0
+Malicious Package,H,exprss,0,0,0
+Malicious Package,H,jajajejejiji,0,0,0
+Malicious Package,H,momen,0,0,0
+Malicious Package,H,reequest,0,0,0
+Malicious Package,H,reqest,0,0,0
+Malicious Package,H,reqquest,0,0,0
+Malicious Package,H,requeest,0,0,0
+Malicious Package,H,reques,0,0,0
+Malicious Package,H,requesst,0,0,0
+Malicious Package,H,requestt,0,0,0
+Malicious Package,H,requet,0,0,0
+Malicious Package,H,requets,0,0,0
+Malicious Package,H,requset,0,0,0
+Malicious Package,H,requst,0,0,0
+Malicious Package,H,requuest,0,0,0
+Malicious Package,H,reuest,0,0,0
+Malicious Package,H,rqeuest,0,0,0
+Malicious Package,H,rrequest,0,0,0
+Malicious Package,H,saync,0,0,0
+Malicious Package,H,wepack-cli,0,0,0
+Cross-site Scripting (XSS),M,angular-froala,0,0,0
+Cross-site Scripting (XSS),M,simditor,0,0,4
+Cross-site Scripting (XSS),H,remarkable,351,303,587
+Regular Expression Denial of Service (ReDoS),H,remarkable,351,303,587
+Cross-site Scripting (XSS),H,markdown-to-jsx,8,8,93
+Insecure Default Configuration,M,@graphql-codegen/cli,0,0,0
+Insecure Default Configuration,M,graphql-code-generator,0,0,35
+Cross-site Scripting (XSS),M,jquery-mobile,0,0,0
+Cross-site Scripting (XSS),M,pupa,20,19,601
+Arbitrary File Overwrite,M,tar-fs,30,30,1680
+Open Redirect,M,ecstatic,0,0,0
+Cross-site Scripting (XSS),M,wangeditor,0,0,32
+Insecure Credential Storage,L,web3,4,4,317
+Buffer Over-read,H,mqtt-packet,0,0,0
+Signature Verification Bypass,M,jwt-simple,9,8,92
+Cross-site Scripting (XSS),M,google-closure-library,0,0,2
+Denial of Service (DoS),M,axios,324,314,11534
+HTML Injection,M,awesomplete,0,0,12
+Deserialization of Untrusted Data,M,preact,0,0,4
+Cross-site Scripting (XSS),M,md-data-table,0,0,0
+Rate Limiting Bypass,M,express-brute,0,0,12
+Cross-site-Scripting (XSS),H,@ionic/source,0,0,0
+Unauthorized File Access,H,harp,0,0,6
+Insufficient Validation,M,redbird,0,0,9
+Timing Attack,L,express-basic-auth,0,0,10
+Cross-site Scripting (XSS),H,shave,0,0,4
+Use After Free,H,puppeteer,8,8,399
+Cross-site Scripting (XSS),M,ngx-bootstrap,0,0,173
+Sensitive Data Exposure,L,sequelize-cli,0,0,19
+Cross-site Scripting (XSS),M,webpack-bundle-analyzer,57,57,4513
+CSV Injection,M,mui-datatables,0,0,7
+Prototype Pollution,H,handlebars,0,0,0
+Cross-site Scripting (XSS),H,@nuxt/devalue,0,0,0
+Cross-site Scripting (XSS),H,@nuxtjs/devalue,0,0,0
+Cross-site Scripting (XSS),H,devalue,0,0,1
+SQL Injection,M,sequelize,0,0,0
+Information Exposure,M,harp,0,0,6
+Cross-site Scripting (XSS),M,materialize-css,2,2,97
+Cross-site Scripting (XSS),M,harp,0,0,6
+Cross-site Scripting (XSS),M,materialize-css,2,2,97
+Arbitrary Code Execution,H,typed-function,4,4,11
+Arbitrary Code Execution,H,js-yaml,7905,7883,66679
+Cross-site Scripting (XSS),M,express-cart,0,0,0
+Information Exposure,H,serve-handler,5,5,86
+Prototype Pollution,H,upmerge,0,0,0
+Cross-site Scripting (XSS),M,buttle,0,0,0
+Information Exposure,H,glance,0,0,0
+Regular Expression Denial of Service (ReDoS),M,marked,1144,1127,18482
+Directory Traversal,M,statics-server,0,0,0
+Denial of Service (DoS),M,canvas,4,4,58
+Arbitrary File Overwrite,H,tar,0,0,0
+Directory Traversal,M,servey,0,0,0
+SQL Injection,H,typeorm,0,0,1
+Arbitrary Code Injection,M,dot,22,22,916
+Hash Injection,H,sequelize,12,12,166
+Denial of Service (DoS),M,js-yaml,44,50,881
+Regular Expression Denial of Service (ReDoS),M,lodash,7212,7156,86971
+Insecure Default Configuration,M,tesseract.js,0,0,8
+Use After Free,H,electron,0,0,0
+Arbitrary Code Injection,H,open,197,196,8012
+Prototype Pollution,M,jquery,78,80,3447
+Arbitrary Command Injection,H,opencv,0,0,2
+Denial of Service (DoS),M,js-yaml,6107,6117,52950
+Arbitrary Command Injection,M,kill-port,0,0,1
+Directory Traversal,H,localhost-now,0,0,0
+Cross-site Scripting (XSS),M,simple-markdown,0,0,10
+Cross-site Scripting (XSS),M,editor.md,0,0,0
+Arbitrary File Write via Archive Extraction (Zip Slip),H,react-native-code-push,0,0,16
+Arbitrary Code Execution,H,safer-eval,1,1,62
+Cross-site Scripting (XSS),M,react-json-pretty,0,0,4
+Cross-site Scripting (XSS),H,embark,0,0,0
+Cross-site Scripting (XSS),M,eslint-plugin-no-unsanitized,0,0,98
+Timing Attack,L,safe-compare,0,0,0
+Cross-site Scripting (XSS),H,bootstrap-select,0,0,54
+Cross-site Scripting (XSS),M,summernote,0,0,9
+Content Injection,M,embark,0,0,0
+Insufficient Entropy,M,cryptr,2,2,98
+Insecure Randomness,M,reveal.js,0,0,15
+Directory Traversal,H,total.js,0,0,0
+Improper Access Control,M,thrift,3,3,80
+Cross-site Scripting (XSS),M,bootstrap,0,0,0
+Remote Code Execution (RCE),H,office-converter,0,0,0
+Arbitrary Code Execution,H,static-eval,29,29,687
+Prototype Pollution,H,handlebars,4023,3968,21227
+Remote Code Execution (RCE),H,node-os-utils,0,0,1
+Denial of Service (DoS),M,url-relative,0,0,2
+Denial of Service (DoS),L,ircdkit,0,0,0
+Information Exposure,H,pem,1,1,44
+Access Restriction Bypass,H,browserify-hmr,2,2,117
+Malicious Package,H,boogeyman,0,0,0
+Directory Traversal,M,@vivaxy/here,0,0,0
+Improper Key Verification,H,ipns,0,0,0
+Cross-site Scripting (XSS),M,mobius1-selectr,0,0,14
+Cross-site Scripting (XSS),M,node-red-dashboard,0,0,1
+Malicious Package,H,stream-combine,0,0,0
+Prototype Pollution,H,@sailshq/lodash,42,44,178
+Cross-site Scripting (XSS),M,html-pages,0,0,1
+Prototype Pollution,H,lodash,7212,7156,86971
+Prototype Pollution,H,lodash._basemerge,13,12,65
+Prototype Pollution,H,lodash.defaultsdeep,47,47,1182
+Prototype Pollution,H,lodash.merge,2379,2336,15143
+Prototype Pollution,H,lodash.mergewith,313,302,1928
+Prototype Pollution,H,node.extend,0,0,0
+Directory Traversal,H,static-resource-server,0,0,0
+Regular Expression Denial of Service (ReDoS),M,marked,268,268,1232
+Regular Expression Denial of Service (ReDoS),M,remove-markdown,3,3,122
+Cross-site Scripting (XSS),M,angucomplete-alt,0,0,1
+Arbitrary File Write via Archive Extraction (Zip Slip),H,bower,24,24,1660
+Arbitrary File Write via Archive Extraction (Zip Slip),H,decompress-zip,0,0,0
+Cross-site Scripting (XSS),H,bootstrap-vue,0,0,19
+Cross-site Scripting (XSS),M,jquery.terminal,0,0,0
+Improper Authorization,H,loopback,0,0,0
+SQL Injection,H,loopback-connector-mongodb,3,3,5
+Server-Side Request Forgery (SSRF),M,terriajs-server,0,0,0
+Directory Traversal,H,http-live-simulator,0,0,0
+Malicious Package,H,portionfatty12,0,0,0
+Malicious Package,H,rrgod,0,0,0
+Denial of Service (DoS),M,autolinker,354,306,1695
+Directory Traversal,M,cordova-plugin-ionic-webview,0,0,2
+Cryptographic Backdoor,M,generate-password,1,1,2
+Cross-site Scripting (XSS),M,jingo,0,0,0
+Denial of Service (DoS),H,markdown-it-toc-and-anchor,1,1,0
+Information Exposure,M,rails-session-decoder,0,0,0
+Malicious Package,H,text-qrcode,0,0,0
+Remote Code Execution,H,xterm,0,0,0
+Cross-site Scripting (XSS),M,bootstrap,5,5,258
+Cross-site Scripting (XSS),M,bootstrap,5,5,258
+Malicious Package,H,commander-js,0,0,0
+Regular Expression Denial of Service (ReDoS),M,esm,46,45,63
+Cross-site Scripting (XSS),M,qunit,5,6,2112
+Cross-site Scripting (XSS),H,ids-enterprise,0,0,0
+Arbitrary Code Execution,H,react-dev-utils,0,0,0
+Arbitrary Code Execution,H,nuclide,0,0,0
+Cross-site Scripting (XSS),M,buefy,0,0,37
+Regular Expression Denial of Service (ReDoS),M,uap-core,0,0,0
+Remote Code Execution (RCE),H,pomelo-monitor,0,0,2
+Cross-site Scripting (XSS),M,rendertron-middleware,0,0,0
+Denial of Service (DoS),H,rendertron-middleware,0,0,0
+Information Exposure,H,rendertron-middleware,0,0,0
+Arbitrary File Read,M,rendertron-middleware,0,0,0
+Denial of Service (DoS),L,just-extend,257,254,47
+Prototype pollution,H,mergify,0,0,0
+Prototype Pollution,H,mpath,9,8,35
+Directory Traversal,M,simplehttpserver,0,0,1
+Malicious Package,H,event-stream,0,0,0
+Malicious Package,H,flatmap-stream,0,0,0
+Cross-site Scripting (XSS),M,inline-source,1,1,37
+Arbitrary Code Execution,L,jquery-file-upload,0,0,0
+HTML Injection,M,valine,0,0,0
+Privilege Escalation,H,auth0-js,0,0,53
+Arbitrary Command Execution,M,kibana,0,0,0
+Cross-site Scripting (XSS),M,serve-handler,3,3,80
+Cross-site Scripting (XSS),M,ckeditor,0,0,12
+Improper Verification of Signature,H,samlify,0,0,0
+Arbitrary Code Injection,M,morgan,184,186,5044
+Prototype Pollution,H,cached-path-relative,89,86,12
+Directory Traversal,H,knightjs,0,0,0
+Directory Traversal,H,takeapeek,0,0,0
+Cross-site Scripting (XSS),H,tianma-static,0,0,1
+Cross-site Scripting (XSS),M,simplemde,0,0,71
+Cross-site Scripting (XSS),M,editor.md,0,0,0
+Directory Traversal,H,kindeditor,0,0,3
+Prototype  Pollution,L,merge,717,714,857
+Arbitrary Command Injection,M,libnmap,0,0,0
+Arbitrary Command Injection,H,apex-publish-static-files,0,0,0
+Denial of Service (DoS),H,apollo-upload-server,0,0,9
+Denial of Service (DoS),H,graphql-upload,0,0,0
+Denial of Service (DoS),H,apollo-upload-server,0,0,9
+Denial of Service (DoS),H,graphql-upload,0,0,0
+Arbitrary Code Injection,H,jstree,0,0,4
+Cross-site Scripting (XSS),M,next,0,0,1
+Directory Traversal,H,http-live-simulator,0,0,0
+Arbitrary Code Execution,H,blueimp-file-upload,0,0,2
+Denial of Service (DoS),H,rrule,2,2,8
+Denial of Service (DoS),M,rrule,2,2,8
+Authentication Bypass,M,passport-saml,1,1,13
+Prototype Pollution,H,defaults-deep,27,17,182
+Information Exposure,L,parcel-bundler,0,0,43
+Information Exposure,H,webpack-dev-server,274,278,21802
+SQL Injection,H,express-cart,0,0,0
+Cross-site Scripting (XSS),M,react-tooltip,1,1,21
+Arbitrary Command Injection,H,ascii-art,0,0,0
+Arbitrary Command Injection,M,ps,0,0,0
+Cross-site Scripting (XSS),M,dojo,0,0,6
+Arbitrary Command Injection,H,samsung-remote,0,0,0
+Cross-site Scripting (XSS),M,editor.md,0,0,0
+Directory Traversal,H,simplehttpserver,0,0,1
+Regular Expression Denial of Service (ReDoS),H,mosca,1,1,8
+Denial of Service (DoS),M,mem,3306,3278,53864
+Arbitrary Code Execution,H,electron,0,0,0
+Cross-site Scripting (XSS),M,mergely,0,0,0
+Arbitrary Command Injection,H,egg-scripts,0,0,0
+Cross-site Scripting (XSS),M,buttle,0,0,0
+Arbitrary Command Injection,H,entitlements,0,0,12
+Privilege Escalation,H,express-cart,0,0,0
+Cross-site Scripting (XSS),M,m-server,0,0,0
+Cross-site Scripting (XSS),H,node-red,1,1,6
+Directory Traversal,H,ponse,0,0,0
+Directory Traversal,H,serve,7,7,436
+Cross-site Scripting (XSS),M,jplayer,0,0,0
+Cross-site Scripting (XSS),M,jplayer,0,0,0
+Cross-site Scripting (XSS),M,jplayer,0,0,0
+Privilege Escalation,H,flintcms,0,0,0
+Arbitrary String Injection,M,dojox,0,0,0
+Cross-site Scripting (XSS),M,dojo,0,0,5
+Access Restriction Bypass,M,angular-jwt,0,0,4
+Improper Authorization,M,aedes,0,0,8
+Cross-site Scripting (XSS),M,exceljs,0,0,8
+Regular Expression Denial of Service (ReDoS),M,slugify,6,6,24
+Cross-site Scripting (XSS),M,preact-render-to-string,1,1,12
+Cross-site Scripting (XSS),M,react-dom,0,0,0
+Cross-site Scripting (XSS),M,vue,36,36,688
+Time of Check Time of Use (TOCTOU),M,chownr,1061,1054,5844
+Open Redirect,H,url-parse,81,83,186
+Information Exposure,M,superagent,599,567,6469
+Directory Traversal,L,file-static-server,0,0,0
+Uninitialized Memory Exposure,L,put,6,6,63
+Uninitialized Memory Exposure,L,utile,296,406,6016
+Prototype Pollution,H,extend,0,0,0
+Directory Traversal,M,markdown-pdf,0,0,9
+Cross-site Scripting (XSS),H,statics-server,0,0,0
+Insecure Randomness,M,cryptiles,0,0,0
+Cross-site Scripting (XSS),M,angular-redactor,0,0,0
+Malicious Package,H,eslint-config-eslint,0,0,0
+Malicious Package,H,eslint-config-airbnb-standard,0,0,0
+Malicious Package,H,eslint-scope,0,0,0
+Directory Traversal,H,buttle,0,0,0
+Denial of Service (DoS),H,memjs,2,2,43
+Cross-site Scripting (XSS),M,medis,0,0,0
+Denial of Service (DoS),H,mailparser-mit,0,0,3
+Denial of Service (DoS),H,emailjs-mime-parser,1,1,6
+Denial of Service (DoS),H,mailsplit,2,2,17
+Denial of Service (DoS),H,mailparser,12,12,117
+Denial of Service (DoS),H,haraka,0,0,0
+Regular Expression Denial of Service (ReDoS),H,underscore.string,97,105,1391
+Regular Expression Denial of Service (ReDoS),H,platform.js,0,0,0
+Regular Expression Denial of Service (ReDoS),H,node-htmlparser-classic,0,0,0
+Regular Expression Denial of Service (ReDoS),H,ismobilejs,3,3,64
+Cross-site Scripting (XSS),M,hexo-editor,0,0,0
+Cross-site Scripting (XSS),M,electron-markdownify,0,0,0
+Arbitrary Code Execution,H,cryo,0,0,2
+Uninititialized Memory Exposure,M,njwt,1,1,11
+Arbitrary Command Injection,H,git-dummy-commit,0,0,10
+Cross-site Scripting (XSS),M,oauth2orize-fprm,0,0,0
+Insecure Randomness,H,generate-pincode,0,0,0
+Cross-site Scripting (XSS),M,bootstrap,1,1,37
+Cross-site Scripting (XSS),M,bootstrap,0,0,0
+Arbitrary Code Execution,H,express-cart,0,0,0
+Information Exposure,H,serve,7,7,436
+Cross-site Scripting (XSS),M,sexstatic,1,1,7
+Cross-site Scripting (XSS),M,ag-grid,0,0,3
+Arbitrary File Write via Archive Extraction (Zip Slip),H,unzipper,0,0,9
+Arbitrary File Write via Archive Extraction (Zip Slip),H,adm-zip,28,28,3352
+Arbitrary Command Injection,M,pdf-image,0,0,5
+Cross-site Scripting (XSS),M,tinymce,0,0,11
+Cross-site Scripting (XSS),H,tinymce,0,0,9
+Cross-Site Scripting (XSS),H,react-marked-markdown,1,1,11
+Open Redirect,M,hekto,0,0,0
+Malicious Package,H,nothing-js,0,0,0
+Malicious Package,H,ladder-text-js,0,0,0
+Regular Expression Denial of Service (ReDoS),H,citation-js,0,0,0
+Directory Traversal,H,koa-body,8,8,528
+Arbitrary Command Injection,H,macaddress,96,96,75
+Arbitrary Command Injection,H,open,197,196,8012
+Uninitialized Memory Exposure,M,stringstream,1234,1227,5679
+SQL Injection,M,sql,1,1,39
+SQL Injection,H,query-mysql,0,0,0
+Uninitialized Memory Exposure,H,npmconf,51,52,908
+Directory Traversal,H,localhost-now,0,0,0
+Directory Traversal,H,html-pages,0,0,1
+Arbitrary Command Injection,H,fs-path,3,3,38
+Arbitrary Command Injection,H,command-exists,3,3,12
+Uninitialized Memory Exposure,M,byte,0,0,2
+Arbitrary Command Injection,H,buttle,0,0,0
+Uninitialized Memory Exposure,H,base64url,54,53,421
+Uninitialized Memory Exposure,H,base64-url,155,155,3838
+Directory Traversal,H,angular-http-server,0,0,0
+Directory Traversal,H,superstatic,1,1,19
+SQL Injection,M,squel,3,3,55
+Sandbox Bypass,H,constantinople,73,72,1583
+Malicious Package,H,express-cookies,0,0,0
+Malicious Package,H,getcookies,0,0,0
+Malicious Package,H,http-fetch-cookies,0,0,0
+Regular Expression Denial of Service (ReDoS),M,ua-parser-js,294,292,2465
+Cross-site Scripting (XSS),H,react-svg,0,0,0
+Cross-site Scripting (XSS),M,ckeditor-dev,0,0,0
+Regular expression Denial of Service (ReDoS),M,rgb2hex,2,2,1
+Regular Expression Denial of Service (ReDoS),H,foreman,0,0,22
+Uninitialized Memory Exposure,M,concat-with-sourcemaps,15,15,83
+Uninitialized Memory Exposure,M,atob,180,181,275
+Directory Traversal,H,mcstatic,0,0,0
+Cross-site Scripting (XSS),H,cloudcmd,0,0,0
+Prototype Override,H,querystringify,65,67,220
+Arbitrary Command Injection,H,pdfinfojs,0,0,0
+Prototype Pollution,H,deep-extend,1126,1134,6796
+Insecure Credential Comparison,M,safe-compare,0,0,0
+Prototype Pollution,H,merge-objects,1,1,5
+Prototype Pollution,H,merge-options,6,6,65
+Prototype Pollution,H,merge-recursive,2,2,70
+Cross-site Scripting (XSS),L,public,0,0,0
+Prototype Pollution,H,deap,5,5,58
+Cross-site Scripting (XSS),L,glance,0,0,1
+Regular Expression Denial of Service (ReDoS),H,is-url,162,158,40
+Regular Expression Denial of Service (ReDoS),H,plist,83,83,3429
+Regular Expression Denial of Service (ReDoS),H,ducktype,0,0,0
+Regular Expression Denial of Service (ReDoS),H,simpl-schema,1,1,19
+Cross-site Scripting (XSS),H,bracket-template,0,0,1
+Regular Expression Denial of Service (ReDoS),H,sshpk,1113,1108,3970
+Uninitialized Memory Exposure,H,http-proxy-agent,22,23,2378
+Cross-site Request Forgery (CSRF),M,auth0-lock,0,0,14
+Cross-site Request Forgery (CSRF),M,auth0-js,0,0,73
+Arbitrary Code Injection,M,mol-proto,1,1,13
+Cross-site Scripting (XSS),M,kibana,0,0,0
+Denial of Service (DoS),H,kibana,0,0,0
+Cross-site Scripting (XSS),M,kibana,0,0,0
+Uninitialized Memory Exposure,H,https-proxy-agent,248,259,7838
+Cross-site Scripting (XSS),H,metascraper,0,0,7
+Arbitrary Command Injection,H,whereis,1,1,2
+Arbitrary Code Execution,H,electron,0,0,0
+Improper Input Validation,M,insight-api,0,0,0
+Regular Expression Denial of Service (ReDoS),L,eslint,4464,4456,44391
+Information Exposure,M,cordova-plugin-ios-keychain,0,0,0
+Access Restriction Bypass,M,npm,103,104,4223
+XML External Entity (XXE) Injection,H,mxgraph,0,0,0
+Cross-site Scripting (XSS),M,bui,0,0,0
+Information Exposure,H,serve,5,5,171
+Cross-site Scripting (XSS),M,simple-server,0,0,0
+Directory Traversal,H,general-file-server,0,0,0
+Directory Traversal,H,zs123,0,0,0
+Directory Traversal,H,zhaolei1111,0,0,0
+Directory Traversal,H,webrepl,0,0,0
+Directory Traversal,H,tmadserver,0,0,0
+Directory Traversal,H,stevenc4.server,0,0,0
+Directory Traversal,H,starfruit,0,0,0
+Directory Traversal,H,serverzyqzyq,0,0,0
+Directory Traversal,H,serversyysyy,0,0,0
+Directory Traversal,H,serverlyj333,0,0,0
+Directory Traversal,H,rjpserver,0,0,0
+Directory Traversal,H,paopao613,0,0,0
+Directory Traversal,H,nodejsccc,0,0,0
+Directory Traversal,H,nodejs_liamgb,0,0,0
+Directory Traversal,H,meryl,0,0,0
+Directory Traversal,H,lab6_agolotin,0,0,0
+Arbitrary File Write,H,terminal-share,0,0,0
+Directory Traversal,H,jiazhipeng,0,0,0
+Directory Traversal,H,jacobj66-weather,0,0,0
+Directory Traversal,H,hdsdhhksjd,0,0,0
+Directory Traversal,H,gyfserver,0,0,0
+Cross-site Scripting (XSS),L,zeroclipboard,0,0,0
+Man-in-the-Middle (MitM),M,tiny-json-http,0,0,12
+Arbitrary Code Execution,H,electron,34,34,272
+Regular Expression Denial of Service (ReDoS),M,path-complete-extname,0,0,12
+Directory Traversal,H,node-srv,0,0,2
+Directory Traversal,H,glance,0,0,0
+Directory Traversal,H,stattic,0,0,0
+Cross-site Request Forgery (CSRF),H,auth0-js,1,1,78
+Directory Traversal,H,angular-http-server,0,0,0
+Regular Expression Denial of Service (ReDoS),L,clean-css,248,251,12234
+Regular Expression Denial of Service (ReDoS),H,diff,4849,4772,26884
+Cross-Site Scripting (XSS),H,simplehttpserver,0,0,1
+Cross-site Scripting (XSS),H,mrk.js,0,0,0
+Cross-site Scripting (XSS),H,anywhere,0,0,0
+Regular Expression Denial of Service (ReDoS),M,ua-parser-js,89,90,110
+Regular Expression Denial of Service (ReDoS),M,useragent,2,2,208
+Authentication Bypass,M,loopback,21,22,69
+Directory Traversal,H,hekto,0,0,0
+Regular Expression Denial of Service (ReDoS),M,aws-lambda-multipart-parser,0,0,0
+Directory Traversal,M,626,0,0,0
+Directory Traversal,H,zxyserver,0,0,0
+Directory Traversal,H,yypsulie11,0,0,0
+Directory Traversal,H,yxxserver,0,0,0
+Directory Traversal,H,wuzhuangserver,0,0,0
+Directory Traversal,H,wrlc,0,0,0
+Directory Traversal,H,wenluhong111,0,0,0
+Directory Traversal,H,web-server-mock,0,0,0
+Directory Traversal,H,web-node-server,0,0,0
+Directory Traversal,H,weathertest.bryceperkins,0,0,0
+Directory Traversal,H,songcaihong,0,0,0
+Directory Traversal,H,shenliru3,0,0,0
+Directory Traversal,H,servewuqianqianqian,0,0,0
+Directory Traversal,H,serveryyl,0,0,0
+Directory Traversal,H,serverfff,0,0,0
+Directory Traversal,H,rapid-httpserver,0,0,0
+Directory Traversal,H,proxey,0,0,0
+Directory Traversal,H,nodeload,0,0,2
+Directory Traversal,H,myserve111,0,0,0
+Directory Traversal,H,iceman178.weather.cs360,0,0,0
+Directory Traversal,H,cs360getcity,0,0,0
+Regular Expression Denial of Service (ReDoS),L,phpjs,4,5,29
+Regular Expression Denial of Service (ReDoS),L,nwmatcher,417,415,510
+Regular Expression Denial of Service (ReDoS),H,content,0,0,0
+Directory Traversal,H,localhost-now,0,0,0
+Regular Expression Denial of Service (ReDoS),H,protobufjs,0,0,0
+Regular Expression Denial of Service (ReDoS),H,uas-parser,0,0,0
+Regular Expression Denial of Service (ReDoS),H,highcharts,0,0,80
+Regular Expression Denial of Service (ReDoS),H,emailjs-mime-codec,2,2,8
+Cross-site Scripting (XSS),M,simditor,0,0,4
+Cross-site Scripting (XSS),M,knockout,3,3,30
+Cross-site Scripting (XSS),M,kibana,0,0,0
+Open Redirect,M,kibana,0,0,0
+Cross-site Scripting (XSS),M,kibana,0,0,0
+Resources Downloaded over Insecure Protocol,M,gatsby-cli,0,0,0
+Directory Traversal,H,xingbaohai,0,0,0
+Directory Traversal,H,willvdb_test_server,0,0,0
+Directory Traversal,H,websvr,0,0,0
+Directory Traversal,H,simple-mock-server,0,0,0
+Directory Traversal,H,mime_web_server,0,0,0
+Directory Traversal,H,express-blinker,0,0,0
+Directory Traversal,H,easy-router,0,0,0
+Directory Traversal,H,caolilinode1,0,0,0
+Directory Traversal,H,caihong,0,0,0
+Directory Traversal,H,binocular-lamp,0,0,0
+Authentication Bypass,M,saml2-js,0,0,0
+Regular Expression Denial of Service (ReDoS),L,wicket,0,0,0
+Regular Expression Denial of Service (ReDoS),L,bson,18,18,25
+Regular Expression Denial of Service (ReDoS),H,marked,249,249,1944
+Directory Traversal,H,cuiaiguang,0,0,0
+Directory Traversal,H,wuzhuang,0,0,0
+Directory Traversal,H,asset-cache,0,0,0
+Directory Traversal,H,ptest,0,0,0
+Directory Traversal,H,micra,0,0,0
+Directory Traversal,H,m-server,0,0,0
+Directory Traversal,H,static-cling,0,0,0
+Directory Traversal,H,html-pages,0,0,1
+Directory Traversal,H,api-proxy,0,0,0
+Directory Traversal,H,basic-static,0,0,0
+Directory Traversal,H,hserver-static,0,0,1
+Directory Traversal,H,sabu,0,0,0
+Directory Traversal,H,awning,0,0,0
+Directory Traversal,H,atropa-server,0,0,0
+Directory Traversal,H,atropa-ide,0,0,0
+Directory Traversal,H,aso-server,0,0,0
+Directory Traversal,H,stattic,0,0,0
+Directory Traversal,H,pico-static-server,0,0,0
+Directory Traversal,H,crud-file-server,0,0,0
+Directory Traversal,H,bae-nodejs,0,0,0
+Directory Traversal,H,node-staticserver,0,0,0
+Directory Traversal,H,server-static,0,0,0
+Directory Traversal,H,bruteser,0,0,0
+Directory Traversal,H,butler-server,0,0,0
+Directory Traversal,H,canvas-designer,0,0,5
+Directory Traversal,H,glurp,0,0,0
+Directory Traversal,H,der-server,0,0,0
+Directory Traversal,H,ex-http-frame,0,0,0
+Directory Traversal,H,btnode,0,0,0
+Directory Traversal,H,gfm-srv,0,0,0
+Directory Traversal,H,getstats,0,0,8
+Directory Traversal,H,gamebutler,0,0,0
+Directory Traversal,H,fast-http,0,0,1
+Directory Traversal,H,easy-node-server,0,0,1
+Directory Traversal,H,dilu,0,0,0
+Directory Traversal,H,isv-http,0,0,1
+Directory Traversal,H,httpea,0,0,0
+Directory Traversal,H,markdown-server,0,0,0
+Directory Traversal,H,serverxh,0,0,0
+Directory Traversal,H,lab6.1,0,0,0
+Directory Traversal,H,less-livereload,0,0,0
+Directory Traversal,H,lander,0,0,0
+Directory Traversal,H,litedoc,0,0,0
+Directory Traversal,H,censorify.matt.shurtz,0,0,0
+Directory Traversal,H,zhanglina,0,0,0
+Directory Traversal,H,node-http-server,1,1,19
+Directory Traversal,H,node-static-webserver,0,0,0
+Directory Traversal,H,server12311,0,0,0
+Directory Traversal,H,fakelearnnodejs,0,0,0
+Directory Traversal,H,servershuai,0,0,0
+Directory Traversal,H,lab6-wclaibor,0,0,0
+Directory Traversal,H,ussasasa,0,0,0
+Directory Traversal,H,grunt-serve,1,1,19
+Directory Traversal,H,grunt-fileserver,0,0,2
+Directory Traversal,H,nitro-server,0,0,2
+Directory Traversal,H,wenluhong11,0,0,0
+Directory Traversal,H,my-sn,0,0,0
+Directory Traversal,H,zhangranbigman,0,0,0
+Directory Traversal,H,secure-servedir,0,0,0
+Directory Traversal,H,servedir,0,0,0
+Regular Expression Denial of Service (ReDoS),L,git-username,4,4,45
+Regular Expression Denial of Service (ReDoS),M,mongoose-beautiful-unique-validation,0,0,0
+Regular Expression Denial of Service (ReDoS),L,checkit,2,2,23
+Regular Expression Denial of Service (ReDoS),M,compromise,0,0,7
+Regular Expression Denial of Service (ReDoS),L,github-url-to-object,13,13,393
+Regular Expression Denial of Service (ReDoS),M,node-forge,72,74,90
+Regular Expression Denial of Service (ReDoS),M,node-json-db,0,0,0
+Directory Traversal,H,node-cxc,0,0,0
+Regular Expression Denial of Service (ReDoS),H,truncate,0,0,31
+Regular Expression Denial of Service (ReDoS),L,skeemas,0,0,1
+Regular Expression Denial of Service (ReDoS),H,sanitize,0,0,2
+Regular Expression Denial of Service (ReDoS),L,email-existence,0,0,5
+Regular Expression Denial of Service (ReDoS),M,datatype-expansion,0,0,0
+Regular Expression Denial of Service (ReDoS),L,astronomia,0,0,0
+Regular Expression Denial of Service (ReDoS),H,address-rfc2822,1,1,1
+Directory Traversal,H,resolve-path,0,0,0
+Regular Expression Denial of Service (ReDoS),L,vue,26,26,590
+Regular Expression Denial of Service (ReDoS),L,xlsx,10,11,218
+Regular Expression Denial of Service (ReDoS),M,valid-email,0,0,2
+Regular Expression Denial of Service (ReDoS),L,shaka-player,0,0,1
+Regular Expression Denial of Service (ReDoS),M,markdown-js,0,0,5
+Regular Expression Denial of Service (ReDoS),L,moddle-xml,1,1,18
+Regular Expression Denial of Service (ReDoS),L,harb,0,0,13
+Information Exposure,H,converse.js,0,0,0
+Cross-site Scripting (XSS),H,crud-file-server,0,0,0
+Cross-site Request Forgery (CSRF),H,pym.js,0,0,3
+Directory Traversal,H,public,0,0,0
+Arbitrary Code Execution,H,gifsicle,0,0,44
+Regular Expression Denial of Service (ReDoS),M,node-pg-migrate,0,0,1
+Regular Expression Denial of Service (ReDoS),L,html-dom-parser,1,1,55
+Regular Expression Denial of Service (ReDoS),L,gettext-parser,6,6,68
+Regular Expression Denial of Service (ReDoS),L,deckardcain,0,0,1
+Regular Expression Denial of Service (ReDoS),L,abaaso,0,0,0
+Regular Expression Denial of Service (ReDoS),L,braces,6587,6532,118923
+Cross-site Scripting (XSS),M,angular,5,6,477
+Regular Expression Denial of Service (ReDoS),L,validator,76,73,1025
+Buffer Overflow,M,validator,75,74,764
+Regular Expression Denial of Service (ReDoS),H,postcss-inline-base64,0,0,0
+Regular Expression Denial of Service (ReDoS),L,jasmine-core,57,57,10022
+Regular Expression Denial of Service (ReDoS),H,cejs,0,0,0
+Prototype Pollution,M,assign-deep,2,1,21
+Prototype Pollution,M,defaults-deep,1,1,9
+Prototype Pollution,M,merge-deep,21,17,79
+Prototype Pollution,L,mixin-deep,76,74,106
+Regular Expression Denial of Service (ReDoS),L,is-my-json-valid,0,0,0
+Regular Expression Denial of Service (ReDoS),M,valid-data-url,1,1,0
+Regular Expression Denial of Service (ReDoS),M,ssri,58,57,557
+Regular Expression Denial of Service (ReDoS),H,q-io,31,31,2160
+Regular Expression Denial of Service (ReDoS),H,nicest,0,0,0
+Regular Expression Denial of Service (ReDoS),M,mimer,2,2,30
+Regular Expression Denial of Service (ReDoS),H,jquery.csssr.validation,0,0,0
+Regular Expression Denial of Service (ReDoS),H,htmllint,0,0,35
+Regular Expression Denial of Service (ReDoS),H,dirty-json,0,0,1
+Regular Expression Denial of Service (ReDoS),H,citeproc,0,0,1
+Variables Overwrite,M,sailsjs-cacheman,0,0,0
+Prototype Pollution,M,@sailshq/lodash,42,44,178
+Prototype Pollution,M,hoek,0,0,0
+Prototype Pollution,M,lodash,5661,5629,80222
+Prototype Pollution,M,lodash._basemerge,13,12,65
+Prototype Pollution,M,lodash.defaultsdeep,47,47,1182
+Prototype Pollution,M,lodash.merge,2379,2336,15143
+Prototype Pollution,M,lodash.mergewith,16,16,120
+Arbitrary Command Execution,H,pullit,0,0,0
+Insecure Credential Comparison,M,safe-compare,0,0,0
+Cross-site Scripting (XSS),H,html-janitor,0,0,7
+Cross-site Scripting (XSS),M,dijit,0,0,1
+Resources Downloaded over Insecure Protocol,M,cordova-android,0,0,1
+Cross-site Scripting (XSS),H,html-janitor,0,0,0
+URL Spoofing,M,electron,34,34,237
+Authentication Bypass,H,keycloak-auth-utils,0,0,0
+Directory Traversal,H,next,2,2,93
+Arbitrary Code Execution,M,mathjs,3,3,48
+Arbitrary Code Execution,H,mathjs,1,1,47
+Arbitrary Code Execution,M,mathjs,3,3,49
+Denial of Service (DoS),H,fastify,4,4,9
+Cross-site Scripting (XSS),M,redis-commander,0,0,0
+Directory Traversal,H,augustine,0,0,0
+Directory Traversal,H,lactate,0,0,1
+Directory Traversal,H,electron,0,0,0
+Directory Traversal,M,serve,5,5,171
+Shell Command Injection,H,traceroute,0,0,3
+XML Injection,H,samlify,0,0,0
+XML Injection,H,express-saml2,0,0,0
+Cross-site Scripting (XSS),M,shiba,0,0,0
+Cross-site Scripting (XSS),M,kibana,0,0,0
+Open Redirect,M,kibana,0,0,0
+Open Redirect,M,kibana,0,0,0
+Cross-Site Scripting (XSS),M,bootstrap,0,0,0
+Directory Traversal,M,featurebook,0,0,0
+Cross-site Scripting (XSS),M,weyland,0,0,0
+Cross-site Scripting (XSS),M,showdown-xss-filter,0,0,0
+Identity Spoofing,H,libp2p-secio,0,0,15
+Template Injection,M,jsviews,0,0,0
+Cross-site Scripting (XSS),M,js-xss,0,0,0
+Cross-site Scripting (XSS),M,blocks,0,0,0
+Directory Traversal,H,serve-here,0,0,2
+Insecure Token Validation,H,node-jose,0,0,14
+Denial of Service (DoS),H,kibana,0,0,0
+Cross-site Scripting (XSS),M,kibana,0,0,0
+Information Exposure,M,kibana,0,0,0
+Cross-site Scripting (XSS),M,kibana,0,0,0
+Denial of Service (DoS),M,mqtt,2,2,10
+User Impersonation,H,passport-wsfed-saml2,0,0,0
+Cross-site Scripting (XSS),M,marked,176,172,1846
+Cross-site Scripting (XSS),H,marked,176,172,1846
+Cross-site Scripting (XSS),M,swagger-ui,5,5,51
+Cross-site Scripting (XSS),M,vue,13,13,474
+Cross-site Scripting (XSS),M,vue,8,8,443
+Denial of Service (DoS),M,ractive,0,0,66
+Cross-site Scripting (XSS),M,pure,0,0,0
+Cross-site Scripting (XSS),M,kibana,0,0,0
+Cross-site Scripting (XSS),M,angular,5,6,474
+Insecure Randomness,H,crypto-browserify,140,135,2505
+Cross-site Scripting (XSS),M,jquery-colorbox,0,0,5
+Cross-site Request Forgery (CSRF),M,keystone,0,0,0
+Denial of Service (DDoS),M,botkit,0,0,6
+Denial of Service (DoS),M,ecstatic,50,47,1995
+Regular Expression Denial of Service (ReDoS),M,content-type-parser,1458,1458,14214
+Regular Expression Denial of Service (ReDoS),M,mobile-detect,0,0,7
+Regular Expression Denial of Service (ReDoS),M,whatwg-mimetype,0,0,0
+Privilege Escalation,M,auth0-js,0,0,59
+Malicious Package,M,npm-script-demo,0,0,0
+Regular Expression Denial of Service (ReDoS),L,moment,196,206,3323
+Arbitrary Code Execution,H,mathjs,5,5,51
+Arbitrary Code Execution,H,mathjs,5,5,51
+Directory Traversal,H,next,1,1,77
+Denial of Service (DoS),H,ws,0,0,0
+Insecure Defaults,M,cordova-plugin-file-transfer,0,0,0
+Privilege Escalation,M,cordova-plugin-inappbrowser,0,0,0
+Arbitrary Command Injection,M,cordova-android,0,0,0
+Arbitrary Code Execution,H,sandbox,2,2,13
+Cross-site Scripting (XSS),M,keystone,1,1,1
+CSV Injection,H,keystone,1,1,1
+Cross-site Scripting (XSS),M,keystone,1,1,1
+Malicious Package,H,hooka-tools,0,0,0
+Malicious Package,H,discordi.js,0,0,0
+Arbitrary Code Execution,H,static-eval,24,24,643
+Directory Traversal,H,ljjnodeserve,0,0,0
+Directory Traversal,H,nodeserver-jta,0,0,0
+Directory Traversal,H,severzlt,0,0,0
+Credential Exposure,H,aegir,0,0,0
+Open Redirect,M,st,1,1,93
+Directory Traversal,H,xbhxbh,0,0,0
+Directory Traversal,H,wangshuai,0,0,0
+Directory Traversal,H,tinyserver,0,0,0
+Directory Traversal,H,nopach,0,0,0
+Directory Traversal,H,nodejs.jseidl,0,0,0
+Malicious Package,H,jquey,0,0,0
+Denial of Service (DoS),M,electron,32,32,210
+Denial of Service (DoS),M,electron,32,32,210
+Cross-site Scripting (XSS),M,electron,32,32,210
+Cross-site Scripting (XSS),M,electron,32,32,210
+Denial of Service (DoS),L,electron,32,32,210
+Arbitrary Code Injection,H,electron,30,31,177
+Man-in-the-Middle (MitM),M,electron,0,0,4
+Denial of Service (DoS),H,electron,0,0,8
+Uninitialized Memory Exposure,H,electron,31,31,199
+Malicious Package,H,coffescript,0,0,0
+Malicious Package,H,coffe-script,0,0,0
+Malicious Package,H,cofeescript,0,0,0
+Malicious Package,H,cofee-script,0,0,0
+Arbitrary Code Execution,H,electron,33,33,224
+Regular Expression Denial of Service (ReDoS),H,method-override,13,15,269
+Denial of Service (DoS),L,superagent,595,563,6347
+Regular Expression Denial of Service (ReDoS),H,fresh,504,494,10411
+Regular Expression Denial of Service (ReDoS),H,forwarded,69,67,943
+Regular Expression Denial of Service (ReDoS),L,mime,0,0,0
+Regular Expression Denial of Service (ReDoS),M,slug,7,7,62
+Regular Expression Denial of Service (ReDoS),H,timespan,58,64,4607
+Regular Expression Denial of Service (ReDoS),M,string,48,45,1048
+Regular Expression Denial of Service (ReDoS),L,debug,0,0,0
+Regular Expression Denial of Service (ReDoS),M,tough-cookie,1045,1042,10007
+Regular Expression Denial of Service (ReDoS),H,marked,176,172,1846
+Regular Expression Denial of Service (ReDoS),H,parsejson,128,134,15907
+Malicious Package,H,shrugging-logging,0,0,0
+Malicious Package,H,test-module-a,0,0,0
+Malicious Package,H,pandora-doomsday,0,0,0
+Malicious Package,H,sdfjghlkfjdshlkjdhsfg,0,0,0
+Malicious Package,H,anarchy,0,0,0
+Malicious Package,H,mktmpio,0,0,0
+Malicious Package,H,botbait,0,0,0
+Malicious Package,H,ikst,0,0,0
+Malicious Package,H,subtitles-lib,0,0,0
+Malicious Package,H,npm_scripts_test_metrics,0,0,0
+Malicious Package,H,npm-exploit,0,0,0
+Malicious Package,H,harmlesspackage,0,0,0
+Malicious Package,H,maybemaliciouspackage,0,0,0
+Malicious Package,H,deasyncp,0,0,0
+Regular Expression Denial of Service (ReDoS),M,content,19,19,378
+Regular Expression Denial of Service (ReDoS),M,dns-sync,0,0,12
+Regular Expression Denial of Service (ReDoS),M,charset,0,0,1
+Regular Expression Denial of Service (ReDoS),M,no-case,16,16,72
+Sandbox Escaping,H,safe-eval,5,5,84
+Arbitrary Command Injection,H,fs-git,0,0,23
+Regular Expression Denial of Service (ReDoS),H,ua-parser,3,3,20
+Arbitrary Code Execution,H,pg,3,3,72
+Uninitialized Memory Exposure,L,mysql,3,3,119
+Denial of Service (DoS),H,js-quantities,0,0,0
+Out of Memory Crash,H,js-quantities,0,0,0
+Cross-site Scripting (XSS),M,foundation-sites,0,0,11
+Directory Traversal,H,xxf11,0,0,0
+Malicious Package,H,tkinter,0,0,0
+Directory Traversal,H,srverqq,0,0,0
+Malicious Package,H,sqlserver,0,0,1
+Malicious Package,H,sqliter,0,0,0
+Malicious Package,H,sqlite.js,0,0,0
+Malicious Package,H,smb,0,0,0
+Malicious Package,H,shadowsock,0,0,0
+Directory Traversal,H,servergmf,0,0,0
+Malicious Package,H,proxy.js,0,0,0
+Malicious Package,H,openssl.js,0,0,0
+Malicious Package,H,opencv.js,0,0,0
+Malicious Package,H,nodesqlite,0,0,0
+Malicious Package,H,nodesass,0,0,0
+Malicious Package,H,noderequest,0,0,0
+Malicious Package,H,nodemssql,0,0,0
+Malicious Package,H,nodemailer.js,0,0,0
+Malicious Package,H,nodemailer-js,0,0,0
+Malicious Package,H,nodeffmpeg,0,0,0
+Malicious Package,H,nodefabric,0,0,0
+Malicious Package,H,nodecaffe,0,0,0
+Malicious Package,H,node-tkinter,0,0,0
+Malicious Package,H,node-sqlite,0,0,0
+Malicious Package,H,node-openssl,0,0,0
+Malicious Package,H,node-opensl,0,0,0
+Malicious Package,H,node-opencv,0,0,0
+Malicious Package,H,node-fabric,0,0,0
+Malicious Package,H,mysqljs,0,0,0
+Malicious Package,H,mssql.js,0,0,0
+Malicious Package,H,mssql-node,0,0,0
+Malicious Package,H,mongose,0,0,0
+Malicious Package,H,mariadb,0,0,0
+Directory Traversal,H,lzl123,0,0,0
+Directory Traversal,H,lihuini,0,0,0
+Malicious Package,H,jquery.js,0,0,0
+Malicious Package,H,http-proxy.js,0,0,0
+Directory Traversal,H,hechatroom,0,0,0
+Malicious Package,H,gruntcli,0,0,0
+Directory Traversal,H,ghod5servercs360,0,0,0
+Malicious Package,H,ffmepg,0,0,0
+Malicious Package,H,fabric-js,0,0,0
+Malicious Package,H,d3.js,0,0,0
+Directory Traversal,H,cxy,0,0,0
+Malicious Package,H,crossenv,0,0,0
+Malicious Package,H,cross-env.js,0,0,0
+Malicious Package,H,babelcli,0,0,0
+Uninitialized Memory Exposure,M,openwhisk,1,1,4
+Directory Traversal,H,360class.jansenhm,0,0,0
+Directory Traversal,H,caolilinode,0,0,0
+Directory Traversal,H,chatbyvista,0,0,0
+Directory Traversal,H,commentapp.stetsonwood,0,0,0
+Directory Traversal,H,cypserver,0,0,0
+Directory Traversal,H,dcdcdcdcdc,0,0,0
+Directory Traversal,H,goserv,0,0,0
+Directory Traversal,H,http_static_simple,0,0,0
+Directory Traversal,H,lab6drewfusbyu,0,0,0
+Directory Traversal,H,section2.madisonjbrooks12,0,0,0
+Directory Traversal,H,serve46,0,0,0
+Directory Traversal,H,serverxxx,0,0,0
+Directory Traversal,H,shenliru,0,0,0
+Directory Traversal,H,simple-npm-registry,0,0,0
+Directory Traversal,H,susu-sum,0,0,0
+Directory Traversal,H,welcomyzt,0,0,0
+Directory Traversal,H,yjmyjmyjm,0,0,0
+Resources Downloaded over Insecure Protocol,H,gfe-sass,0,0,0
+Resources Downloaded over Insecure Protocol,H,ikst,0,0,0
+Uninitialized Memory Exposure,M,tunnel-agent,3302,3311,33999
+Directory Traversal,H,koa-static-cache,0,0,12
+Insecure Hashing Algorithm,L,contwidgetor,0,0,0
+Resources Downloaded over Insecure Protocol,H,edp-package,0,0,10
+Directory Traversal,H,web-debug,0,0,0
+Directory Traversal,H,f2e-server,0,0,0
+Timing Attack,M,http-signature,748,752,9205
+Cross-site Scripting (XSS),M,semantic-ui,0,0,0
+Cross-site Scripting (XSS),M,semantic-ui,0,0,0
+Cross-site Scripting (XSS),M,jstree,0,0,0
+Uninitialized Memory Exposure,M,floody,0,0,1
+Cross-site Scripting (XSS),M,express-graphql,0,0,0
+Authentication Bypass,M,crumb,0,0,0
+CRLF Injection,M,cordova-plugin-file-transfer,0,0,0
+Authorization Bypass,M,cordova-ios,0,0,0
+Insecure Randomness,L,cordova-android,0,0,0
+Arbitrary execution,M,cordova-ios,0,0,0
+Arbitrary Code Execution,M,cordova-android,0,0,0
+Cross-Application Scripting (CAS),M,cordova-android,0,0,0
+Information Exposure,L,cordova-android,0,0,0
+HTTP Whitelist Bypass,M,cordova-android,0,0,0
+Cross-site Scripting (XSS),M,next,1,1,78
+Directory Traversal,H,serve,0,0,0
+Directory Traversal,H,next,0,0,0
+Directory Traversal,H,elding,0,0,0
+Directory Traversal,H,wffserve,0,0,0
+Directory Traversal,H,node-simple-router,0,0,1
+Directory Traversal,H,scott-blanch-weather-app,0,0,0
+Directory Traversal,H,jikes,0,0,0
+Directory Traversal,H,byucslabsix,0,0,0
+Directory Traversal,H,dmmcquay.lab6,0,0,0
+Directory Traversal,H,citypredict.whauwiller,0,0,0
+Arbitrary File Write,H,frvr,0,0,0
+Arbitrary File Write,H,innomon,0,0,0
+Arbitrary File Write,H,connect-parse-php,0,0,0
+Directory Traversal,H,hftp,0,0,0
+Arbitrary File Write,H,mysql2csv,0,0,0
+Directory Traversal,H,zjjserver,0,0,0
+Directory Traversal,H,yzt,0,0,0
+Directory Traversal,H,yyooopack,0,0,0
+Directory Traversal,H,yttivy,0,0,0
+Directory Traversal,H,mfrs,0,0,0
+Directory Traversal,H,xtalk,0,0,0
+Directory Traversal,H,ltt,0,0,0
+Directory Traversal,H,xiongrui-httpserver,0,0,0
+Directory Traversal,H,ltt.js,0,0,0
+Arbitrary File Write,H,wisper,0,0,0
+Arbitrary File Write,H,thrushs,0,0,0
+Directory Traversal,H,wintiwebdev,0,0,0
+Directory Traversal,H,thrushs,0,0,0
+Directory Traversal,H,wind-mvc,0,0,0
+Directory Traversal,H,whispercast,0,0,0
+Directory Traversal,H,wenluhong1,0,0,0
+Directory Traversal,H,rtcmulticonnection-client,0,0,0
+Arbitrary File Write,H,lam,0,0,0
+Directory Traversal,H,weather.swlyons,0,0,0
+Resources Downloaded over Insecure Protocol,H,given-html-report,0,0,0
+Directory Traversal,H,wangguojing123,0,0,0
+Directory Traversal,H,uv-tj-demo,0,0,0
+Arbitrary File Write,H,parse-ssi,0,0,1
+Directory Traversal,H,utahcityfinder,0,0,0
+Directory Traversal,H,unicorn-list,0,0,0
+Directory Traversal,H,uekw1511server,0,0,0
+Directory Traversal,H,tmock,0,0,0
+Directory Traversal,H,tinyserver2,0,0,0
+Directory Traversal,H,tiny-http,0,0,1
+Directory Traversal,H,tencent-server,0,0,0
+Directory Traversal,H,static-html-server,0,0,2
+Directory Traversal,H,sspa,0,0,0
+Directory Traversal,H,sly07,0,0,0
+Directory Traversal,H,shit-server,0,0,0
+Directory Traversal,H,sgqserve,0,0,0
+Directory Traversal,H,serverzyy,0,0,0
+Directory Traversal,H,serveryztyzt,0,0,0
+Directory Traversal,H,serveryaozeyan,0,0,0
+Directory Traversal,H,serverwzl,0,0,0
+Directory Traversal,H,serverwg,0,0,0
+Directory Traversal,H,serverlyr,0,0,0
+Directory Traversal,H,serverliujiayi1,0,0,0
+Directory Traversal,H,serverhuwenhui,0,0,0
+Directory Traversal,H,serverabc,0,0,0
+Directory Traversal,H,run-this-place,0,0,0
+Directory Traversal,H,ritp,0,0,0
+Directory Traversal,H,reecerver,0,0,0
+Directory Traversal,H,quickserver,0,0,0
+Directory Traversal,H,qinserve,0,0,0
+Directory Traversal,H,pytservce,0,0,0
+Arbitrary Command Injection,H,pidusage,3,3,34
+Directory Traversal,H,picard,0,0,0
+Directory Traversal,H,peiserver,0,0,0
+Directory Traversal,H,open-device,0,0,0
+Directory Traversal,H,nodeload-nmickuli,0,0,0
+Directory Traversal,H,nodeaaaaa,0,0,0
+Directory Traversal,H,node-server-forfront,0,0,0
+Directory Traversal,H,zwserver,0,0,0
+Directory Traversal,H,myserver.alexcthomas18,0,0,0
+Directory Traversal,H,myprolyz,0,0,0
+Directory Traversal,H,mockserve,0,0,0
+Directory Traversal,H,mfrserver,0,0,0
+Directory Traversal,H,looppake,0,0,0
+Directory Traversal,H,liyujing,0,0,0
+Directory Traversal,H,liuyaserver,0,0,0
+Directory Traversal,H,lessindex,0,0,0
+Directory Traversal,H,lab6.brit95,0,0,0
+Directory Traversal,H,jn_jj_server,0,0,0
+Directory Traversal,H,jansenstuffpleasework,0,0,0
+Directory Traversal,H,iter-server,0,0,0
+Directory Traversal,H,iter-http,0,0,0
+Directory Traversal,H,intsol-package,0,0,0
+Directory Traversal,H,infraserver,0,0,0
+Resources Downloaded over Insecure Protocol,M,hubl-server,0,0,0
+Directory Traversal,H,hcbserver,0,0,0
+Directory Traversal,H,gomeplus-h5-proxy,0,0,0
+Directory Traversal,H,getcityapi.yoehoehne,0,0,0
+Directory Traversal,H,gaoxuyan,0,0,0
+Directory Traversal,H,gaoxiaotingtingting,0,0,0
+Directory Traversal,H,fsk-server,0,0,0
+Directory Traversal,H,fbr-client,0,0,0
+Directory Traversal,H,fast-http-cli,0,0,0
+Directory Traversal,H,exxxxxxxxxxx,0,0,0
+Directory Traversal,H,ewgaddis.lab6,0,0,0
+Directory Traversal,H,enserver,0,0,0
+Directory Traversal,H,easyquick,0,0,0
+Directory Traversal,H,earlybird,0,0,0
+Directory Traversal,H,dylmomo,0,0,0
+Directory Traversal,H,dgard8.lab6,0,0,0
+Directory Traversal,H,desafio,0,0,0
+Directory Traversal,H,dcserver,0,0,0
+Directory Traversal,H,datachannel-client,0,0,0
+Directory Traversal,H,dasafio,0,0,0
+Directory Traversal,H,cyber-js,0,0,0
+Directory Traversal,H,cuciuci,0,0,0
+Resources Downloaded over Insecure Protocol,H,craft-ai-icons,0,0,0
+Directory Traversal,H,city-weather-abe,0,0,0
+Directory Traversal,H,censorify.tanisjr,0,0,0
+Directory Traversal,H,calmquist.static-server,0,0,0
+Directory Traversal,H,badjs-sourcemap-server,0,0,0
+Directory Traversal,H,22lixian,0,0,0
+Directory Traversal,H,11xiaoli,0,0,0
+Resources Downloaded over Insecure Protocol,H,rocketmake-nuget,0,0,0
+Uninitialized Memory Exposure,M,ip,11,11,1183
+Cross-site Scripting (XSS),M,ghost,0,0,0
+Cross-site Scripting (XSS),M,rendr-handlebars,0,0,0
+Cross-site Scripting (XSS),M,octotree,0,0,0
+Cross-site Scripting (XSS),M,octotree,0,0,0
+Man-in-the-Middle (MitM),M,hotel,0,0,0
+Cross-site Scripting (XSS),M,ghost,0,0,0
+Open Redirect,M,ghost,0,0,0
+Information Disclosure,M,ghost,0,0,0
+Denial of Service (DoS),M,ghost,0,0,0
+Authentication Bypass,M,ghost,0,0,0
+Authentication Bypass,M,ghost,0,0,0
+Cross-site Scripting (XSS),M,ghost,0,0,0
+Identity Spoofing,M,ghost,0,0,0
+Cross-site Scripting (XSS),M,easyxdm,0,0,0
+Cross-site Scripting (XSS),M,bootstrap-markdown,0,0,1
+Arbitrary Command Execution,H,windows-cpu,0,0,1
+Regular Expression Denial of Service (ReDoS),M,amqp-match,0,0,0
+Regular Expression Denial of Service (ReDoS),L,ms,7637,7552,56256
+Regular Expression Denial of Service (ReDoS),M,uikit,0,0,0
+Cross-site Scripting (XSS),M,riot,0,0,0
+Cross-site Scripting (XSS),M,rendr,0,0,2
+Cross-site Scripting (XSS),M,rendr,0,0,0
+Cross-site Scripting (XSS),M,ql.io-engine,0,0,0
+Cross-site Scripting (XSS),M,polyfill-service,0,0,1
+Information Disclosure,M,nforce,0,0,0
+Cross-site Scripting (XSS),M,mediaelement,0,0,0
+Cross-site Scripting (XSS),M,mediaelement,0,0,0
+Cross-site Scripting (XSS),M,fullpage.js,0,0,0
+Cross-site Scripting (XSS),M,favico.js,0,0,0
+Cross-site Request Forgery (CSRF),M,eslint_d,0,0,2
+Cross-site Scripting (XSS),M,datatables,0,0,0
+Information Exposure,L,brunch,0,0,0
+Cross-site Scripting (XSS),M,actionhero,0,0,0
+Directory Traversal,M,actionhero,0,0,0
+Arbitrary Code Injection,H,growl,12075,11882,63210
+Directory Traversal,H,sencisho,0,0,0
+Resources Downloaded over Insecure Protocol,H,ec2-price,0,0,0
+Directory Traversal,M,guaycuru,0,0,0
+Arbitrary Code Injection,M,protojs,0,0,0
+Arbitrary Code Injection,M,microservicebus.node,0,0,0
+Arbitrary Code Injection,M,mongo-parse,0,0,4
+Arbitrary Code Injection,M,kmc,0,0,4
+Arbitrary Code Injection,M,mongo-edit,0,0,0
+Arbitrary Code Injection,M,mongui,0,0,0
+Arbitrary Code Injection,M,mock2easy,0,0,0
+Arbitrary Code Injection,M,mongoosemask,1,1,2
+Arbitrary Code Injection,M,mongoosify,0,0,0
+Arbitrary Code Injection,M,m-log,0,0,0
+Arbitrary Code Injection,M,modjs,0,0,0
+Arbitrary Code Injection,M,modulify,0,0,0
+Arbitrary Code Injection,M,nameless-cli,0,0,0
+Arbitrary Code Injection,M,nd-validator,0,0,3
+Arbitrary Code Injection,M,m2m-supervisor,0,0,0
+Arbitrary Code Injection,M,mobile-icon-resizer,0,0,0
+Arbitrary Code Injection,M,mixin-pro,0,0,0
+Regular Expression Denial of Service (ReDoS),M,brace-expansion,689,684,8180
+Directory Traversal,M,pooledwebsocket,0,0,0
+Directory Traversal,H,list-n-stream,0,0,0
+Resources Downloaded over Insecure Protocol,H,nodux-core,0,0,0
+Cross-site Scripting (XSS),M,dompurify,0,0,6
+Cross-site Scripting (XSS),M,dompurify,0,0,2
+Cross-site Scripting (XSS),M,dompurify,0,0,0
+Cross-site Scripting (XSS),M,dompurify,0,0,0
+Insecure Defaults,M,dompurify,0,0,0
+Regular Expression Denial of Service (ReDoS),H,decamelize,2,2,6
+Regular Expression Denial of Service (ReDoS),H,useragent,2,2,208
+Regular Expression Denial Of Service (ReDoS),H,uri-js,2,2,21
+Insecure use of Tmp files,M,sync-exec,261,269,4275
+Cross-site Scripting (XSS),M,sanitize-html,0,0,1
+Denial of Service (DoS),H,nes,0,0,0
+Cross-site Scripting (XSS),M,morris.js,0,0,29
+Unsafe use of eval(),M,summit,0,0,0
+Insecure Randomness,L,react-native-meteor-oauth,0,0,0
+Cross-site Scripting (XSS),M,forms,1,1,5
+Cross-site Scripting (XSS),M,sanitize-html,0,0,3
+Cross-site Scripting (XSS),M,bootstrap,0,0,0
+Denial of Service (DoS),M,hapi,2,2,58
+Denial of Service (DoS),M,share,0,0,1
+Arbitrary Code Execution,M,nodebb,0,0,0
+Cross-site Scripting (XSS),M,nodebb,0,0,0
+Insecure Defaults,M,faye,0,0,3
+Cross-site Scripting (XSS),M,jspdf,0,0,0
+Timing Attack,M,generator-jhipster,0,0,0
+Mishandled Logout Function,M,generator-jhipster,0,0,0
+Open Redirect,M,keystone,1,1,1
+HTML Injection,M,ag-grid,0,0,1
+Elliptic Curve Key Disclosure,H,node-jose,0,0,2
+Cross-site Scripting (XSS),M,zeroclipboard,0,0,0
+Cross-site Scripting (XSS),M,zeroclipboard,0,0,0
+Arbitrary File Upload,M,youtransfer,0,0,0
+Cross-site Scripting (XSS),M,wysihtml,0,0,0
+Denial of Service (DoS),M,ng-dialog,0,0,10
+Cross-site Scripting (XSS),M,swagger-ui,1,1,5
+Cross-site Scripting (XSS),M,vega,0,0,0
+Cross-site Scripting (XSS),M,squire-rte,0,0,0
+Cross-site Scripting (XSS),M,select2,0,0,0
+Cross-site Scripting (XSS),M,reveal.js,0,0,0
+Cross-site Scripting (XSS),M,rethinkdb,0,0,12
+Information Disclosure,M,rethinkdb,0,0,12
+SQL Injection,M,pouchdb,0,0,1
+Cross-site Scripting (XSS),M,knockout,0,0,1
+Cross-site Scripting (XSS),M,foundation-sites,0,0,0
+Cross-site Scripting (XSS),M,foundation-sites,0,0,0
+Uninitialized Memory Exposure,M,concat-stream,144,144,8155
+Cross-site Scripting (XSS),M,yms,0,0,0
+Cross-site Scripting (XSS),M,thelounge,0,0,0
+Cross-site Scripting (XSS),M,lets-chat,0,0,0
+Prototype Override Protection Bypass,H,qs,0,0,0
+Arbitrary Code Execution,M,quill,0,0,0
+Cross-site Scripting (XSS),M,plotly.js,0,0,0
+Arbitrary Code Execution,H,serialize-to-js,0,0,0
+JSONP Callback Attack,M,angular,4,5,412
+HTML Injection,M,shout,0,0,0
+Arbitrary Code Execution,H,node-serialize,0,0,4
+Regular Expression Denial of Service (ReDoS),M,http-proxy,0,0,0
+Insecure Randomness,M,uuid,0,0,0
+Cross-site Scripting (XSS),M,restify,4,4,90
+Unsigned Request Headers,M,http-signature,18,17,452
+Cross-site Scripting (XSS),M,jquery-ui,0,0,0
+Cross-site Scripting (XSS),M,remarkable,0,0,7
+Insecure Randomness,M,socket.io,0,0,59
+Cross-site Scripting (XSS),M,socket.io,0,0,56
+Cross-site Scripting (XSS),M,textangular,0,0,0
+Cross-site Scripting (XSS),M,textangular,0,0,0
+Denial of Service (DoS),M,connect,4,4,369
+Symlink attack due to predictable tmp folder names,M,npm,0,0,18
+Cross-site Scripting (XSS) via Class Injection,M,markdown-it,4,4,1485
+SQL Injection,M,sequelize,0,0,24
+Cross-site Scripting (XSS),M,yui,0,0,0
+Cross-site Scripting (XSS),M,yui,0,0,0
+Cross-site Scripting (XSS),M,yui,0,0,0
+Cross-site Scripting (XSS),M,yui,0,0,18
+Cross-site Scripting (XSS),M,yui,0,0,18
+Cross-site Scripting (XSS),M,i18next,2,2,31
+Cross-site Scripting (XSS),M,i18next,0,0,1
+Insecure Randomness,M,ws,120,125,6708
+Cross-site Scripting (XSS) via Data URIs,H,marked,171,167,1845
+Cross-site Scripting (XSS),M,validator,18,16,187
+Denial of Service (DoS),H,websocket-driver,0,0,5
+Denial of Service (DoS),H,sails,0,0,0
+Denial of Service (DoS),H,sails,6,7,49
+Content Security Policy (CSP) Bypass,M,angular,0,1,111
+Arbitrary Script Injection,M,angular,0,0,6
+Cross-site Scripting (XSS),M,angular,3,3,180
+Cross-site Scripting (XSS),M,angular,3,3,211
+Cross-site Scripting (XSS),M,angular,1,1,136
+Cross-site Scripting (XSS),H,angular,3,3,211
+Clickjacking,M,angular,3,3,180
+Cross-site Scripting (XSS),H,angular,3,3,211
+Arbitrary Code Execution,H,angular,3,3,211
+Arbitrary Command Execution,M,angular,0,0,32
+Unsafe Object Deserialization,H,angular,0,0,0
+Cross-site Scripting (XSS),M,angular,0,0,32
+Arbitrary Code Execution,L,angular,0,0,32
+Protection Bypass,H,angular,0,0,0
+Arbitrary Script Injection,H,angular,0,0,0
+Cross-site Scripting (XSS),M,angular,0,0,0
+Cross-site Scripting (XSS),M,angular,0,0,0
+Cross-site Scripting (XSS),M,angular-gettext,0,0,0
+Cross-site Scripting (XSS),H,react,33,31,1206
+Cross-site Scripting (XSS),M,react,0,0,0
+Arbitrary Command Execution,H,clamscan,0,0,0
+Directory Traversal,H,fury-adapter-swagger,0,0,1
+Cross-site Scripting (XSS),H,tinymce,0,0,0
+Resources Downloaded over Insecure Protocol,H,windows-build-tools,0,0,0
+Unauthorized SSL Connection due to lack of cert authentication,M,mysql,0,0,13
+SQL Injection,M,loopback-connector-mssql,0,0,0
+SQL Injection,M,loopback-connector-mysql,0,0,0
+SQL Injection,M,loopback-connector-oracle,0,0,0
+SQL Injection,M,loopback-connector-postgresql,0,0,0
+Resources Downloaded over Insecure Protocol,H,mystem-fix,0,0,0
+Resources Downloaded over Insecure Protocol,H,react-native-baidu-voice-synthesizer,0,0,0
+Resources Downloaded over Insecure Protocol,H,windows-latestchromedriver,0,0,0
+Resources Downloaded over Insecure Protocol,H,npm-test-sqlite3-trunk,0,0,0
+Resources Downloaded over Insecure Protocol,H,alto-saxophone,0,0,0
+Resources Downloaded over Insecure Protocol,H,pm2-kafka,0,0,0
+Resources Downloaded over Insecure Protocol,H,haxeshim,0,0,0
+Resources Downloaded over Insecure Protocol,H,windows-seleniumjar,0,0,0
+Resources Downloaded over Insecure Protocol,H,openframe-ascii-image,0,0,0
+Resources Downloaded over Insecure Protocol,H,windows-iedriver,0,0,0
+Resources Downloaded over Insecure Protocol,H,haxe3,0,0,0
+Resources Downloaded over Insecure Protocol,H,windows-selenium-chromedriver,0,0,0
+Resources Downloaded over Insecure Protocol,H,fis-sass-all,0,0,0
+Resources Downloaded over Insecure Protocol,H,pk-app-wonderbox,0,0,0
+Resources Downloaded over Insecure Protocol,H,healthcenter,0,0,0
+Resources Downloaded over Insecure Protocol,M,arcanist,0,0,0
+Resources Downloaded over Insecure Protocol,H,massif,0,0,0
+Resources Downloaded over Insecure Protocol,H,roslib-socketio,0,0,0
+Resources Downloaded over Insecure Protocol,M,adamvr-geoip-lite,0,0,0
+Resources Downloaded over Insecure Protocol,H,selenium-standalone-painful,0,0,0
+Resources Downloaded over Insecure Protocol,H,serc.js,0,0,0
+Resources Downloaded over Insecure Protocol,H,google-closure-tools-latest,0,0,0
+Resources Downloaded over Insecure Protocol,H,rs-brightcove,0,0,0
+Resources Downloaded over Insecure Protocol,H,libsbmlsim,0,0,0
+Resources Downloaded over Insecure Protocol,H,limbus-buildgen,0,0,0
+Resources Downloaded over Insecure Protocol,M,ipip-coffee,0,0,0
+Resources Downloaded over Insecure Protocol,H,cloudpub-redis,0,0,0
+Resources Downloaded over Insecure Protocol,H,mystem-wrapper,0,0,0
+Resources Downloaded over Insecure Protocol,H,windows-seleniumjar-mirror,0,0,0
+Resources Downloaded over Insecure Protocol,H,soci,0,0,0
+Resources Downloaded over Insecure Protocol,H,libsbml,0,0,0
+Resources Downloaded over Insecure Protocol,H,selenium-portal,0,0,0
+Resources Downloaded over Insecure Protocol,H,tomita-parser,0,0,0
+Resources Downloaded over Insecure Protocol,H,herbivore,0,0,0
+Resources Downloaded over Insecure Protocol,H,mystem,0,0,0
+Resources Downloaded over Insecure Protocol,H,wixtoolset,0,0,0
+Resources Downloaded over Insecure Protocol,H,tomita,0,0,0
+Resources Downloaded over Insecure Protocol,H,phantomjs-cheniu,0,0,0
+Resources Downloaded over Insecure Protocol,H,fis-parser-sass-bin,0,0,0
+Resources Downloaded over Insecure Protocol,H,poco,0,0,0
+Resources Downloaded over Insecure Protocol,H,native-opencv,0,0,0
+Resources Downloaded over Insecure Protocol,H,co-cli-installer,0,0,0
+Resources Downloaded over Insecure Protocol,H,qbs,0,0,0
+Resources Downloaded over Insecure Protocol,H,clang-extra,0,0,0
+Resources Downloaded over Insecure Protocol,H,sfml,0,0,0
+Resources Downloaded over Insecure Protocol,H,xd-testing,0,0,0
+Resources Downloaded over Insecure Protocol,H,prebuild-lwip,0,0,0
+Resources Downloaded over Insecure Protocol,H,webdriver-launcher,0,0,0
+Resources Downloaded over Insecure Protocol,H,ntfserver,0,0,0
+Resources Downloaded over Insecure Protocol,H,frames-compiler,0,0,0
+Resources Downloaded over Insecure Protocol,H,marionette-socket-host,0,0,0
+Resources Downloaded over Insecure Protocol,H,node-air-sdk,0,0,0
+Resources Downloaded over Insecure Protocol,H,resourcehacker,0,0,0
+Resources Downloaded over Insecure Protocol,H,grunt-images,0,0,0
+Resources Downloaded over Insecure Protocol,H,slimerjs-edge,0,0,0
+Resources Downloaded over Insecure Protocol,H,jstestdriver,0,0,3
+Resources Downloaded over Insecure Protocol,H,cmake,0,0,0
+Resources Downloaded over Insecure Protocol,H,node-bsdiff-android,0,0,0
+Resources Downloaded over Insecure Protocol,H,node-thulac,0,0,0
+Resources Downloaded over Insecure Protocol,H,redis-srvr,0,0,0
+Resources Downloaded over Insecure Protocol,H,js-given,0,0,0
+Resources Downloaded over Insecure Protocol,H,grunt-ccompiler,0,0,0
+Resources Downloaded over Insecure Protocol,H,broccoli-closure,0,0,0
+Resources Downloaded over Insecure Protocol,H,scalajs-standalone-bin,0,0,1
+Resources Downloaded over Insecure Protocol,H,dwebp-bin,0,0,0
+Resources Downloaded over Insecure Protocol,H,apk-parser2,0,0,0
+Resources Downloaded over Insecure Protocol,H,jvminstall,0,0,2
+Resources Downloaded over Insecure Protocol,H,install-g-test,0,0,0
+Resources Downloaded over Insecure Protocol,H,nw-with-arm,0,0,0
+Resources Downloaded over Insecure Protocol,H,selenium-wrapper,0,0,0
+Resources Downloaded over Insecure Protocol,H,scala-bin,0,0,2
+Resources Downloaded over Insecure Protocol,H,mystem3,0,0,0
+Resources Downloaded over Insecure Protocol,H,headless-browser-lite,0,0,0
+Resources Downloaded over Insecure Protocol,H,selenium-chromedriver,0,0,0
+Resources Downloaded over Insecure Protocol,H,macaca-chromedriver-zxa,0,0,0
+Resources Downloaded over Insecure Protocol,H,nodeschnaps,0,0,0
+Resources Downloaded over Insecure Protocol,H,fibjs,0,0,0
+Resources Downloaded over Insecure Protocol,H,atom-node-module-installer,0,0,0
+Resources Downloaded over Insecure Protocol,H,pennyworth,0,0,2
+Resources Downloaded over Insecure Protocol,H,node-browser,0,0,0
+Resources Downloaded over Insecure Protocol,H,box2d-native,0,0,0
+Resources Downloaded over Insecure Protocol,H,openframe-image,0,0,0
+Resources Downloaded over Insecure Protocol,H,curses,0,0,0
+Resources Downloaded over Insecure Protocol,H,httpsync,0,0,0
+Resources Downloaded over Insecure Protocol,H,bionode-sra,0,0,0
+Resources Downloaded over Insecure Protocol,H,dalek-browser-ie-canary,0,0,0
+Resources Downloaded over Insecure Protocol,H,strider-sauce,0,0,0
+Resources Downloaded over Insecure Protocol,M,unicode-json,1,1,1
+Resources Downloaded over Insecure Protocol,H,chromedriver126,0,0,0
+Resources Downloaded over Insecure Protocol,H,robot-js,0,0,0
+Resources Downloaded over Insecure Protocol,H,openframe-glslviewer,0,0,0
+Resources Downloaded over Insecure Protocol,H,grunt-webdriver-qunit,0,0,0
+Resources Downloaded over Insecure Protocol,H,dalek-browser-ie,0,0,0
+Resources Downloaded over Insecure Protocol,H,dalek-browser-chrome,0,0,1
+Resources Downloaded over Insecure Protocol,H,air-sdk,0,0,0
+Resources Downloaded over Insecure Protocol,H,haxe,0,0,4
+Resources Downloaded over Insecure Protocol,H,haxe-dev,0,0,0
+Resources Downloaded over Insecure Protocol,H,webdrvr,0,0,0
+Resources Downloaded over Insecure Protocol,H,webrtc-native,0,0,0
+Resources Downloaded over Insecure Protocol,H,sauce-connect,0,0,0
+Resources Downloaded over Insecure Protocol,H,arrayfire-js,0,0,0
+Resources Downloaded over Insecure Protocol,H,cobalt-cli,0,0,0
+Resources Downloaded over Insecure Protocol,H,imageoptim,0,0,0
+Resources Downloaded over Insecure Protocol,H,jdf-sass,0,0,0
+Resources Downloaded over Insecure Protocol,H,fuseki,0,0,0
+Resources Downloaded over Insecure Protocol,H,mongodb-instance,0,0,0
+Resources Downloaded over Insecure Protocol,H,geoip-lite-country,0,0,0
+Resources Downloaded over Insecure Protocol,H,install-nw,0,0,0
+Resources Downloaded over Insecure Protocol,H,iedriver,0,0,2
+Denial of Service (DoS),L,jquery,0,0,0
+Cross-site Scripting (XSS) via Tooltip,M,jquery-ui,0,0,0
+Timing Attack,M,node-forge,6,6,13
+Cross-site Scripting (XSS),M,jquery-mobile,0,0,0
+Cross-site Scripting (XSS),M,jquery-migrate,0,0,0
+Cross-site Scripting (XSS),H,clusterize.js,0,0,0
+Resources Downloaded over Insecure Protocol,H,ibapi,0,0,0
+Resources Downloaded over Insecure Protocol,H,ipip,0,0,1
+Resources Downloaded over Insecure Protocol,M,jser-stat,0,0,1
+Resources Downloaded over Insecure Protocol,H,prince,0,0,1
+Resources Downloaded over Insecure Protocol,H,cue-sdk-node,0,0,0
+Directory Traversal,M,hostr,0,0,1
+Resources Downloaded over Insecure Protocol,H,apk-parser,0,0,0
+SQL Injection,M,knex,0,0,0
+Denial of Service (DoS),H,podium,2,2,52
+Resources Downloaded over Insecure Protocol,H,steroids,0,0,0
+Resources Downloaded over Insecure Protocol,H,apk-parser3,0,0,0
+Resources Downloaded over Insecure Protocol,H,baryton-saxophone,0,0,0
+Resources Downloaded over Insecure Protocol,H,bkjs-wand,0,0,0
+Resources Downloaded over Insecure Protocol,H,chromedriver,0,0,6
+Resources Downloaded over Insecure Protocol,H,closure-util,0,0,8
+Resources Downloaded over Insecure Protocol,H,closurecompiler,0,0,1
+Resources Downloaded over Insecure Protocol,H,dalek-browser-chrome-canary,0,0,0
+Resources Downloaded over Insecure Protocol,H,embedza,0,0,0
+Resources Downloaded over Insecure Protocol,H,ibm_db,0,0,0
+Resources Downloaded over Insecure Protocol,H,kindlegen,0,0,0
+Resources Downloaded over Insecure Protocol,H,libxl,0,0,0
+Resources Downloaded over Insecure Protocol,H,macaca-chromedriver,0,0,0
+Resources Downloaded over Insecure Protocol,H,nodewebkit,0,0,0
+Resources Downloaded over Insecure Protocol,H,nw,0,0,4
+Resources Downloaded over Insecure Protocol,H,pngcrush-installer,0,0,0
+Resources Downloaded over Insecure Protocol,H,product-monitor,0,0,0
+Resources Downloaded over Insecure Protocol,H,selenium-binaries,0,0,2
+Resources Downloaded over Insecure Protocol,H,unicode,0,0,0
+Resources Downloaded over Insecure Protocol,H,wasdk,0,0,0
+Resources Downloaded over Insecure Protocol,H,operadriver,0,0,1
+Resources Downloaded over Insecure Protocol,H,go-ipfs-dep,0,0,1
+Denial of Service (DoS),H,mongoose,0,0,12
+Directory Traversal,M,bitty,0,0,0
+Denial of Service (DoS),M,ejs,70,69,1242
+Cross-site Scripting (XSS),M,ejs,70,69,1242
+Resources Downloaded over Insecure Protocol,H,appium-chromedriver,0,0,0
+Resources Downloaded over Insecure Protocol,H,aerospike,0,0,0
+Resources Downloaded over Insecure Protocol,H,selenium-download,0,0,0
+Resources Downloaded over Insecure Protocol,H,galenframework-cli,0,0,7
+Authentication Bypass,H,passport-azure-ad,0,0,0
+Arbitrary Code Execution,H,ejs,70,69,1242
+Cross-site Scripting (XSS),M,jquery,0,0,0
+Denial of Service (DoS),M,node-uuid,1,1,29
+Timing Attack,M,fernet,0,0,0
+Cross-site Scripting (XSS),H,rendr,0,0,0
+Cross-site Scripting (XSS),M,hapi,0,0,0
+Denial of Service (DoS),M,engine.io,0,0,32
+Cross-site Scripting (XSS),M,hoek,0,0,0
+Uninitialized Memory Exposure,M,life_star,0,0,0
+Cross-site Scripting (XSS),M,shout,0,0,0
+Forgeable public/private tokens,M,jwt-simple,4,3,42
+Resources Downloaded over Insecure Protocol,L,igniteui,0,0,0
+SQL Injection,H,waterline-sequel,0,0,4
+Cross-site Scripting (XSS),H,tinymce,0,0,0
+Regular Expression Denial of Service (ReDoS),M,moment,90,95,1927
+Authentication Bypass,H,jsjws,0,0,0
+Cross-site Scripting (XSS),M,cheerio,0,0,1
+Cross-site Scripting (XSS),M,jquery,0,0,2
+Cross-site Scripting (XSS),M,jquery,0,0,31
+Cross-site Scripting (XSS),M,jquery,0,0,6
+Broken CORS,H,sails,6,8,56
+Denial of Service (DoS),H,uws,0,0,0
+CSS Injection,L,plotly.js,0,0,1
+Cross-site Scripting (XSS),M,plotly.js,0,0,1
+Arbitrary Code Injection,H,pouchdb,5,5,62
+Arbitrary Code Injection,H,reduce-css-calc,0,0,5
+Sensitive Information Exposure,M,airbrake,0,0,1
+Regular Expression Denial of Service (DoS),L,uc.micro,3,2,21
+Cross-site Scripting (XSS),M,boom,0,0,0
+Cross-site Scripting (XSS),M,ckeditor-dev,0,0,0
+Cross-site Scripting (XSS) via Data URIs,M,markdown-it,3,2,340
+Cross-site Scripting (XSS),M,ckeditor-dev,0,0,0
+Shell Command Injection,H,git-ls-remote,0,0,0
+Cross-site Scripting (XSS),M,ckeditor-dev,0,0,0
+Cross-site Scripting (XSS) via Bootstrapped data URL,M,brisket,0,0,0
+Cross-site Scripting (XSS),M,ckeditor-dev,0,0,0
+Uninitialized Memory Exposure,M,bl,112,110,4363
+Code Injection,H,crossbow-lang,0,0,0
+Code Injection,H,dustjs-linkedin,1,1,37
+Content & Code Injection (XSS),H,nunjucks,3,3,120
+Non-Constant Time String Comparison,M,cookie-signature,143,140,3082
+Insecure use of /tmp folder,L,cli,359,366,7631
+Cross-site Scripting (XSS),M,c3,0,0,0
+Cross-site Scripting (XSS),H,pivottable,0,0,0
+Denial of Service (DoS),H,mqtt,0,0,21
+Cross-site Scripting (XSS),H,swagger-ui,1,1,5
+Spoofing attack due to unvalidated KDC,M,node-krb5,0,0,0
+Cross-site Scripting (XSS),M,sanitize-html,0,0,1
+Insecure Defaults Allow MitM,M,ezseed-transmission,0,0,0
+Forgeable Public/Private Tokens,H,jws,5,4,46
+Cross-site Scripting (XSS) in Pillbox,H,fuelux,0,0,0
+Cross-site Scripting (XSS),H,jqtree,0,0,0
+Cross-site Scripting (XSS),H,swagger-ui,1,1,5
+XSS in primary functions,H,emojione,0,0,0
+XSS in client rendered block templates,H,rendr,0,0,2
+Regular Expression Denial of Service (ReDoS),H,tough-cookie,179,181,8013
+Cross-site Scripting (XSS),H,jquery-ui,0,0,24
+Cross-site Scripting (XSS),H,swagger-ui,1,1,5
+DOM-based XSS,H,gmail-js,0,0,0
+XSS in itemTitle parameter,H,bootstrap-tagsinput,0,0,9
+Cross-site Scripting (XSS),H,swagger-ui,1,1,5
+SQL Injection via GeoJSON,H,sequelize,0,0,3
+Improper input validation,M,call,16,16,233
+Denial of Service (DoS),H,ws,101,105,4183
+Cross-site Scripting (XSS),M,backbone,0,0,0
+Non-Constant Time String Comparison,M,csrf-lite,0,0,0
+Cross Site Scripting,M,dojo,0,0,0
+Private Data Disclosure,H,express-restify-mongoose,0,0,0
+Command Injection,H,shell-quote,358,354,8058
+Regular Expression Denial of Service (DoS),H,minimatch,9532,9398,78449
+Regular Expression Denial of Service (DoS),H,negotiator,313,307,8394
+Insecure Defaults,H,engine.io-client,16,18,815
+Authentication Bypass,H,console-io,0,0,0
+SSL Validation disabled by default,L,electron-packager,0,0,8
+Content & Code Injection (XSS),H,marked,23,23,521
+npm Token Leak,M,npm,26,25,2162
+Remote Memory Exposure,M,sequelize,0,0,25
+SQL Injection,M,sequelize,0,0,21
+SQL Injection,M,sequelize,0,0,1
+SQL Injection,M,sequelize,0,0,25
+SQL Injection in order/limit,H,sequelize,0,0,24
+Template Injection,M,jsrender,0,0,0
+Cross-site Request Forgery (CSRF),M,droppy,0,0,0
+Directory Traversal,M,restafary,0,0,0
+Insecure Default Configuration,M,airbrake,0,0,1
+Insecure Randomness,M,node-uuid,51,55,2564
+Remote Memory Exposure,M,request,891,894,13754
+Regular Expression Denial of Service (DoS),H,riot-compiler,0,0,0
+Credentials saved as clear-text in log,M,grunt-gh-pages,0,0,72
+Multiple vulnerabilities in embedded binary version of libxml2,M,libxmljs,0,0,14
+Regular Expression Denial of Service (ReDoS),M,moment,61,63,1218
+Authentication Bypass in Try Mode,H,hapi-auth-jwt2,0,0,0
+Denial of Service (DoS),H,i18n-node-angular,0,0,0
+Remote Memory Exposure,M,mongoose,3,3,97
+Regular Expression Denial of Service (DoS),L,hawk,0,0,0
+Regular Expression Denial of Service (ReDoS),H,is-my-json-valid,38,37,1704
+Denial of Service (DoS),H,mqtt-packet,0,0,0
+Content Injection via TileJSON Name,L,mapbox.js,0,0,1
+Regular Expression Denial of Service (DoS),H,jadedown,0,0,0
+Regular Expression Denial of Service (DoS),H,jshamcrest,1,1,16
+Potentially loose security restrictions,L,hapi,13,13,206
+SQL Injection due to unescaped object keys,H,mysql,0,0,3
+Remote Memory Exposure,M,ws,91,94,3354
+Remote Memory Exposure,M,bittorrent-dht,0,0,9
+Denial of Service through invalid If-Modified-Since/Last-Modified headers,H,hapi,13,13,206
+Denial of Service (DoS),H,ecstatic,29,27,1127
+Cross-site Scripting (XSS),M,handlebars,424,395,7460
+Content Injection due to quoteless attributes,M,mustache,36,35,996
+Authentication Weakness,M,keystone,1,1,1
+Regular Expression Denial of Service (DoS),M,millisecond,0,0,2
+Potential Cross-site Scripting (XSS),L,ember,0,0,0
+Cross-site Scripting (XSS),L,ember,0,0,0
+Regular Expression Denial of Service (ReDoS),M,ms,2075,2013,12453
+Root Path Disclosure,M,send,193,189,3950
+Symlink File Overwrite,H,tar,47,47,2363
+Regular Expression Denial of Service (DoS),M,uglify-js,1241,1211,17237
+Regular Expression Denial of Service (DoS),M,bleach,0,0,0
+CORS Bypass,L,hapi,13,13,201
+Content Injection via TileJSON attribute,L,mapbox.js,0,0,1
+Insecure Comparison,M,secure-compare,0,0,0
+Regular Expression Denial of Service (DoS),H,ansi2html,0,0,0
+Remote Shell Command Injection,M,gm,5,5,75
+Cross-site Scripting (XSS),M,backbone,0,0,0
+Cross-site Scripting (XSS),M,dojo,0,0,0
+Cross-site Scripting (XSS),H,dojo,0,0,0
+Cross-site Scripting (XSS),M,dojo,0,0,0
+Potential Cross-site Scripting (XSS),M,ember,0,0,0
+Cross-site Scripting (XSS),M,handlebars,0,0,0
+Cross-site Scripting (XSS),M,mustache,0,0,0
+Cross-site Scripting (XSS),M,sanitize-html,0,0,1
+LDAP Injection,M,ldapauth,0,0,0
+Cross-site Scripting (XSS),M,datatables,0,0,0
+LDAP Injection,M,ldapauth-fork,0,0,1
+Improper minification of non-boolean comparisons,H,uglify-js,627,592,11507
+Directory Traversal,M,geddy,0,0,1
+Cross-site Request Forgery (CSRF),M,jquery-ujs,0,0,0
+Regular Expression Denial of Service (ReDoS),M,semver,266,268,7334
+Authentication Bypass,H,jsonwebtoken,1,1,21
+Cross-site Scripting due to improper file and directory names escaping,M,serve-index,34,35,455
+Command Injection,M,ungit,0,0,0
+SQL Injection in Order,H,sequelize,0,0,12
+Open Redirect,L,serve-static,33,32,521
+Hidden Directories Leakage,H,inert,0,0,0
+Validation Bypass,M,paypal-ipn,0,0,0
+Directory Traversal,M,fancy-server,0,0,0
+Directory Traversal,M,nhouston,0,0,0
+Content Injection,M,remarkable,0,0,0
+Regular Expression Denial of Service (DoS),H,validator,17,16,148
+Arbitrary Command Injection,M,dns-sync,0,0,0
+Cross-site Scripting (XSS),M,validator,6,5,62
+Arbitrary JavaScript Code Injection,M,bassmaster,0,0,0
+Directory Traversal,M,send,166,164,3688
+Cross-site Scripting (XSS),M,express,125,122,2551
+Denial of Service (Event Loop Blocking),M,qs,501,503,9582
+Denial of Service (Memory Exhaustion),H,qs,501,503,9582
+CORS Token Disclosure,M,crumb,0,0,0
+Potential Script Injection,M,syntax-error,23,23,625
+Rosetta-flash jsonp vulnerability,M,hapi,0,0,22
+Denial of Service (DoS),H,hapi,0,0,1
+Denial of Service (DoS),H,yar,0,0,1
+Arbitrary Command Injection,M,printer,0,0,0
+Directory Traversal,M,st,0,0,2
+Heap-based Buffer Overflow,H,libyaml,0,0,2
+Multiple Content Injection Vulnerabilities,M,marked,46,44,936
+Regular Expression Denial of Service (DoS),H,marked,53,51,1025
+VBScript Content Injection,M,marked,48,46,990
+Arbitrary Command Injection,M,codem-transcode,0,0,0
+Cross-site Scripting (XSS),M,validator,3,2,27
+Cross-site Scripting (XSS),M,connect,48,47,1826
+Code Execution due to Deserialization,M,js-yaml,44,50,884
+Potential Command Injection,H,libnotify,0,0,0
+Command Injection,M,hubot-scripts,0,0,0
+Unauthenticated Remote Command Injection,H,ep_imageconvert,0,0,0
+API Admin Auth Weakness,M,tomato,0,0,0

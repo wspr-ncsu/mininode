@@ -1,0 +1,20 @@
+{
+  "name": "mn-worker",
+  "version": "1.0.0",
+  "description": "",
+  "main": "worker.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Igibek Koishybayev",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "bee-queue": "^1.2.2",
+    "bull": "^3.5.2",
+    "escodegen": "^1.11.1",
+    "esprima": "^4.0.1",
+    "jsonfile": "^5.0.0",
+    "mongodb": "^3.1.10"
+  }
+}
