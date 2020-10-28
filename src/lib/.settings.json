@@ -1,0 +1,16 @@
+{
+  "dryRun": false,
+  "skipReduction": false,
+  "default_attack_surface": true,
+  "extra_attack_surface": null,
+  "destination": "mininode",
+  "log": true,
+  "logOutput": "mininode.json",
+  "compressLog": false,
+  "seeds": [],
+  "skipStat": false,
+  "verbose": false,
+  "skipRemove": false,
+  "silent": false,
+  "mode": "soft"
+}

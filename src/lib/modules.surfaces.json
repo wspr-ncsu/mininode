@@ -1,0 +1,24 @@
+{
+    "packages": [
+        {
+            "name":"fs",
+            "version":"",
+            "entries":["appendFile", "appendFileSync", "copyFile", "copyFileSync", "chown", "chownSync", "chmod", "chmodSync", "createWriteStream", "fchown", "fchmod","fchownSync","fchmodSync", "ftruncate", "ftruncateSync", "mkdir", "mkdirSync", "lchown", "lchownSync", "rmdir", "rmdirSync", "symlink", "symlinkSync", "truncate", "truncateSync", "unlink", "unlinkSync", "write", "writeSync", "writeFile", "writeFileSync"],
+            "exits":["readFile", "readFileSync", "readdir", "readdirSync", "createReadStream", "read", "readSync", "readlink", "readlinkSync", "rename", "renameSync", "stat", "statSync" ]
+        },
+        {
+            "name":"child_process",
+            "version":"",
+            "entries":[],
+            "exits":[]
+        }
+    ],
+    "scores":{
+        "entries":3,
+        "exits":3,
+        "eval":10,
+        "obfus":100,
+        "dynamic":20,
+        "env":1
+    }
+}

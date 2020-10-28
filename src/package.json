@@ -1,0 +1,30 @@
+{
+  "name": "mininode",
+  "version": "0.0.4",
+  "description": "Mininode is a tool to reduce JavaScript code by using sophisticated techniques",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm run test:dry & npm run test:soft & npm run test:hard",
+    "test:dry": "node index.js test-module/ --silent --dry-run",
+    "test:soft": "node index.js test-module/ --destination=mininode.soft && cp test-module/check.js mininode.soft/ && node mininode.soft/ && node mininode.soft/check.js",
+    "test:hard": "node index.js test-module/ --mode=hard --destination=mininode.hard && cp test-module/check.js mininode.hard/ && node mininode.hard/ && node mininode.hard/check.js",
+    "webpack": "cd mininode/ && webpack",
+    "parcel": "cd mininode/ && parcel index.js -d parcel",
+    "clean": "rm -rf mininode/ mininode.soft/ mininode.hard/ test-module/mininode.json"
+  },
+  "author": "Igibek Koishybayev",
+  "license": "ISC",
+  "dependencies": {
+    "chalk": "^2.4.1",
+    "escodegen": "^1.10.0",
+    "esprima": "^4.0.0",
+    "estraverse": "^4.2.0",
+    "fs-extra": "^6.0.1",
+    "glob": "^7.1.3",
+    "resolve-from": "^4.0.0",
+    "safe-regex": "^2.0.0",
+    "sloc": "^0.2.0",
+    "yargs": "^11.0.0"
+  },
+  "devDependencies": {}
+}
