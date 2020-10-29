@@ -19,6 +19,25 @@ List of command line options that can be passed to mininode.
 - `--skip-reduction`: if passed mininode will not reduce the JavaScript files. The default value: `false`.
 - `--skip-remove`: if passed mininode will not remove unused JavaScript files. The default value: `false`.
 
+## Research Paper
+
+You can read more about the details of our work in the following research paper:
+
+**Mininode: Reducing the Attack Surface of Node.js Applications** [[PDF]](https://kapravelos.com/publications/mininode-raid20.pdf)  
+Igibek Koishybayev, Alexandros Kapravelos  
+*Proceedings of the International Symposium on Research in Attacks, Intrusions and Defenses (RAID), 2020*
+
+If you use *Mininode* in your research, consider citing our work using this **Bibtex** entry:
+``` tex
+@conference{mininode-raid20,
+  title = {{Mininode: Reducing the Attack Surface of Node.js Applications}},
+  author = {Koishybayev, Igibek and Kapravelos, Alexandros},
+  booktitle = {{Proceedings of the International Symposium on Research in Attacks, Intrusions and Defenses (RAID)}},
+  year = {2020}
+}
+
+```
+
 ### Contributing
 [![js-semistandard-style](https://cdn.rawgit.com/flet/semistandard/master/badge.svg)](https://github.com/Flet/semistandard)
 
