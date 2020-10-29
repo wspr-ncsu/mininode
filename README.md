@@ -38,7 +38,7 @@ If you use *Mininode* in your research, consider citing our work using this **Bi
 
 ```
 
-### Contributing
+## Contributing
 [![js-semistandard-style](https://cdn.rawgit.com/flet/semistandard/master/badge.svg)](https://github.com/Flet/semistandard)
 
 We are following semistandard.
