@@ -1,7 +1,9 @@
 # Mininode
-Mininode is a CLI tool to reduce the attack surface of the Node.js applications by using static analysis.
+Mininode is a CLI tool to reduce the attack surface of the Node.js applications by using static analysis of source code. It supports two modes of reduction (1) soft, (2) hard. 
 
+Mininode constructs the dependency graph (modules and functions used) of the application starting from main file, _i.e._ entry point of the application. Mininode initializes entry point to `package.json` file's `main` field if it exists. Otherwise default to `index.js`. 
 
+Example usage: `node index.js <path to Node application root folder> --mode=(soft|hard)`. Below is the list of options that can be passed to Mininode. 
 
 ### Options
 List of command line options that can be passed to mininode.
