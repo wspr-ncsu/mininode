@@ -21,6 +21,9 @@ List of command line options that can be passed to mininode.
 - `--skip-reduction`: if passed mininode will not reduce the JavaScript files. The default value: `false`.
 - `--skip-remove`: if passed mininode will not remove unused JavaScript files. The default value: `false`.
 
+## Limitaions
+1. Mininode uses static analysis, which means it can not reduce the attack surface of the Node.js application which uses dynamic behaviour, such as `eval`. If Mininode detects dynamic behaviour in the application it exits with error `DYNAMIC_BEHAVOUR_DETECTED`.
+
 ## Research Paper
 
 You can read more about the details of our work in the following research paper:
