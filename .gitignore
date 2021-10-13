@@ -64,7 +64,5 @@ samples/
 
 
 # project specific folders
-mininode/
-mininode.soft/
-mininode.hard/
+mininode.*/
 manual/
