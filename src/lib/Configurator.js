@@ -4,14 +4,20 @@
  */
 
 const app = require('../package.json');
-const banner =
-"#         _     _           _     \n"+
-"#   _____|_|___|_|___ ___ _| |___ \n"+
-"#  |     | |   | |   | . | . | -_|\n"+
-"#  |_|_|_|_|_|_|_|_|_|___|___|___|\n"+
-"#                                 \n"+
-"# Authors: Igibek Koishybayev, Alexandros Kapravelos\n"+
-`# Version: ${app.version}`
+const chalk = require('chalk');
+const banner = chalk.default.green(
+"####################################\n" +
+"#         _     _           _     \n" +
+"#   _____|_|___|_|___ ___ _| |___ \n" +
+"#  |     | |   | |   | . | . | -_|\n" +
+"#  |_|_|_|_|_|_|_|_|_|___|___|___|\n" +
+"#                                 \n" +
+"# Authors: Igibek Koishybayev, Alexandros Kapravelos\n" +
+`# Version: ${app.version}\n` +
+// `# Description: ${chalk.default.white(app.description)}\n` +
+"####################################\n")
+
+
 
 const settings = require('./.settings.json');
 const argv = require('yargs')
@@ -32,6 +38,18 @@ const argv = require('yargs')
               .option('seeds', {
                 type: 'array',
                 describe: 'Seed files from where to start building the dependency graph. By default mininode will try to resolve the entry point of the application by reading the package.json file'
+              })
+              .option('dry-run', {
+                describe: 'Generates the mininode.json (dependency graph) file without reducing the application',
+                type: 'boolean'
+              })
+              .option('silent', {
+                describe: 'Runs in silent mode, i.e. does not print anything to the console',
+                type: 'boolean'
+              })
+              .option('verbose', {
+                describe: 'Runs in verbose mode, i.e. prints debug statements',
+                type: 'boolean'
               })
               .epilog('Thank you for checking out the project')
               .argv;
