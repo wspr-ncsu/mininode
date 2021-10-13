@@ -4,7 +4,6 @@ const fs = require('fs');
 const es = require('esprima');
 const escodegen = require('escodegen');
 const path = require('path');
-const argv = require('yargs').argv;
 const chalk = require('chalk');
 const sloc = require('sloc');
 
@@ -20,7 +19,8 @@ const utils = require('./lib/utils');
 const packageDependencies = require('./lib/utils/package-dependencies');
 
 
-let location = process.argv[2];
+let location = config.origin;
+
 let utf = 'utf-8';
 location = path.resolve(location);
 if (location.indexOf('package.json') !== -1) {
@@ -52,7 +52,7 @@ let entries = [];
       throw new Error('DYNAMIC_IMPORT_DETECTED');
     }
     
-    if (config.mode === 'hard') {
+    if (config.mode === 'fine') {
       console.log(chalk.bold.green('>> BUILDING DEPENDENCY GRAPH...'));
       await buildDependency();
       console.log(chalk.bold('>> DONE BUILDING DEPENDENCY GRAPH'));
@@ -104,7 +104,7 @@ let entries = [];
         for (let modul of modulesToRemove) {
           await utils.removeFile(modul, config.dryRun);
         } 
-      } else if (config.mode === 'hard'){
+      } else if (config.mode === 'fine'){
         // run reduction with dimports
         for (const dimport of _app.dimports) {
           if (config.verbose) console.log('> DYNAMIC IMPORT REDUCTION', _app.dimports);
@@ -268,7 +268,7 @@ async function readModule (modul) {
         }
       }
       if (changed) { // calling readModule only if child was updated
-        if (argv.verbose) console.log(chalk.cyan('READMODULE:'), child.path, child.used);
+        if (config.verbose) console.log(chalk.cyan('READMODULE:'), child.path, child.used);
         await readModule(child);
         changed = false;
       }

@@ -2,8 +2,37 @@
  *  @author Igibek Koishybayev
  *  @abstract Responsible for parsing the given arguments and generating the configuration object 
  */
+
+const banner = "MININODE";
+
+
+const app = require('../package.json');
 const settings = require('./.settings.json');
-const argv = require('yargs').argv;
+const argv = require('yargs')
+              .usage(`${banner} \nVersion: ${app.version} \n\nUsage: $0 <path> [options]`)
+              .command('[path]', 'Full path to the application')
+              .demandCommand(1)
+              .option('destination', {
+                alias: 'd',
+                describe: 'Destination where reduced application will be saved',
+                type: 'string'
+              })
+              .option('mode', {
+                alias: 'm',
+                describe: 'Reduction mode',
+                choices: ['coarse', 'fine'],
+                default: 'coarse'
+              })
+              .option('seeds', {
+                type: 'array',
+                describe: 'Seed files from where to start building the dependency graph. By default mininode will try to resolve the entry point of the application by reading the package.json file'
+              })
+              .epilog('Thank you for checking out the project')
+              .argv;
+
+settings.origin = argv._[0];
+
+if (argv.destination) settings.destination = argv.destination;
 
 settings.dryRun = argv.dryRun;
 settings.skipReduction = argv.skipReduction;
@@ -20,9 +49,10 @@ if (argv.seeds) {
   Array.prototype.push.apply(settings.seeds, seeds);
   settings.seeds = [...new Set(settings.seeds)];
 }
-if (argv.destination) settings.destination = argv.destination;
+
 if (argv.defaultAttackSurface) settings.default_attack_surface = argv.defaultAttackSurface;
 if (argv.mode) {
   settings.mode = argv.mode;
 }
+
 module.exports = settings;
