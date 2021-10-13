@@ -3,6 +3,7 @@
   "version": "0.0.4",
   "description": "Mininode is a tool to reduce JavaScript code by using sophisticated techniques",
   "main": "index.js",
+  "bin": "index.js",
   "scripts": {
     "test": "npm run test:dry & npm run test:soft & npm run test:hard",
     "test:dry": "node index.js test-module/ --silent --dry-run",

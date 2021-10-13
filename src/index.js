@@ -1,3 +1,5 @@
+#! /usr/bin/env node
+
 const fs = require('fs');
 const es = require('esprima');
 const escodegen = require('escodegen');
