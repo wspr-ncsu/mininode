@@ -3,13 +3,19 @@
  *  @abstract Responsible for parsing the given arguments and generating the configuration object 
  */
 
-const banner = "MININODE";
-
-
 const app = require('../package.json');
+const banner =
+"#         _     _           _     \n"+
+"#   _____|_|___|_|___ ___ _| |___ \n"+
+"#  |     | |   | |   | . | . | -_|\n"+
+"#  |_|_|_|_|_|_|_|_|_|___|___|___|\n"+
+"#                                 \n"+
+"# Authors: Igibek Koishybayev, Alexandros Kapravelos\n"+
+`# Version: ${app.version}`
+
 const settings = require('./.settings.json');
 const argv = require('yargs')
-              .usage(`${banner} \nVersion: ${app.version} \n\nUsage: $0 <path> [options]`)
+              .usage(`${banner} \n\nUsage: $0 <path> [options]`)
               .command('[path]', 'Full path to the application')
               .demandCommand(1)
               .option('destination', {
