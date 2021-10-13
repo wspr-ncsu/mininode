@@ -1,6 +1,6 @@
 {
   "name": "mininode",
-  "version": "0.0.4",
+  "version": "0.9.0",
   "description": "Mininode is a tool to reduce JavaScript code by using sophisticated techniques",
   "main": "index.js",
   "bin": "index.js",
