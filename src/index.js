@@ -21,6 +21,7 @@ const packageDependencies = require('./lib/utils/package-dependencies');
 
 let location = config.origin;
 
+
 let utf = 'utf-8';
 location = path.resolve(location);
 if (location.indexOf('package.json') !== -1) {
@@ -32,17 +33,22 @@ let entries = [];
 // let devs = packageDependencies.toList(location, true);
 // console.log(devs, devs.length);
 // process.exit(0);
+
+if (config.silent) {
+  console.log = function () {}
+}
+
 (async function () {
   console.time('overall');
   try {
-    console.info(chalk.bold.blue(`====================\nSTARTED ${location}\n====================`));
-    console.info(chalk.bold.green('>> INITIALIZING...'));
+    console.log(chalk.bold.blue(`====================\nSTARTED ${location}\n====================`));
+    console.log(chalk.bold.green('>> INITIALIZING...'));
     await init();
-    console.info(chalk.bold('>> DONE INITIALIZING'));
+    console.log(chalk.bold('>> DONE INITIALIZING'));
     
-    console.info(chalk.bold.green('>> TRAVERSING...'));
+    console.log(chalk.bold.green('>> TRAVERSING...'));
     await traverse(location);
-    console.info(chalk.bold('>> DONE TRAVERSING'));
+    console.log(chalk.bold('>> DONE TRAVERSING'));
 
     console.log(chalk.bold.green('>> DETECTOR...'));
     await Detector(_app);
