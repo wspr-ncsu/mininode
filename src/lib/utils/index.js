@@ -154,7 +154,7 @@ function entryPoints(app) {
       }
     }
   } 
-  if (app.main) {
+  if (app.main && config.seeds.length === 0) {
     let uri = path.join(app.path, app.main);
     if (fs.existsSync(uri)) {
       if (fs.lstatSync(uri).isDirectory()) {

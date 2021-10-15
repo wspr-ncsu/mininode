@@ -51,7 +51,7 @@ if (config.silent) {
     console.log(chalk.bold('>> DONE TRAVERSING'));
 
     console.log(chalk.bold.green('>> DETECTOR...'));
-    await Detector(_app);
+    await Detector(_app, entries);
     console.log(chalk.bold(">> DONE DETECTOR"))
     
     if (_app.usedComplicatedDynamicImport) {
@@ -171,11 +171,21 @@ async function init () {
   _app.path = location;
   _app.main = utils.entryPoint(location, packageJson.main);
 
-  if (!_app.main) {
-    throw new Error("NO_ENTRY_POINT");
+  if (config.seeds.length === 0) {
+    if (!_app.main) {
+      throw new Error("NO_ENTRY_POINT");
+    }
+    entries.push(path.join(_app.path, _app.main));
+  } else {
+    for (let seed of config.seeds) {
+      let s = utils.entryPoint(location, seed);
+      if (s) {
+        entries.push(path.join(location, seed));
+      } else {
+        console.error(chalk.default.red(`Can not find ${seed} in ${location}`));
+      }
+    }
   }
-  entries.push(path.join(_app.path, _app.main));
-
   if (packageJson.dependencies) {
     _app.declaredDependencyCount = Object.keys(packageJson.dependencies).length;
     let packageLock = path.join(location, 'package-lock.json');
@@ -189,12 +199,7 @@ async function init () {
       }
     }
   }
-  // entries = utils.entryPoints(_app);
 
-  // if (entries.length === 0) {
-  //   console.error(chalk.bold.red('NO ENTRY POINTS SPECIFIED'));
-  //   throw new Error('NO ENTRY POINTS SPECIFIED');
-  // }
 }
 
 /**

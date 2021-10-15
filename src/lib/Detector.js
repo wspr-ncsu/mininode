@@ -103,12 +103,13 @@ async function readModule(modul) {
  * 
  * @param {AppBuilder} app 
  */
-async function main (app) {
+async function main (app, entries = []) {
   _app = app;
-  let entryPath = path.join(app.path, app.main);
-  let entry = app.modules.find(m => m.path === entryPath);
-  if (!entry) throw new Error('Detector.js: NO_ENTRY_POINT');
-  await readModule(entry);
+  for (let entryPath of entries) {
+    let entry = app.modules.find(m => m.path === entryPath);
+    if (!entry) throw new Error('Detector.js: NO_ENTRY_POINT');
+    await readModule(entry);
+  }
 }
 
 module.exports = main;

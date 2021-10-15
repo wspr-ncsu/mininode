@@ -70,7 +70,7 @@ settings.logOutput = argv.logOutput ? argv.logOutput : settings.logOutput;
 settings.ignored = ['.git', '.gitignore']
 
 if (argv.seeds) {
-  let seeds = argv.seeds.split(',');
+  let seeds = argv.seeds;
   console.log('> seeds:', seeds);
   Array.prototype.push.apply(settings.seeds, seeds);
   settings.seeds = [...new Set(settings.seeds)];
