@@ -303,7 +303,7 @@ async function traverse (directory) {
         await traverse(item);
       } else if (stat.isFile()) {
         let extension = path.extname(item).toLowerCase();
-        if (extension === '.js' || extension === 'cjs' ||extension === '') {
+        if (extension === '.js' || extension === '.cjs' ||extension === '') {
           var _module = new ModuleBuilder();
           _module.app = _app;
           _module.name = path.basename(item);

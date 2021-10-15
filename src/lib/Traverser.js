@@ -23,7 +23,7 @@ async function traverse(directory) {
       let stat = fs.statSync(item);
       if (stat.isDirectory()) {
         await traverse(item);
-      } else if (stat.isFile() && item.endsWith('.js')) {
+      } else if (stat.isFile() && (item.endsWith('.js') || item.endsWith('.cjs'))) {
         let _module = new ModuleBuilder();
         _module.app = _app;
         _module.name = path.basename(item);
