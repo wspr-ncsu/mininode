@@ -67,6 +67,8 @@ settings.silent = argv.silent;
 settings.compressLog = argv.compressLog;
 settings.logOutput = argv.logOutput ? argv.logOutput : settings.logOutput;
 
+settings.ignored = ['.git', '.gitignore']
+
 if (argv.seeds) {
   let seeds = argv.seeds.split(',');
   console.log('> seeds:', seeds);

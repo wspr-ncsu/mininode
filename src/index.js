@@ -295,7 +295,7 @@ async function traverse (directory) {
     for (let item of folderContent) {
       // Ignores .git directory.
       // Better if we have some array of ignore list
-      if (item === '.git') continue;
+      if (config.ignored.includes(item)) continue;
       
       item = path.join(directory, item);
       let stat = fs.statSync(item);
