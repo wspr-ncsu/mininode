@@ -124,7 +124,10 @@ module.exports.generate = async function (modul, dryRun = false) {
       if (modul.hashbang) {
         gen = modul.hashbang + '\n' + gen;
       }
-      await fse.writeFile(modul.path, gen);
+      let changeCount = (removedExports + removedFunctions + removedVariables);
+      if (changeCount > 0) {
+        await fse.writeFile(modul.path, gen);
+      }
     }
   } catch (error) {
     console.error(chalk.bgRed.bold('ERROR:'), 'generation', modul.path, error);
