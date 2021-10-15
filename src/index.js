@@ -293,13 +293,17 @@ async function traverse (directory) {
   try {
     var folderContent = fs.readdirSync(directory);
     for (let item of folderContent) {
+      // Ignores .git directory.
+      // Better if we have some array of ignore list
+      if (item === '.git') continue;
+      
       item = path.join(directory, item);
       let stat = fs.statSync(item);
       if (stat.isDirectory()) {
         await traverse(item);
       } else if (stat.isFile()) {
         let extension = path.extname(item).toLowerCase();
-        if (extension === '.js' || extension === '') {
+        if (extension === '.js' || extension === 'cjs' ||extension === '') {
           var _module = new ModuleBuilder();
           _module.app = _app;
           _module.name = path.basename(item);
