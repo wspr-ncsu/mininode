@@ -168,6 +168,11 @@ async function init () {
 
   _app.appname = packageJson.name;
   _app.version = packageJson.version;
+  _app.type = packageJson.type;
+  if (_app.type === "module") {
+    throw new Error("ES6_NOT_SUPPORTED");
+  }
+  
   _app.path = location;
   _app.main = utils.entryPoint(location, packageJson.main);
 

@@ -2,6 +2,7 @@ const ModuleBuilder = require('./ModuleBuilder');
 module.exports = function () {
   this.appname = '';
   this.version = '';
+  this.type = '';
   this.path = '';
   this.main = '';
 
