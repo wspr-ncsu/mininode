@@ -2,10 +2,12 @@
 
 const fs = require('fs');
 const es = require('esprima');
+// const es = require('espree');
 const escodegen = require('escodegen');
 const path = require('path');
 const chalk = require('chalk');
 const sloc = require('sloc');
+const winston = require("winston");
 
 const AppBuilder = require('./lib/models/AppBuilder');
 const ModuleBuilder = require('./lib/models/ModuleBuilder');
@@ -17,7 +19,23 @@ const config = require('./lib/Configurator');
 const stat = require('./lib/Stat');
 const utils = require('./lib/utils');
 const packageDependencies = require('./lib/utils/package-dependencies');
+const createLogger = require('./lib/Logger');
 
+let logger = createLogger();
+
+if (config.silent) {
+  logger = createLogger('error');
+}
+
+if (config.verbose) {
+  logger = createLogger('debug');
+}
+
+console.log = (...args) => logger.info.call(logger, ...args);
+console.info = (...args) => logger.info.call(logger, ...args);
+console.warn = (...args) => logger.warn.call(logger, ...args);
+console.error = (...args) => logger.error.call(logger, ...args);
+console.debug = (...args) => logger.debug.call(logger, ...args);
 
 let location = config.origin;
 
@@ -31,40 +49,36 @@ if (location.indexOf('package.json') !== -1) {
 let _app = new AppBuilder();
 let entries = [];
 // let devs = packageDependencies.toList(location, true);
-// console.log(devs, devs.length);
+// console.info(devs, devs.length);
 // process.exit(0);
-
-if (config.silent) {
-  console.log = function () {}
-}
 
 (async function () {
   console.time('overall');
   try {
-    console.log(chalk.bold.blue(`====================\nSTARTED ${location}\n====================`));
-    console.log(chalk.bold.green('>> INITIALIZING...'));
+    console.info(chalk.bold.blue(`====================\nSTARTED ${location}\n====================`));
+    console.info(chalk.bold.green('>> INITIALIZING...'));
     await init();
-    console.log(chalk.bold('>> DONE INITIALIZING'));
+    console.info(chalk.bold('>> DONE INITIALIZING'));
     
-    console.log(chalk.bold.green('>> TRAVERSING...'));
+    console.info(chalk.bold.green('>> TRAVERSING...'));
     await traverse(location);
-    console.log(chalk.bold('>> DONE TRAVERSING'));
+    console.info(chalk.bold('>> DONE TRAVERSING'));
 
-    console.log(chalk.bold.green('>> DETECTOR...'));
+    console.info(chalk.bold.green('>> DETECTOR...'));
     await Detector(_app, entries);
-    console.log(chalk.bold(">> DONE DETECTOR"))
+    console.info(chalk.bold(">> DONE DETECTOR"))
     
     if (_app.usedComplicatedDynamicImport) {
       throw new Error('DYNAMIC_IMPORT_DETECTED');
     }
     
     if (config.mode === 'fine') {
-      console.log(chalk.bold.green('>> BUILDING DEPENDENCY GRAPH...'));
+      console.info(chalk.bold.green('>> BUILDING DEPENDENCY GRAPH...'));
       await buildDependency();
-      console.log(chalk.bold('>> DONE BUILDING DEPENDENCY GRAPH'));
+      console.info(chalk.bold('>> DONE BUILDING DEPENDENCY GRAPH'));
       // await attackSurface();
       
-      console.log(chalk.bold.green('>> FINAL REDUCING...'));
+      console.info(chalk.bold.green('>> FINAL REDUCING...'));
       /**
        * 1. iterate modules' memusage
        * 2. map results to app.globals by name
@@ -94,16 +108,16 @@ if (config.silent) {
   
       let usedExternalModules = _app.modules.filter(m => (m.isUsed && !m.skipReduce));
       for (let modul of usedExternalModules) {
-        if (config.verbose) console.log(chalk.bold('> REDUCING:'), modul.path);
+        if (config.verbose) console.info(chalk.bold('> REDUCING:'), modul.path);
         await reduceModule(modul);
-        if (config.verbose) console.log('-- done');
+        if (config.verbose) console.info('-- done');
       }
-      console.log(chalk.bold('>> DONE FINAL REDUCING'));
+      console.info(chalk.bold('>> DONE FINAL REDUCING'));
     
     }
     
     if (!config.skipRemove) {
-      console.log(chalk.bold.green('>> REMOVING UNUSED MODULES...'));
+      console.info(chalk.bold.green('>> REMOVING UNUSED MODULES...'));
       
       if (!_app.usedComplicatedDynamicImport) {
         let modulesToRemove = _app.modules.filter(m => !m.isUsed);
@@ -113,7 +127,7 @@ if (config.silent) {
       } else if (config.mode === 'fine'){
         // run reduction with dimports
         for (const dimport of _app.dimports) {
-          if (config.verbose) console.log('> DYNAMIC IMPORT REDUCTION', _app.dimports);
+          if (config.verbose) console.info('> DYNAMIC IMPORT REDUCTION', _app.dimports);
           let reducableModules = _app.modules.filter(m => (!m.skipReduce) && dimport.members.every(v => m.members.includes(v)));
           for (let modul of reducableModules) {
             await reduceModule(modul, dimport.members);
@@ -121,27 +135,27 @@ if (config.silent) {
         }
       }
       
-      console.log(chalk.bold('>> DONE REMOVING UNUSED MODULES'));
+      console.info(chalk.bold('>> DONE REMOVING UNUSED MODULES'));
     }
     
-    console.log(chalk.bold.green('>> GENERATING...'));
+    console.info(chalk.bold.green('>> GENERATING...'));
     let usedModules = _app.modules.filter(m => !m.isRemoved && !m.skipReduce);
     for (var modul of usedModules) {
       if (!modul.parseError) {
         generator.generate(modul, config.dryRun);
       }
     }
-    console.log(chalk.bold('>> DONE GENERATING'));
+    console.info(chalk.bold('>> DONE GENERATING'));
 
-    console.log(chalk.bold.green('>> CALCULATING STATS...'));
+    console.info(chalk.bold.green('>> CALCULATING STATS...'));
     utils.calculateAppStatictic(_app);
-    console.log(chalk.bold('>> DONE CALCULATING'));
+    console.info(chalk.bold('>> DONE CALCULATING'));
 
     if (config.log) {
-      console.log(chalk.bold.green('>> CREATING MININODE.JSON...'));
+      console.info(chalk.bold.green('>> CREATING MININODE.JSON...'));
       let log_path = path.join(location, config.logOutput);
       fs.writeFileSync(log_path, JSON.stringify(_app, null, 2), {encoding: 'utf-8'});
-      console.log(chalk.bold('>> DONE CREATING MININODE.JSON'));
+      console.info(chalk.bold('>> DONE CREATING MININODE.JSON'));
     }
 
   } catch (err) {
@@ -220,7 +234,7 @@ async function buildDependency () {
     }
     entryModule.skipReduce = true;
     entryModule.isUsed = true;
-    console.log(chalk.bold.yellow('> STARTING:'), entry)
+    console.info(chalk.bold.yellow('> STARTING:'), entry)
     await readModule(entryModule);
   }
 }
@@ -238,18 +252,18 @@ async function readModule (modul) {
 		 *  - or --skip-reduce flag was setup when script started
 		 */
     if (!config.skipReduction && !modul.skipReduce) {
-      if(!config.silent) console.log(chalk.bold('> REDUCING:'), modul.path);
+      if(!config.silent) console.info(chalk.bold('> REDUCING:'), modul.path);
       await reduceModule(modul);
-      if(!config.silent) console.log('-- done');
+      if(!config.silent) console.info('-- done');
     }
 
     /**
      * Analyzer part:
      */
-    if(!config.silent) console.log(chalk.bold('> ANALYZING:'), modul.path);
+    if(!config.silent) console.info(chalk.bold('> ANALYZING:'), modul.path);
     let result = await Analyzer.analyze(modul);
-    if(!config.silent) console.log('-- done');
-    if (config.verbose) console.log(result);
+    if(!config.silent) console.info('-- done');
+    if (config.verbose) console.info(result);
     
     for (let i of modul.descendents) {
       let descendent = _app.modules.find(m => { return m.path === i; });
@@ -284,7 +298,7 @@ async function readModule (modul) {
         }
       }
       if (changed) { // calling readModule only if child was updated
-        if (config.verbose) console.log(chalk.cyan('READMODULE:'), child.path, child.used);
+        if (config.verbose) console.info(chalk.cyan('READMODULE:'), child.path, child.used);
         await readModule(child);
         changed = false;
       }
@@ -361,6 +375,7 @@ async function moduleStat (modul) {
 
 
     let ast = es.parseScript(modul.initialSrc, {range: true, tokens: true, comment: true});
+    // let ast = es.parse(modul.initialSrc, {range: true, comment: true, tokens: true, sourceType: "commonjs"});
     modul.ast = ast;
 
     //calculating the SLOC
@@ -368,7 +383,7 @@ async function moduleStat (modul) {
     modul.initialSloc = sloc(gen, 'js').source;
     modul.finalSloc = modul.initialSloc;
   } catch (ex) {
-    if (config.verbose) console.warn(chalk.bold.yellow('WARN:'), modul.path, ex.message);
+    console.warn(modul.path, ex.message);
     modul.parseError = true;
   } finally {
     modul.initialSrc = null;
