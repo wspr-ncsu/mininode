@@ -34,13 +34,14 @@ async function init () {
  * @returns {AnalyzeResult}
  */
 module.exports.analyze = async function analyze (modul) {
+  console.info(`[Analyzer.js] analyzing ${modul.path}`);
   await init();
   resolve = resolveFrom.silent.bind(null, path.dirname(modul.path));
   await traverse(modul);
-  if (config.verbose) console.log(chalk.bold.cyan('SCOPE VARIABLES:'), vars);
-  if (config.verbose) console.log(chalk.bold.cyan('SCOPE ASSIGNMENTS:'), assignments);
-  await checkForLeaks()
-  if (config.verbose) console.log(chalk.bold.cyan('LEAKED GLOBALS:'), leaks);
+  console.debug(`[Analyzer.js] ${modul.path} has scope variables ${vars}`);
+  console.debug(`[Analyzer.js] ${modul.path} has scope assignments ${assignments}`);
+  await checkForLeaks();
+  console.debug(`[Analyzer.js] ${modul.path} global leaks ${leaks}`);
   variables.forEach((item, index) => {
     if (item.isModule && item.value) {
       if (utils.hasKey(modul.children, item.value)) {
@@ -60,11 +61,11 @@ module.exports.analyze = async function analyze (modul) {
       }
 
       if (leaks.includes(item.name)) {
-        if (config.verbose) console.log(chalk.bold.red('GLOBAL TO APP:', item.name));
+        console.debug(`[Analyzer.js] Global var "${item.name}"`);
         modul.app.globals.push({name: item.name, path: item.value, members: item.members.slice()});
       }
     } else if (item.isModule && item.value === null) {
-      console.log(chalk.bold.cyan('DYNAMIC IMPORT:'), item.name, modul.path);
+      console.debug(`[Analyzer.js] Dynamic import "${item.name}" inside "${modul.path}"`);
       let arr = modul.app.dimports.concat({name: item.name, members: item.members.filter(i => i !== '.'), by: modul.path});
       modul.app.dimports = [...new Set(arr)];
     }
@@ -76,6 +77,7 @@ module.exports.analyze = async function analyze (modul) {
  * @param {ModuleBuilder} modul
  */
 async function traverse (modul) {
+  console.debug(`[Analyzer.js] traversing AST of ${modul.path}`);
   estraverse.traverse(modul.ast, {
     enter: function (node, parent) {
       node['xParent'] = parent;

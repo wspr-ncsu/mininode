@@ -31,12 +31,6 @@ if (config.verbose) {
   logger = createLogger('debug');
 }
 
-console.log = (...args) => logger.info.call(logger, ...args);
-console.info = (...args) => logger.info.call(logger, ...args);
-console.warn = (...args) => logger.warn.call(logger, ...args);
-console.error = (...args) => logger.error.call(logger, ...args);
-console.debug = (...args) => logger.debug.call(logger, ...args);
-
 let location = config.origin;
 
 
@@ -51,34 +45,33 @@ let entries = [];
 // let devs = packageDependencies.toList(location, true);
 // console.info(devs, devs.length);
 // process.exit(0);
+console.critical('TESTING');
 
 (async function () {
   console.time('overall');
   try {
-    console.info(chalk.bold.blue(`====================\nSTARTED ${location}\n====================`));
-    console.info(chalk.bold.green('>> INITIALIZING...'));
+    console.info(`Starting with app at ${location}`)
     await init();
-    console.info(chalk.bold('>> DONE INITIALIZING'));
-    
-    console.info(chalk.bold.green('>> TRAVERSING...'));
-    await traverse(location);
-    console.info(chalk.bold('>> DONE TRAVERSING'));
 
-    console.info(chalk.bold.green('>> DETECTOR...'));
+    console.info('>> Started Traversing');
+    await traverse(location);
+    console.info('>> Finished Traversing');
+
+    console.info('>> Started Detector');
     await Detector(_app, entries);
-    console.info(chalk.bold(">> DONE DETECTOR"))
+    console.info('>> Finished Detector')
     
     if (_app.usedComplicatedDynamicImport) {
       throw new Error('DYNAMIC_IMPORT_DETECTED');
     }
     
     if (config.mode === 'fine') {
-      console.info(chalk.bold.green('>> BUILDING DEPENDENCY GRAPH...'));
+      console.info('>> [index.js] Started building dependency graph');
       await buildDependency();
-      console.info(chalk.bold('>> DONE BUILDING DEPENDENCY GRAPH'));
+      console.info('[index.js] Finished building dependency graph');
       // await attackSurface();
       
-      console.info(chalk.bold.green('>> FINAL REDUCING...'));
+      console.info('[index.js] Started final reduction');
       /**
        * 1. iterate modules' memusage
        * 2. map results to app.globals by name
@@ -108,7 +101,7 @@ let entries = [];
   
       let usedExternalModules = _app.modules.filter(m => (m.isUsed && !m.skipReduce));
       for (let modul of usedExternalModules) {
-        if (config.verbose) console.info(chalk.bold('> REDUCING:'), modul.path);
+        console.debug(chalk.bold('> REDUCING:'), modul.path);
         await reduceModule(modul);
         if (config.verbose) console.info('-- done');
       }
@@ -225,16 +218,15 @@ async function init () {
  * Builds the dependency graph of the application
  */
 async function buildDependency () {
-  
+  console.info(`[index.js] Building the dependency graph of ${_app.appname}`);
   for(let entry of entries) {
     let entryModule = _app.modules.find(m => { return m.path === entry; });
     if (!entryModule) {
-      console.error(chalk.red(`NO_ENTRY_POINT:`, entry));
+      console.critical(`[index.js] Can not find entry point module ${entry}`);
       process.exit(1);
     }
     entryModule.skipReduce = true;
     entryModule.isUsed = true;
-    console.info(chalk.bold.yellow('> STARTING:'), entry)
     await readModule(entryModule);
   }
 }
@@ -252,19 +244,17 @@ async function readModule (modul) {
 		 *  - or --skip-reduce flag was setup when script started
 		 */
     if (!config.skipReduction && !modul.skipReduce) {
-      if(!config.silent) console.info(chalk.bold('> REDUCING:'), modul.path);
       await reduceModule(modul);
-      if(!config.silent) console.info('-- done');
     }
 
     /**
      * Analyzer part:
      */
-    if(!config.silent) console.info(chalk.bold('> ANALYZING:'), modul.path);
+    console.info('[index.js] Started analysis of ', modul.path);
     let result = await Analyzer.analyze(modul);
-    if(!config.silent) console.info('-- done');
-    if (config.verbose) console.info(result);
-    
+    console.debug(`[index.js] Analysis of ${modul.path} returned ${result}`);
+    console.info('[index.js] Finished analysis of', modul.path);
+
     for (let i of modul.descendents) {
       let descendent = _app.modules.find(m => { return m.path === i; });
       if (descendent) {
@@ -298,7 +288,7 @@ async function readModule (modul) {
         }
       }
       if (changed) { // calling readModule only if child was updated
-        if (config.verbose) console.info(chalk.cyan('READMODULE:'), child.path, child.used);
+        console.debug(`[index.js] Changed the child of "${modul.path}" "${child.path}" is used "${child.used}"`);
         await readModule(child);
         changed = false;
       }
@@ -314,6 +304,7 @@ async function readModule (modul) {
  * @param {String} directory
  */
 async function traverse (directory) {
+  console.info(`[index.js] Traversing directory ${directory}`);
   try {
     var folderContent = fs.readdirSync(directory);
     for (let item of folderContent) {
@@ -356,6 +347,7 @@ async function traverse (directory) {
       } 
     }
   } catch (err) {
+    console.error(`[index.js] Traversing directory ${directory} returned error ${err.message}`);
     throw new Error(err);
   }
   return true;
@@ -366,6 +358,7 @@ async function traverse (directory) {
  * @param {ModuleBuilder} modul
  */
 async function moduleStat (modul) {
+
   try {
     if (modul.initialSrc.startsWith('#!')) {
       modul.hashbang = modul.initialSrc.split('\n', 1)[0]; // saves the hashbang value
@@ -388,15 +381,16 @@ async function moduleStat (modul) {
   } finally {
     modul.initialSrc = null;
   }
+
   try {
     if(!config.skipStat && !modul.parseError) {
       await stat(modul);
     }    
   } catch (error) {
+    console.error(`[index.js] Module ${modul.path} stat returned an error ${error.message}`);
     throw new Error(`STAT FAILED: ${modul.path} ${error.message}`);
   }
 
-  
   return modul;
 }
 
@@ -405,6 +399,7 @@ async function moduleStat (modul) {
  * @param {ModuleBuilder} modul 
  */
 async function reduceModule(modul, extra = null) {
+  console.debug(`[index.js] reducing the module ${modul.path}`);
   let additional = [];
 
   if (extra && extra.length > 0) {
