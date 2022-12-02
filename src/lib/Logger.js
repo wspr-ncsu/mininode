@@ -22,7 +22,6 @@ console.info = (...args) => logger.info.call(logger, ...args);
 console.warn = (...args) => logger.warn.call(logger, ...args);
 console.error = (...args) => logger.error.call(logger, ...args);
 console.debug = (...args) => logger.debug.call(logger, ...args);
-console.critical = (...args) => logger.crit.call(logger, ...args);
 
 module.exports = function(level = 'info', filename = 'mininode.log') {
     transports.console.level = level;
