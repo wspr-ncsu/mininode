@@ -45,7 +45,6 @@ let entries = [];
 // let devs = packageDependencies.toList(location, true);
 // console.info(devs, devs.length);
 // process.exit(0);
-console.critical('TESTING');
 
 (async function () {
   console.time('overall');
@@ -66,7 +65,7 @@ console.critical('TESTING');
     }
     
     if (config.mode === 'fine') {
-      console.info('>> [index.js] Started building dependency graph');
+      console.info('[index.js] Started building dependency graph');
       await buildDependency();
       console.info('[index.js] Finished building dependency graph');
       // await attackSurface();
@@ -222,7 +221,7 @@ async function buildDependency () {
   for(let entry of entries) {
     let entryModule = _app.modules.find(m => { return m.path === entry; });
     if (!entryModule) {
-      console.critical(`[index.js] Can not find entry point module ${entry}`);
+      console.error(`[index.js] Critical error, can not find entry point module "${entry}". Exiting the process...`);
       process.exit(1);
     }
     entryModule.skipReduce = true;

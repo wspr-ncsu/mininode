@@ -24,11 +24,11 @@ let visited = [];
 async function run(modul) {
   
   if (modul.parseError === true) {
-    console.error(`Detector.js: module ${modul.path} parsed with error. Returting without traversing`);
+    console.error(`[Detector.js] module ${modul.path} parsed with error. Returting without traversing`);
     return;
   }
   let rsv = resolveFrom.silent.bind(null, path.dirname(modul.path));
-  console.debug(`Detector.js: AST traversing ${modul.path}`);
+  console.debug(`[Detector.js] Traversing the AST of ${modul.path}`);
   estraverse.traverse(modul.ast, {
     enter: function(node, parent) {
       switch(node.type) {
@@ -83,7 +83,7 @@ async function run(modul) {
  */
 async function readModule(modul) {
   if (!visited.includes(modul.path)) {
-    console.debug(`Detector.js: reading the module ${modul.path}`);
+    console.info(`[Detector.js] reading the module ${modul.path}`);
     modul.isUsed = true;
     await run(modul);
     visited.push(modul.path);
@@ -107,7 +107,7 @@ async function main (app, entries = []) {
   _app = app;
   for (let entryPath of entries) {
     let entry = app.modules.find(m => m.path === entryPath);
-    if (!entry) throw new Error('Detector.js: NO_ENTRY_POINT');
+    if (!entry) throw new Error('[Detector.js] NO_ENTRY_POINT');
     await readModule(entry);
   }
 }
