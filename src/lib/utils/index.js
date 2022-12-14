@@ -124,8 +124,8 @@ async function removeFile(modul, dryRun = false) {
       // TODO: .bin, do we need this?
       if (!(modul.path.includes('/.bin/') || modul.path.includes('/bin/'))) {
         modul.isRemoved = true;
+        console.debug(`[utils.js] Deleting a file from the disk "${modul.path}"`);
         if (!dryRun) fs.unlinkSync(modul.path);
-        if(config.verbose) console.log('> removed: ', modul.path);
       }
     }
     

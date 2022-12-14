@@ -100,16 +100,16 @@ let entries = [];
   
       let usedExternalModules = _app.modules.filter(m => (m.isUsed && !m.skipReduce));
       for (let modul of usedExternalModules) {
-        console.debug(chalk.bold('> REDUCING:'), modul.path);
+        console.debug(`[index.js] Reducing the module "${modul.path}"`);
         await reduceModule(modul);
-        if (config.verbose) console.info('-- done');
+        console.debug(`[index.js] Finished reducing the module "${modul.path}"`);
       }
-      console.info(chalk.bold('>> DONE FINAL REDUCING'));
+      console.info(`[index.js] Finished final reduction`);
     
     }
     
     if (!config.skipRemove) {
-      console.info(chalk.bold.green('>> REMOVING UNUSED MODULES...'));
+      console.info(`[index.js] Removing unused modules`);
       
       if (!_app.usedComplicatedDynamicImport) {
         let modulesToRemove = _app.modules.filter(m => !m.isUsed);
@@ -119,7 +119,7 @@ let entries = [];
       } else if (config.mode === 'fine'){
         // run reduction with dimports
         for (const dimport of _app.dimports) {
-          if (config.verbose) console.info('> DYNAMIC IMPORT REDUCTION', _app.dimports);
+          console.debug('[index.js] Reducing modules with dynamic imports', _app.dimports);
           let reducableModules = _app.modules.filter(m => (!m.skipReduce) && dimport.members.every(v => m.members.includes(v)));
           for (let modul of reducableModules) {
             await reduceModule(modul, dimport.members);
@@ -127,27 +127,27 @@ let entries = [];
         }
       }
       
-      console.info(chalk.bold('>> DONE REMOVING UNUSED MODULES'));
+      console.info(`[index.js] Finished removing unused modules`);
     }
     
-    console.info(chalk.bold.green('>> GENERATING...'));
+    console.info(`[index.js] Generating codes for modules`);
     let usedModules = _app.modules.filter(m => !m.isRemoved && !m.skipReduce);
     for (var modul of usedModules) {
       if (!modul.parseError) {
         generator.generate(modul, config.dryRun);
       }
     }
-    console.info(chalk.bold('>> DONE GENERATING'));
+    console.info(`[index.js] Finished generating codes for modules`);
 
-    console.info(chalk.bold.green('>> CALCULATING STATS...'));
+    console.info(`[index.js] Calculating overall statistics`);
     utils.calculateAppStatictic(_app);
-    console.info(chalk.bold('>> DONE CALCULATING'));
+    console.info(`[index.js] Finished calculating overall statistics`);
 
     if (config.log) {
-      console.info(chalk.bold.green('>> CREATING MININODE.JSON...'));
+      console.info(`[index.js] Creating final statistics file "${config.logOutput}"`);
       let log_path = path.join(location, config.logOutput);
       fs.writeFileSync(log_path, JSON.stringify(_app, null, 2), {encoding: 'utf-8'});
-      console.info(chalk.bold('>> DONE CREATING MININODE.JSON'));
+      console.info(`[index.js] Finished creating statistics file. Statistics are stored in "${log_path}"`);
     }
 
   } catch (err) {
