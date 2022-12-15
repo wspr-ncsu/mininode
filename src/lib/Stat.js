@@ -1,5 +1,5 @@
 const estraverse = require('estraverse');
-const syntax = require('esprima').Syntax;
+const syntax = require('espree').Syntax;
 const helper = require('./utils/helpers');
 const utils = require('./utils');
 const Scope = require('./Scope');

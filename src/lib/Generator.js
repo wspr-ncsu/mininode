@@ -5,7 +5,8 @@
 const helper = require('./utils/helpers');
 const estraverse = require('estraverse');
 const escodegen = require('escodegen');
-const es = require('esprima');
+// const es = require('esprima');
+const es = require('espree');
 const fse = require('fs-extra');
 const chalk = require('chalk');
 const ModuleBuilder = require('./models/ModuleBuilder');

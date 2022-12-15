@@ -4,7 +4,7 @@
  *  - used/unused members of the required modules
  */
 const estraverse = require('estraverse');
-const syntax = require('esprima').Syntax;
+const syntax = require('espree').Syntax;
 const chalk = require('chalk');
 const config = require('./Configurator');
 const helper = require('./utils/helpers');

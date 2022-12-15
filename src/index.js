@@ -1,8 +1,8 @@
 #! /usr/bin/env node
 
 const fs = require('fs');
-const es = require('esprima');
-// const es = require('espree');
+// const es = require('esprima');
+const es = require('espree');
 const escodegen = require('escodegen');
 const path = require('path');
 const chalk = require('chalk');
@@ -52,13 +52,13 @@ let entries = [];
     console.info(`Starting with app at ${location}`)
     await init();
 
-    console.info('>> Started Traversing');
+    console.info('[index.js] Started Traversing');
     await traverse(location);
-    console.info('>> Finished Traversing');
+    console.info('[index.js] Finished Traversing');
 
-    console.info('>> Started Detector');
+    console.info('[index.js] Started Detector');
     await Detector(_app, entries);
-    console.info('>> Finished Detector')
+    console.info('[index.js] Finished Detector')
     
     if (_app.usedComplicatedDynamicImport) {
       throw new Error('DYNAMIC_IMPORT_DETECTED');
@@ -109,7 +109,7 @@ let entries = [];
     }
     
     if (!config.skipRemove) {
-      console.info(`[index.js] Removing unused modules`);
+      console.info(`[index.js] Deleting unused modules(files)`);
       
       if (!_app.usedComplicatedDynamicImport) {
         let modulesToRemove = _app.modules.filter(m => !m.isUsed);
@@ -127,7 +127,7 @@ let entries = [];
         }
       }
       
-      console.info(`[index.js] Finished removing unused modules`);
+      console.info(`[index.js] Finished deleting unused modules(files)`);
     }
     
     console.info(`[index.js] Generating codes for modules`);
@@ -366,8 +366,9 @@ async function moduleStat (modul) {
     // modul.initialSrc = modul.initialSrc.replace(/\.\.\./g, '_mininode_'); // breaks the test
 
 
-    let ast = es.parseScript(modul.initialSrc, {range: true, tokens: true, comment: true});
-    // let ast = es.parse(modul.initialSrc, {range: true, comment: true, tokens: true, sourceType: "commonjs"});
+    // let ast = es.parseScript(modul.initialSrc, {range: true, tokens: true, comment: true});
+    let ast = es.parse(modul.initialSrc, {sourceType: "commonjs", ecmaVersion: 6, range: true, comment: true, tokens: true});
+    
     modul.ast = ast;
 
     //calculating the SLOC
@@ -375,7 +376,7 @@ async function moduleStat (modul) {
     modul.initialSloc = sloc(gen, 'js').source;
     modul.finalSloc = modul.initialSloc;
   } catch (ex) {
-    console.warn(modul.path, ex.message);
+    console.warn(`[index.js] Error occured while parsing "${modul.path}". Error message: ${ex.message}`);
     modul.parseError = true;
   } finally {
     modul.initialSrc = null;

@@ -5,8 +5,7 @@
  */
 const path = require('path');
 const resolveFrom = require('resolve-from');
-const esprima = require('esprima');
-const syntax = esprima.Syntax;
+const syntax = require("espree").Syntax;
 const utils = require('./utils');
 const flatten = require('./utils/flatten-object-keys');
 const estraverse = require('estraverse');

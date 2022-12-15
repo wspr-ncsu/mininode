@@ -6,7 +6,7 @@
  *  - function is used/unsed
  */
 const estraverse = require('estraverse');
-const es = require('esprima');
+const es = require('espree');
 const chalk = require('chalk');
 const path = require('path');
 const helper = require('./utils/helpers');
