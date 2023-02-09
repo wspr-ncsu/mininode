@@ -5,7 +5,8 @@
 const helper = require('./utils/helpers');
 const estraverse = require('estraverse');
 const escodegen = require('escodegen');
-const es = require('esprima');
+// const es = require('esprima');
+const es = require('espree');
 const fse = require('fs-extra');
 const chalk = require('chalk');
 const ModuleBuilder = require('./models/ModuleBuilder');
@@ -13,7 +14,7 @@ const sloc = require('sloc');
 
 module.exports = function (source, destination) {
   try {
-    console.log(chalk.bold('> COPYING:'), source, '->', destination);
+    console.log(`[Generator.js] Copying "${source}" into "${destination}"`);
     fse.copySync(source, destination);
   } catch (err) {
     console.log(chalk.red(err));
@@ -25,6 +26,7 @@ module.exports = function (source, destination) {
  * @param {ModuleBuilder} modul
  */
 module.exports.generate = async function (modul, dryRun = false) {
+  console.log(`[Generator.js] Traversing the AST to generator code for "${modul.path}"`);
   let currentScope = 0;
   let removedExports = 0, removedFunctions = 0, removedVariables = 0;
   try {
@@ -36,6 +38,7 @@ module.exports.generate = async function (modul, dryRun = false) {
         switch (node.type) {
           case es.Syntax.FunctionDeclaration:
             if (node.xUsed === false) {
+              console.debug(`[Generator.js] removing the FunctionDeclaration "${node}"`);
               removedFunctions += 1;
               this.remove();
             }
@@ -76,6 +79,7 @@ module.exports.generate = async function (modul, dryRun = false) {
             break;
           case es.Syntax.VariableDeclaration:
             if (node.declarations.length < 1) {
+              console.debug(`[Generator.js] removing VariableDeclaration ${node}`);
               this.remove();
             }
             break;
@@ -84,6 +88,7 @@ module.exports.generate = async function (modul, dryRun = false) {
               this.remove();
             } else if (node.expression.xUsed === false) {
               removedExports += 1;
+              console.debug(`[Generator.js] removing ExpressionStatement ${node}`);
               this.remove();
             } 
             // else if (node.expression.xUsed === true) {
@@ -113,7 +118,9 @@ module.exports.generate = async function (modul, dryRun = false) {
     });
     
     // need to generate potential final source code to calculate reduced LOC
+    console.debug(`[Generator.js] Attaching comments`);
     modul.ast = escodegen.attachComments(modul.ast, modul.ast.comments, modul.ast.tokens);
+    console.debug(`[Generator.js] Generating final code for "${modul.path}"`);
     let gen = escodegen.generate(modul.ast, {comment: true});
     modul.finalSloc = sloc(gen, 'js').source;
     modul.removedExports = removedExports;
@@ -125,11 +132,12 @@ module.exports.generate = async function (modul, dryRun = false) {
         gen = modul.hashbang + '\n' + gen;
       }
       let changeCount = (removedExports + removedFunctions + removedVariables);
+      console.debug(`[Generator.js] Overwriting "${modul.path}" with new code if there are changes. Total change count: ${changeCount}`);
       if (changeCount > 0) {
         await fse.writeFile(modul.path, gen);
       }
     }
   } catch (error) {
-    console.error(chalk.bgRed.bold('ERROR:'), 'generation', modul.path, error);
+    console.error(`[Generator.js] Error during code generation for "${modul.path}"`, error);
   }
 };

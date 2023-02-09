@@ -1,4 +1,4 @@
-const syntax = require('esprima').Syntax;
+const syntax = require('espree').Syntax;
 class Scope {
   constructor() {
     this.vars = [];

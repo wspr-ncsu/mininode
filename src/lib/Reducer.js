@@ -6,7 +6,7 @@
  *  - function is used/unsed
  */
 const estraverse = require('estraverse');
-const es = require('esprima');
+const es = require('espree');
 const chalk = require('chalk');
 const path = require('path');
 const helper = require('./utils/helpers');
@@ -36,6 +36,7 @@ async function init (dirname) {
  * @returns {String} if the module is chained returns path of the chain, else returns NULL
  */
 module.exports.reduce = async function (modul, extra = []) {
+  console.debug(`[Reducer.js] reducing the module ${modul.path}`);
   await init(path.dirname(modul.path));
   await traverse(modul, extra);
 };
@@ -45,6 +46,7 @@ module.exports.reduce = async function (modul, extra = []) {
  * @param {Array<String>} extra 
  */
 async function traverse (modul, extra) {
+  console.debug(`[Reducer.js] traversing AST of ${modul.path}`);
   estraverse.traverse(modul.ast, {
     enter: function (node, parent) {
       if (helper.createsNewScope(node)) {
