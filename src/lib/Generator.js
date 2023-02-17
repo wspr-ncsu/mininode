@@ -22,7 +22,6 @@ module.exports = function (source, destination) {
 };
 
 /**
- *
  * @param {ModuleBuilder} modul
  */
 module.exports.generate = async function (modul, dryRun = false) {

@@ -77,7 +77,6 @@ async function run(modul) {
 }
 
 /**
- * 
  * @param {ModuleBuilder} modul 
  */
 async function readModule(modul) {
@@ -99,7 +98,6 @@ async function readModule(modul) {
 }
 
 /**
- * 
  * @param {AppBuilder} app 
  */
 async function main (app, entries = []) {

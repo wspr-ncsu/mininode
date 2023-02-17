@@ -16,7 +16,6 @@ async function stat(modul) {
 }
 
 /**
- * 
  * @param {ModuleBuilder} modul 
  */
 async function secondPass(modul) {
