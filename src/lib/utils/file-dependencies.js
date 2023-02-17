@@ -4,7 +4,7 @@ const esprima = require('esprima');
 const syntax = esprima.Syntax;
 const estraverse = require('estraverse');
 
-function allRequires(base, ast) {
+module.exports = function allRequires(base, ast) {
   let resolveFrom = resolve.bind(base, null);
   let result = [];
   estraverse.traverse(ast, {

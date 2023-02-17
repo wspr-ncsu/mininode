@@ -2,7 +2,7 @@ const es = require('esprima');
 const saferegex = require('safe-regex');
 
 /**
- * @returns {String} closests variable_declarator/assignment_expression identifier
+ * @returns {String} closest variable_declarator/assignment_expression identifier
  * @param {*} node
  * @param {Function} cb
  */
