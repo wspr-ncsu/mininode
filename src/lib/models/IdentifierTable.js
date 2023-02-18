@@ -17,7 +17,6 @@ class IdentifierTable {
                         result.add(value);
                     }
                 }
-                // console.log(queue.length, 'queue');
             }
             return result;
         }
