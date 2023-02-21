@@ -1,4 +1,3 @@
-const chalk = require("chalk");
 const fs = require("fs");
 const config = require("../Configurator");
 const path = require("path");

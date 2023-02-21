@@ -7,7 +7,6 @@ const saferegex = require('safe-regex');
  * @param {Function} cb
  */
 function VariableAssignmentName (node, cb) {
-  // console.log(chalk.blue("Parent:"), node);
   if (!node) return cb(null);
   if (node.type === es.Syntax.Program) {
     return cb(null);

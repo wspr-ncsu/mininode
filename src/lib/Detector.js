@@ -7,7 +7,6 @@ const path = require("path");
 const resolveFrom = require("resolve-from");
 const syntax = require("espree").Syntax;
 const utils = require("./utils");
-const flatten = require("./utils/flatten-object-keys");
 const estraverse = require("estraverse");
 const AppBuilder = require("./models/AppBuilder");
 const ModuleBuilder = require("./models/ModuleBuilder");
