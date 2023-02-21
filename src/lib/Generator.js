@@ -25,14 +25,10 @@ module.exports = function (source, destination) {
  */
 module.exports.generate = async function (modul, dryRun = false) {
   console.log(`[Generator.js] Traversing the AST to generator code for "${modul.path}"`);
-  let currentScope = 0;
   let removedExports = 0, removedFunctions = 0, removedVariables = 0;
   try {
     estraverse.replace(modul.ast, {
       enter: function (node, parent) {
-        if (helper.createsNewScope(node)) {
-          currentScope += 1;
-        }
         switch (node.type) {
           case es.Syntax.FunctionDeclaration:
             if (node.xUsed === false) {
@@ -60,10 +56,6 @@ module.exports.generate = async function (modul, dryRun = false) {
         }
       },
       leave: function (node, parent) {
-        if (helper.createsNewScope(node)) {
-          currentScope -= 1;
-          // todo remove scoped 
-        }
         switch (node.type) {
           case es.Syntax.ObjectPattern:
             if (node.properties.length < 1) {
