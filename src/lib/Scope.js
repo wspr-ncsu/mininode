@@ -1,4 +1,4 @@
-const syntax = require('espree').Syntax;
+const syntax = require("espree").Syntax;
 class Scope {
   constructor() {
     this.vars = [];
@@ -23,10 +23,12 @@ class Scope {
   }
 
   isNew(node) {
-    if (!node) throw new Error('SCOPE_NODE_IS_NULL');
-    return node.type === syntax.Program ||
-          node.type === syntax.FunctionDeclaration ||
-          node.type === syntax.FunctionExpression;
+    if (!node) throw new Error("SCOPE_NODE_IS_NULL");
+    return (
+      node.type === syntax.Program ||
+      node.type === syntax.FunctionDeclaration ||
+      node.type === syntax.FunctionExpression
+    );
   }
 }
 

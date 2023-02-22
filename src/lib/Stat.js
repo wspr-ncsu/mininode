@@ -248,13 +248,11 @@ async function initialPass(modul) {
             } else if (node.right.type === syntax.BinaryExpression && utils.BinaryExpression.isDynamic(node.right)) {
               let idens = utils.BinaryExpression.getIdentifiers(node.right);
               if (idens) {
-                // console.log(idens, 'idens');
                 for (const i of idens) {
                   modul.identifiers.addDependency(id, i);
                 }
               }
             }
-            // console.log(id, 'added in initial pass');
           }
           break;
         case syntax.VariableDeclarator:
@@ -281,7 +279,6 @@ async function initialPass(modul) {
             } else if (node.init.type === syntax.BinaryExpression && utils.BinaryExpression.isDynamic(node.init)) {
               let idens = utils.BinaryExpression.getIdentifiers(node.init);
               if (idens) {
-                // console.log(idens, 'idens');
                 for (const i of idens) {
                   modul.identifiers.addDependency(id, i);
                 }

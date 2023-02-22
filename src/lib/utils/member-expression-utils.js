@@ -13,9 +13,6 @@ function getObjectName(node) {
     return node.name;
   }
   // should I add Literal???
-  // else if (node.type === es.Syntax.Literal) {
-  //   return node.value;
-  // }
   if (node.type !== es.Syntax.MemberExpression) {
     return null;
   } else if (node.object.type === es.Syntax.Identifier) {

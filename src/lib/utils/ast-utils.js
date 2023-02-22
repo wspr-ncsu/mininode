@@ -29,7 +29,6 @@ function createsNewScope(node) {
     node.type === es.Syntax.FunctionDeclaration ||
     node.type === es.Syntax.FunctionExpression
   );
-  // || node.type === syntax.ArrowFunctionExpression
 }
 
 module.exports.closests = closests;
