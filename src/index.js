@@ -174,10 +174,6 @@ async function init() {
   _app.appname = packageJson.name;
   _app.version = packageJson.version;
   _app.type = packageJson.type;
-  if (_app.type === "module") {
-    throw new Error("ES6_NOT_SUPPORTED");
-  }
-
   _app.path = location;
   _app.main = utils.entryPoint(location, packageJson.main);
 
@@ -322,7 +318,10 @@ async function traverse(directory) {
         await traverse(item);
       } else if (stat.isFile()) {
         let extension = path.extname(item).toLowerCase();
-        if (extension === ".js" || extension === ".cjs" || extension === "") {
+        if (
+          _app.type === "commonjs" &&
+          (extension === ".js" || extension === ".cjs" || extension === "")
+        ) {
           var _module = new ModuleBuilder();
           _module.app = _app;
           _module.name = path.basename(item);
