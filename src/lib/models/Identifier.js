@@ -8,7 +8,6 @@ class Identifier {
     }
 
     addValue(value) {
-        // console.log('stuck in add value');
         let type = typeof value;
         if (type === 'string') {
             this.values.add(value);
@@ -17,7 +16,6 @@ class Identifier {
 
     addLink(link) {
         if (typeof link !== 'string') throw new Error('IDENTIFIER_LINK_MUST_BE_STRING');
-
         if (!this.links.includes(link))
             this.links.push(link);
     }

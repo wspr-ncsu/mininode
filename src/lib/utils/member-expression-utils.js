@@ -1,18 +1,17 @@
-
-const astutils = require('./ast-utils');
-const es = require('esprima');
+const astutils = require("./ast-utils");
+const es = require("esprima");
 
 /**
  * Finds object name of the member expression.
  * @returns {String}
  * @param {MemberExpression} node
  */
-function getObjectName (node) {
+function getObjectName(node) {
   if (node.type === es.Syntax.CallExpression) {
     return getObjectName(node.callee);
   } else if (node.type === es.Syntax.Identifier) {
     return node.name;
-  } 
+  }
   // should I add Literal???
   // else if (node.type === es.Syntax.Literal) {
   //   return node.value;
@@ -22,7 +21,7 @@ function getObjectName (node) {
   } else if (node.object.type === es.Syntax.Identifier) {
     return node.object.name;
   } else if (node.object.type === es.Syntax.ThisExpression) {
-    return 'this';
+    return "this";
   }
   return getObjectName(node.object);
 }
@@ -34,34 +33,37 @@ function getObjectName (node) {
  * @returns {String}
  * @param {MemberExpression} node
  */
-function getPropertyName (node) {
+function getPropertyName(node) {
   if (node) {
     if (node.type === es.Syntax.MemberExpression) {
-      let propertyName = '';
+      let propertyName = "";
       if (node.property.type === es.Syntax.Identifier) {
         propertyName = node.property.name;
       } else if (node.property.type === es.Syntax.Literal) {
         propertyName = node.property.value;
       }
-      let parentProperty = getPropertyName(node['xParent']);
+      let parentProperty = getPropertyName(node["xParent"]);
       if (parentProperty) {
-        return propertyName + '.' + parentProperty;
+        return propertyName + "." + parentProperty;
       }
       return propertyName;
     } else if (node.type === es.Syntax.CallExpression) {
-      return getPropertyName(node['xParent']);
+      return getPropertyName(node["xParent"]);
     }
   }
-  
+
   return null;
 }
 
-function getMemberExpressionString (node) {
+function getMemberExpressionString(node) {
   if (node.type !== es.Syntax.MemberExpression) return null;
-  if (node.object.type === es.Syntax.Identifier || node.object.type === es.Syntax.ThisExpression) {
+  if (
+    node.object.type === es.Syntax.Identifier ||
+    node.object.type === es.Syntax.ThisExpression
+  ) {
     let objectName = getObjectName(node);
     let propertyName = getPropertyName(node);
-    return {object: objectName, property: propertyName};
+    return { object: objectName, property: propertyName };
   } else {
     return getMemberExpressionString(node.object);
   }
@@ -71,22 +73,23 @@ function getMemberExpressionString (node) {
  * @returns {String}
  * @param {String} str
  */
-function getExportedProperty (str) {
-  if (str.startsWith('exports.')) {
-    return str.replace('exports.', '');
-  } else if (str.startsWith('module.exports.')) {
-    return str.replace('module.exports.', '');
-  } else if (str === 'module.exports') { // how to detect exports
+function getExportedProperty(str) {
+  if (str.startsWith("exports.")) {
+    return str.replace("exports.", "");
+  } else if (str.startsWith("module.exports.")) {
+    return str.replace("module.exports.", "");
+  } else if (str === "module.exports") {
+    // how to detect exports
     return str;
   }
   return null;
 }
 /**
  * @returns {Boolean} Returns true if MemberExpression itself or its object is computed, false otherwise
- * @param {Node} node 
+ * @param {Node} node
  */
 function isComputedMemberExpressionChild(node) {
-  if(node.type === es.Syntax.CallExpression) {
+  if (node.type === es.Syntax.CallExpression) {
     return isComputedMemberExpressionChild(node.callee);
   } else if (node.type === es.Syntax.MemberExpression) {
     if (node.computed && node.property.type !== es.Syntax.Literal) {
@@ -100,12 +103,12 @@ function isComputedMemberExpressionChild(node) {
 }
 /**
  * @returns {Boolean} Returns true if MemberExpression itself or its xParent is computed, false otherwise
- * @param {Node} node 
+ * @param {Node} node
  */
 function isComputedMemberExpressionParent(node) {
   if (node.type === es.Syntax.CallExpression && node.xParent) {
     return isComputedMemberExpressionParent(node.xParent);
-  } else if(node.type === es.Syntax.MemberExpression) {
+  } else if (node.type === es.Syntax.MemberExpression) {
     if (node.computed && node.property.type !== es.Syntax.Literal) {
       return true;
     }
@@ -118,19 +121,22 @@ function isComputedMemberExpressionParent(node) {
 
 /**
  * @returns {Boolean} Returns true if any part of nested MemberExpression is computed, or false otherwise.
- * @param {Node} node 
+ * @param {Node} node
  */
 function isComputed(node) {
-  return isComputedMemberExpressionChild(node) || isComputedMemberExpressionParent(node);
+  return (
+    isComputedMemberExpressionChild(node) ||
+    isComputedMemberExpressionParent(node)
+  );
 }
 
 /**
- * @returns {Boolean} returns true if MemberExpression is exporting, and false otherwise. 
- * @param {*} node 
+ * @returns {Boolean} returns true if MemberExpression is exporting, and false otherwise.
+ * @param {*} node
  */
 function isExport(node) {
   let object = getObjectName(node);
-  if (object === 'exports' || object === 'module') {
+  if (object === "exports" || object === "module") {
     let assignment = astutils.closests(node, es.Syntax.AssignmentExpression);
     if (assignment && assignment.left.type === es.Syntax.MemberExpression) {
       if (object === getObjectName(assignment.left)) {
@@ -141,43 +147,50 @@ function isExport(node) {
   return false;
 }
 /**
- * 
- * @param {*} node 
+ *
+ * @param {*} node
  */
 function getMemberExpressionMeta(node) {
   if (node.type === es.Syntax.CallExpression) {
     if (node.callee.type === es.Syntax.Identifier) {
       let property = getPropertyName(node);
       let computed = isComputed(node);
-      
+
       return {
         object: node.callee.name,
         property: property,
         computed: computed,
-        exported: false
-      }
+        exported: false,
+      };
     }
-    
+
     return getMemberExpressionMeta(node.callee);
-    
   } else if (node.type === es.Syntax.MemberExpression) {
     if (node.object.type === es.Syntax.Identifier) {
       let property = getPropertyName(node);
       let computed = isComputed(node);
       let exported = false;
 
-      if (node.object.name === 'exports' || (node.object.name === 'module' && node.property.type === es.Syntax.Identifier && node.property.name === 'exports')) {
-        let assignment = astutils.closests(node, es.Syntax.AssignmentExpression);
+      if (
+        node.object.name === "exports" ||
+        (node.object.name === "module" &&
+          node.property.type === es.Syntax.Identifier &&
+          node.property.name === "exports")
+      ) {
+        let assignment = astutils.closests(
+          node,
+          es.Syntax.AssignmentExpression
+        );
         if (assignment && assignment.left.type === es.Syntax.MemberExpression) {
           exported = getObjectName(assignment.left) === node.object.name;
         }
       }
-      
+
       return {
-        object: node.object.name, 
+        object: node.object.name,
         property: property,
         computed: computed,
-        exported: exported
+        exported: exported,
       };
     }
     return getMemberExpressionMeta(node.object);

@@ -60,7 +60,6 @@ async function traverse(directory) {
   return true;
 }
 /**
- * 
  * @param {ModuleBuilder} modul 
  */
 async function parse(modul) {

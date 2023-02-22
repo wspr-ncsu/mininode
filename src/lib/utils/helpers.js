@@ -2,12 +2,11 @@ const es = require('esprima');
 const saferegex = require('safe-regex');
 
 /**
- * @returns {String} closests variable_declarator/assignment_expression identifier
+ * @returns {String} closest variable_declarator/assignment_expression identifier
  * @param {*} node
  * @param {Function} cb
  */
 function VariableAssignmentName (node, cb) {
-  // console.log(chalk.blue("Parent:"), node);
   if (!node) return cb(null);
   if (node.type === es.Syntax.Program) {
     return cb(null);
