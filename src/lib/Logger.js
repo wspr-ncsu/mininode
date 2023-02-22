@@ -12,10 +12,8 @@ const logger = winston.createLogger({
   transports: [transports.console, transports.file],
 });
 
-/**
- * Overrides the Global console variables functions.
- * This will ensure that everytime when console is used it log into a file
- */
+// Overrides the Global console variables functions.
+// This will ensure that everytime when console is used it log into a file
 console.log = (...args) => logger.info.call(logger, ...args);
 console.info = (...args) => logger.info.call(logger, ...args);
 console.warn = (...args) => logger.warn.call(logger, ...args);

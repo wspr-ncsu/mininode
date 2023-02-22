@@ -58,13 +58,10 @@ let entries = [];
       console.info("[index.js] Started building dependency graph");
       await buildDependency();
       console.info("[index.js] Finished building dependency graph");
-
       console.info("[index.js] Started final reduction");
-      /**
-       * 1. iterate modules' memusage
-       * 2. map results to app.globals by name
-       * 3. add to individual modules used globals.
-       */
+      // 1. iterate modules' memusage
+      // 2. map results to app.globals by name
+      // 3. add to individual modules used globals.
       for (let modul of _app.modules) {
         for (let mem in modul.memusages) {
           _app.globals.forEach((i) => {
@@ -162,9 +159,7 @@ let entries = [];
   process.exit(1);
 });
 
-/**
- * Initializes the initial state of the application.
- */
+// Initializes the initial state of the application.
 async function init() {
   if (!config.dryRun) {
     generator(location, config.destination);
@@ -220,9 +215,7 @@ async function init() {
   }
 }
 
-/**
- * Builds the dependency graph of the application
- */
+// Builds the dependency graph of the application
 async function buildDependency() {
   console.info(`[index.js] Building the dependency graph of ${_app.appname}`);
   for (let entry of entries) {

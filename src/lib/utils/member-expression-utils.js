@@ -144,7 +144,6 @@ function isExport(node) {
   return false;
 }
 /**
- *
  * @param {*} node
  */
 function getMemberExpressionMeta(node) {
