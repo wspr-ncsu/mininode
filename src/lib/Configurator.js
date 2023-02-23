@@ -14,7 +14,6 @@ const banner = chalk.default.green(
     "#                                 \n" +
     "# Authors: Igibek Koishybayev, Alexandros Kapravelos\n" +
     `# Version: ${app.version}\n` +
-    // `# Description: ${chalk.default.white(app.description)}\n` +
     "####################################\n"
 );
 
