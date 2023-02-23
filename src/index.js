@@ -20,8 +20,7 @@ const createLogger = require("./lib/Logger");
 let logger = createLogger();
 if (config.silent) {
   logger = createLogger("error");
-}
-if (config.verbose) {
+} else if (config.verbose) {
   logger = createLogger("debug");
 }
 
@@ -312,20 +311,20 @@ async function traverse(directory) {
       // Better if we have some array of ignore list
       if (config.ignored.includes(item)) continue;
 
-      item = path.join(directory, item);
-      let stat = fs.statSync(item);
+      itemPath = path.join(directory, item);
+      let stat = fs.statSync(itemPath);
       if (stat.isDirectory()) {
-        await traverse(item);
+        await traverse(itemPath);
       } else if (stat.isFile()) {
-        let extension = path.extname(item).toLowerCase();
+        let extension = path.extname(itemPath).toLowerCase();
         if (
           _app.type === "commonjs" &&
           (extension === ".js" || extension === ".cjs" || extension === "")
         ) {
           var _module = new ModuleBuilder();
           _module.app = _app;
-          _module.name = path.basename(item);
-          _module.path = item;
+          _module.name = path.basename(itemPath);
+          _module.path = itemPath;
 
           if (directory.indexOf("/node_modules", location.length - 1) === -1) {
             _module.isOwned = true;
@@ -340,7 +339,7 @@ async function traverse(directory) {
             }
           }
           _module.initialSrc = fs.readFileSync(`${_module.path}`, utf);
-          await moduleStat(_module);
+          await generateModuleStatistics(_module);
           _app.modules.push(_module);
         }
       }
@@ -358,7 +357,7 @@ async function traverse(directory) {
  * Generate a general statistic for the module
  * @param {ModuleBuilder} modul
  */
-async function moduleStat(modul) {
+async function generateModuleStatistics(modul) {
   try {
     if (modul.initialSrc.startsWith("#!")) {
       modul.hashbang = modul.initialSrc.split("\n", 1)[0]; // saves the hashbang value
@@ -371,7 +370,6 @@ async function moduleStat(modul) {
       comment: true,
       tokens: true,
     });
-
     modul.ast = ast;
 
     //calculating the SLOC

@@ -1,14 +1,14 @@
-const estraverse = require('estraverse');
-const syntax = require('espree').Syntax;
-const helper = require('./utils/helpers');
-const utils = require('./utils');
-const Scope = require('./Scope');
-const attack = require('./attack.json');
-const ModuleBuilder = require('./models/ModuleBuilder');
+const estraverse = require("estraverse");
+const syntax = require("espree").Syntax;
+const helper = require("./utils/helpers");
+const utils = require("./utils");
+const Scope = require("./Scope");
+const attack = require("./attack.json");
+const ModuleBuilder = require("./models/ModuleBuilder");
 
 // FIXME: maximum call stack exceeded
 /**
- * @param {ModuleBuilder} modul 
+ * @param {ModuleBuilder} modul
  */
 async function stat(modul) {
   await initialPass(modul);
@@ -16,70 +16,8 @@ async function stat(modul) {
 }
 
 /**
- * @param {ModuleBuilder} modul 
- */
-async function secondPass(modul) {
-  let scope = new Scope();
-  estraverse.traverse(modul.ast, {
-    enter: function(node, parent){
-      if (scope.isNew(node)) scope.create();
-      if (node.type === syntax.VariableDeclarator) {
-        if (node.init && node.id.type === syntax.Identifier) {
-          let id = node.id.name;
-          if (modul.identifiers.hasIdentifier(id) && modul.identifiers.isModule(id)) {
-            if (node.init.type === syntax.Literal) {
-              modul.identifiers.addValue(id, node.init.value);
-            } else if(node.init.type === syntax.Identifier) {
-              modul.identifiers.addLink(id, node.init.name);
-            } else if (node.init.type === syntax.BinaryExpression) { 
-              if (utils.BinaryExpression.isDynamic(node.init)) {
-                let values = utils.BinaryExpression.getValues(node.init, modul.identifiers);
-                if (!values) modul.identifiers.setComplex(id, true);
-                else { modul.identifiers.addValue(id, values); }
-              } else {
-                let binaryExpressionValue = utils.BinaryExpression.getValue(node.init);
-                modul.identifiers.addValue(id, binaryExpressionValue);
-              }
-            } else {
-              modul.identifiers.setComplex(id, true);
-            }
-          }
-            
-        }
-      } else if (node.type === syntax.AssignmentExpression) {
-        if (node.left.type === syntax.Identifier) {
-          let id = node.left.name;
-          if (modul.identifiers.hasIdentifier(id) && modul.identifiers.isModule(id)) {
-            if (node.right.type === syntax.Literal) {
-              modul.identifiers.addValue(id, node.right.value);
-            } else if (node.right.type === syntax.Identifier) {
-              modul.identifiers.addLink(id, node.right.name);
-            } else if (node.right.type === syntax.BinaryExpression) { 
-              if (utils.BinaryExpression.isDynamic(node.right)) {
-                let values = utils.BinaryExpression.getValues(node.right, modul.identifiers);
-                if (!values) modul.identifiers.setComplex(id, true);
-                else { modul.identifiers.addValue(id, values);}
-              } else {
-                let binaryExpressionValue = utils.BinaryExpression.getValue(node.right);
-                modul.identifiers.addValue(id, binaryExpressionValue);
-              }
-            } else {
-              modul.identifiers.setComplex(id, true);
-            }
-          }
-        }
-        
-      }
-    },
-    leave: function(node, parent) {
-      if (scope.isNew(node)) scope.exit();
-    }
-  })
-}
-
-/**
  * initialPass calculates basic statistics and initializes modul's fields
- * @param {ModuleBuilder} modul 
+ * @param {ModuleBuilder} modul
  */
 async function initialPass(modul) {
   let scope = new Scope();
@@ -88,14 +26,14 @@ async function initialPass(modul) {
   let self = [];
   estraverse.traverse(modul.ast, {
     enter: function (node, parent) {
-      node['xParent'] = parent;
-      if(scope.isNew(node)) {
+      node["xParent"] = parent;
+      if (scope.isNew(node)) {
         scope.create();
       }
       switch (node.type) {
         case syntax.CallExpression:
           let callee = node.callee.name;
-          if (callee === 'eval') {
+          if (callee === "eval") {
             modul.eval += 1;
             if (node.arguments.length > 0) {
               let arg = node.arguments[0];
@@ -103,19 +41,24 @@ async function initialPass(modul) {
                 modul.evalWithVariable += 1;
               }
             }
-          } else if (callee === 'Function') {
+          } else if (callee === "Function") {
             modul.functionNew += 1;
             modul.functions += 1;
-          } else if (callee === 'require' && node.arguments.length > 0) {
+          } else if (callee === "require" && node.arguments.length > 0) {
             let arg = node.arguments[0];
             if (arg.type !== syntax.Literal) {
               modul.dynamicRequire += 1;
               // TODO: detect what is value
               if (arg.type === syntax.BinaryExpression) {
-                let isDynamicBinaryExpression = utils.BinaryExpression.isDynamic(arg);
+                let isDynamicBinaryExpression =
+                  utils.BinaryExpression.isDynamic(arg);
                 if (isDynamicBinaryExpression) modul.complexDynamicRequire += 1;
-              } else if (arg.type === syntax.Identifier && (!modul.identifiers.hasIdentifier(arg.name)
-                 || modul.identifiers.hasIdentifier(arg.name) && modul.identifiers.isComplex(arg.name))) {
+              } else if (
+                arg.type === syntax.Identifier &&
+                (!modul.identifiers.hasIdentifier(arg.name) ||
+                  (modul.identifiers.hasIdentifier(arg.name) &&
+                    modul.identifiers.isComplex(arg.name)))
+              ) {
                 modul.complexDynamicRequire += 1;
               }
             } else {
@@ -127,7 +70,7 @@ async function initialPass(modul) {
                       console.log(name);
                     }
                     tracker.push(name);
-                    let vector = {name: name, value: arg.value, members: []};
+                    let vector = { name: name, value: arg.value, members: [] };
                     modul.attackVectors.push(vector);
                     if (parent.type === syntax.MemberExpression) {
                       vector.members.push(parent.property.name);
@@ -135,56 +78,89 @@ async function initialPass(modul) {
                   }
                 });
               }
-              let vardeclarator = helper.closests(node, syntax.VariableDeclarator);
+              let vardeclarator = helper.closests(
+                node,
+                syntax.VariableDeclarator
+              );
               if (vardeclarator) {
                 modules.push(vardeclarator.id.name);
               }
-              let assignment = helper.closests(node, syntax.AssignmentExpression);
+              let assignment = helper.closests(
+                node,
+                syntax.AssignmentExpression
+              );
               if (assignment && assignment.left.type === syntax.Identifier) {
                 modules.push(assignment.left.name);
               }
             }
-          } else if (callee === 'match' && node.arguments.length === 1) {
+          } else if (callee === "match" && node.arguments.length === 1) {
             modul.stringMatch += 1;
-          } else if (callee === 'replace' && node.arguments.length === 2) {
+          } else if (callee === "replace" && node.arguments.length === 2) {
             modul.stringReplace += 1;
-          } else if (callee === 'search' && node.arguments.length === 1) {
+          } else if (callee === "search" && node.arguments.length === 1) {
             modul.stringSearch += 1;
-          } else if (modul.requires.includes(callee) && node.arguments.length === 1) {
+          } else if (
+            modul.requires.includes(callee) &&
+            node.arguments.length === 1
+          ) {
             modul.dynamicRequire += 1;
-          } 
+          }
           break;
         case syntax.MemberExpression:
           if (node.object.type === syntax.Identifier) {
-            if (node.object.name === 'Object' && node.property.name === 'defineProperty') {
+            if (
+              node.object.name === "Object" &&
+              node.property.name === "defineProperty"
+            ) {
               if (parent.type === syntax.CallExpression) {
                 let firstArg = parent.arguments[0];
                 let secondArg = parent.arguments[1];
                 if (firstArg && secondArg) {
-                  if (firstArg.type === syntax.Identifier && firstArg.name === 'exports') {
-                    if (secondArg.type !== syntax.Literal) modul.dynamicExport += 1;
+                  if (
+                    firstArg.type === syntax.Identifier &&
+                    firstArg.name === "exports"
+                  ) {
+                    if (secondArg.type !== syntax.Literal)
+                      modul.dynamicExport += 1;
                     else modul.staticExport += 1;
-                  } else if (firstArg.type === syntax.MemberExpression && helper.getObjectName(firstArg) === 'module') {
-                    if (secondArg.type !== syntax.Literal) modul.dynamicExport += 1;
+                  } else if (
+                    firstArg.type === syntax.MemberExpression &&
+                    helper.getObjectName(firstArg) === "module"
+                  ) {
+                    if (secondArg.type !== syntax.Literal)
+                      modul.dynamicExport += 1;
                     else modul.staticExport += 1;
                   }
                 }
               }
-            } else if (node.object.name === 'JSON' && node.property.name === 'parse') {
+            } else if (
+              node.object.name === "JSON" &&
+              node.property.name === "parse"
+            ) {
               if (parent.type === syntax.CallExpression) {
                 modul.jsonParse += 1;
               }
-            } else if (node.object.name === 'exports' || (node.object.name === 'module' && node.property.name === 'exports')) {
-              if (helper.isComputed(node)){
+            } else if (
+              node.object.name === "exports" ||
+              (node.object.name === "module" &&
+                node.property.name === "exports")
+            ) {
+              if (helper.isComputed(node)) {
                 modul.dynamicExport += 1;
               } else {
                 modul.staticExport += 1;
               }
-              let assignment = helper.closests(node, syntax.AssignmentExpression);
+              let assignment = helper.closests(
+                node,
+                syntax.AssignmentExpression
+              );
               if (assignment && assignment.left.type === syntax.Identifier) {
                 self.push(assignment.right.name);
               }
-              let vardeclarator = helper.closests(node, syntax.VariableDeclarator);
+              let vardeclarator = helper.closests(
+                node,
+                syntax.VariableDeclarator
+              );
               if (vardeclarator) {
                 if (vardeclarator.id.type === syntax.Identifier) {
                   self.push(vardeclarator.id.name);
@@ -194,16 +170,24 @@ async function initialPass(modul) {
               }
             }
             if (tracker.includes(node.object.name)) {
-              modul.attackVectors.forEach(item => {
+              modul.attackVectors.forEach((item) => {
                 if (item.name === node.object.name) {
                   item.members.push(node.property.name);
                 }
               });
             }
             if (modules.includes(node.object.name)) {
-              let assignment = helper.closests(node, syntax.AssignmentExpression);
-              if (assignment && assignment.left.type === syntax.MemberExpression) {
-                if (helper.getObjectName(assignment.left) === node.object.name) {
+              let assignment = helper.closests(
+                node,
+                syntax.AssignmentExpression
+              );
+              if (
+                assignment &&
+                assignment.left.type === syntax.MemberExpression
+              ) {
+                if (
+                  helper.getObjectName(assignment.left) === node.object.name
+                ) {
                   modul.monkeyPatching += 1;
                 }
               }
@@ -222,30 +206,37 @@ async function initialPass(modul) {
           if (node.left.type === syntax.Identifier) {
             if (node.right.type === syntax.Identifier) {
               switch (node.right.name) {
-                case 'eval':
+                case "eval":
                   modul.obfuscated += 1;
-                break;
-                case 'require':
+                  break;
+                case "require":
                   modul.requires.push(node.left.name);
-                break;
-                case 'exports':
+                  break;
+                case "exports":
                   modul.exporters.push(node.left.name);
-                break;
-              } 
+                  break;
+              }
             } else if (node.right.type === syntax.MemberExpression) {
               let meta = helper.getMemberExpressionMeta(node.right);
-              if (meta && meta.object === 'module' && meta.property === 'exports') {
+              if (
+                meta &&
+                meta.object === "module" &&
+                meta.property === "exports"
+              ) {
                 modul.exporters.push(node.left.name);
               }
             }
             // TODO: calculate the possible values of identifier
             // storing the modul.identifiers for simple dynamic resolution.
             let id = node.left.name;
-            
+
             modul.identifiers.addIdentifier(id);
             if (node.right.type === syntax.Identifier) {
               modul.identifiers.addLink(id, node.right.name);
-            } else if (node.right.type === syntax.BinaryExpression && utils.BinaryExpression.isDynamic(node.right)) {
+            } else if (
+              node.right.type === syntax.BinaryExpression &&
+              utils.BinaryExpression.isDynamic(node.right)
+            ) {
               let idens = utils.BinaryExpression.getIdentifiers(node.right);
               if (idens) {
                 for (const i of idens) {
@@ -259,14 +250,19 @@ async function initialPass(modul) {
           if (node.init && node.id.type === syntax.Identifier) {
             modul.variables += 1;
             if (node.init.type === syntax.Identifier) {
-              if (node.init.name === 'require') {
+              if (node.init.name === "require") {
                 modul.requires.push(node.id.name);
-              } else if (node.init.name === 'exports') {
+              } else if (node.init.name === "exports") {
                 modul.exporters.push(node.id.name);
               }
             } else if (node.init.type === syntax.MemberExpression) {
               let meta = helper.getMemberExpressionMeta(node.init);
-              if (meta && meta.exported && meta.object === 'module' && meta.property === 'exports') {
+              if (
+                meta &&
+                meta.exported &&
+                meta.object === "module" &&
+                meta.property === "exports"
+              ) {
                 modul.exporters.push(node.id.name);
               }
             }
@@ -274,9 +270,12 @@ async function initialPass(modul) {
             // storing the modul.identifiers for simple dynamic resolution.
             let id = node.id.name;
             modul.identifiers.addIdentifier(id);
-            if(node.init.type === syntax.Identifier) {
+            if (node.init.type === syntax.Identifier) {
               modul.identifiers.addLink(id, node.init.name);
-            } else if (node.init.type === syntax.BinaryExpression && utils.BinaryExpression.isDynamic(node.init)) {
+            } else if (
+              node.init.type === syntax.BinaryExpression &&
+              utils.BinaryExpression.isDynamic(node.init)
+            ) {
               let idens = utils.BinaryExpression.getIdentifiers(node.init);
               if (idens) {
                 for (const i of idens) {
@@ -285,7 +284,7 @@ async function initialPass(modul) {
               }
             }
           }
-        break;
+          break;
         case syntax.Literal:
           if (node.regex) {
             modul.regex += 1;
@@ -294,23 +293,110 @@ async function initialPass(modul) {
             }
           }
           break;
-        case syntax.FunctionDeclaration: 
+        case syntax.FunctionDeclaration:
           modul.functions += 1;
           break;
       }
     },
     leave: function (node, parent) {
-      if(scope.isNew(node)) scope.exit();
+      if (scope.isNew(node)) scope.exit();
       if (node.type === syntax.CallExpression) {
-        if ((node.callee.name === 'require' || modul.requires.includes(node.callee.name)) && node.arguments.length > 0) {
+        if (
+          (node.callee.name === "require" ||
+            modul.requires.includes(node.callee.name)) &&
+          node.arguments.length > 0
+        ) {
           let first = node.arguments[0];
-          if (first.type === syntax.Identifier && modul.identifiers.hasIdentifier(first.name)) {
+          if (
+            first.type === syntax.Identifier &&
+            modul.identifiers.hasIdentifier(first.name)
+          ) {
             // marking the identifier as a module
             modul.identifiers.setIsModule(first.name, true);
           }
         }
       }
-    }
+    },
+  });
+}
+
+/**
+ * @param {ModuleBuilder} modul
+ */
+async function secondPass(modul) {
+  let scope = new Scope();
+  estraverse.traverse(modul.ast, {
+    enter: function (node, parent) {
+      if (scope.isNew(node)) scope.create();
+      if (node.type === syntax.VariableDeclarator) {
+        if (node.init && node.id.type === syntax.Identifier) {
+          let id = node.id.name;
+          if (
+            modul.identifiers.hasIdentifier(id) &&
+            modul.identifiers.isModule(id)
+          ) {
+            if (node.init.type === syntax.Literal) {
+              modul.identifiers.addValue(id, node.init.value);
+            } else if (node.init.type === syntax.Identifier) {
+              modul.identifiers.addLink(id, node.init.name);
+            } else if (node.init.type === syntax.BinaryExpression) {
+              if (utils.BinaryExpression.isDynamic(node.init)) {
+                let values = utils.BinaryExpression.getValues(
+                  node.init,
+                  modul.identifiers
+                );
+                if (!values) modul.identifiers.setComplex(id, true);
+                else {
+                  modul.identifiers.addValue(id, values);
+                }
+              } else {
+                let binaryExpressionValue = utils.BinaryExpression.getValue(
+                  node.init
+                );
+                modul.identifiers.addValue(id, binaryExpressionValue);
+              }
+            } else {
+              modul.identifiers.setComplex(id, true);
+            }
+          }
+        }
+      } else if (node.type === syntax.AssignmentExpression) {
+        if (node.left.type === syntax.Identifier) {
+          let id = node.left.name;
+          if (
+            modul.identifiers.hasIdentifier(id) &&
+            modul.identifiers.isModule(id)
+          ) {
+            if (node.right.type === syntax.Literal) {
+              modul.identifiers.addValue(id, node.right.value);
+            } else if (node.right.type === syntax.Identifier) {
+              modul.identifiers.addLink(id, node.right.name);
+            } else if (node.right.type === syntax.BinaryExpression) {
+              if (utils.BinaryExpression.isDynamic(node.right)) {
+                let values = utils.BinaryExpression.getValues(
+                  node.right,
+                  modul.identifiers
+                );
+                if (!values) modul.identifiers.setComplex(id, true);
+                else {
+                  modul.identifiers.addValue(id, values);
+                }
+              } else {
+                let binaryExpressionValue = utils.BinaryExpression.getValue(
+                  node.right
+                );
+                modul.identifiers.addValue(id, binaryExpressionValue);
+              }
+            } else {
+              modul.identifiers.setComplex(id, true);
+            }
+          }
+        }
+      }
+    },
+    leave: function (node, parent) {
+      if (scope.isNew(node)) scope.exit();
+    },
   });
 }
 
