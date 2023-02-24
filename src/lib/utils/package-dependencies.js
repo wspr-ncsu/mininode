@@ -38,6 +38,7 @@ function toList(location, dev = false) {
   let result = utils.flattenObjectKeys(dependencies);
   return [...new Set(result)];
 }
+
 function dependencyBuilder(loc, name) {
   if (glocation.length > loc.length) return null;
   let l = `${loc}/node_modules/${name}`;
