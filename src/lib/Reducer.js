@@ -211,9 +211,6 @@ async function traverse(modul, extra) {
                     console.log("-- not used:", chalk.yellow(full));
                   parent["xUsed"] = false;
                   // todo: mark parent.right hand side as unused if it is functionexpress
-                  // if (parent.right.type === es.Syntax.FunctionExpression) {
-                  //   // parent.right.xUsed = false;
-                  // }
                 }
               }
             }
