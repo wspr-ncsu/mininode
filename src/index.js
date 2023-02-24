@@ -317,7 +317,17 @@ async function traverse(directory) {
         await traverse(itemPath);
       } else if (stat.isFile()) {
         let extension = path.extname(itemPath).toLowerCase();
-        if (extension === ".js" || extension === ".cjs" || extension === "") {
+        let isCommonJS = false;
+        if (
+          _app.type === "commonjs" &&
+          (extension === ".js" || extension === ".cjs" || extension === "")
+        ) {
+          isCommonJS = true;
+        } else if (_app.type === "module" && extension === ".cjs") {
+          isCommonJS = true;
+        }
+
+        if (isCommonJS) {
           var _module = new ModuleBuilder();
           _module.app = _app;
           _module.name = path.basename(itemPath);
