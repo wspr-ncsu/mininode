@@ -164,7 +164,10 @@ async function init() {
     generator(location, config.destination);
     location = path.resolve(config.destination);
   }
-
+  if (!fs.existsSync(path.join(location, "package.json"))) {
+    console.error("Couldn't find package.json");
+    process.exit(1);
+  }
   let content = fs.readFileSync(path.join(location, "package.json"), {
     encoding: utf,
   });
