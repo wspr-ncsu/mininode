@@ -42,7 +42,7 @@ let entries = [];
     await init();
 
     console.info("[index.js] Started Traversing");
-    await traverse(location);
+    await traverseAndCreateModuleBuilderForEachJSFile(location);
     console.info("[index.js] Finished Traversing");
 
     console.info("[index.js] Started Detector");
@@ -305,7 +305,7 @@ async function readModule(modul) {
  * @returns {Boolean}
  * @param {String} directory
  */
-async function traverse(directory) {
+async function traverseAndCreateModuleBuilderForEachJSFile(directory) {
   console.info(`[index.js] Traversing directory ${directory}`);
   try {
     var folderContent = fs.readdirSync(directory);
@@ -317,17 +317,17 @@ async function traverse(directory) {
       itemPath = path.join(directory, item);
       let stat = fs.statSync(itemPath);
       if (stat.isDirectory()) {
-        await traverse(itemPath);
+        await traverseAndCreateModuleBuilderForEachJSFile(itemPath);
       } else if (stat.isFile()) {
         let extension = path.extname(itemPath).toLowerCase();
-        let isCommonJS = false;
+        let isCommonJS = true;
         if (
           _app.type === "commonjs" &&
           (extension === ".js" || extension === ".cjs" || extension === "")
         ) {
-          isCommonJS = true;
+          isCommonJS = false;
         } else if (_app.type === "module" && extension === ".cjs") {
-          isCommonJS = true;
+          isCommonJS = false;
         }
 
         if (isCommonJS) {
@@ -336,16 +336,21 @@ async function traverse(directory) {
           _module.name = path.basename(itemPath);
           _module.path = itemPath;
 
+          switch(_app.type) {
+            case "commonjs":
+              
+          }
+
           if (directory.indexOf("/node_modules", location.length - 1) === -1) {
             _module.isOwned = true;
             // should we add do not reduce here?
           } else {
             let arr = _module.path.split("/");
-            let lastIndex = arr.lastIndexOf("node_modules");
-            _module.packagename = arr[lastIndex + 1];
+            let lastIndexNodeModules = arr.lastIndexOf("node_modules");
+            _module.packagename = arr[lastIndexNodeModules + 1];
             // scoped packages packagename
             if (_module.packagename.startsWith("@")) {
-              _module.packagename += "/" + arr[lastIndex + 2];
+              _module.packagename += "/" + arr[lastIndexNodeModules + 2];
             }
           }
           _module.initialSrc = fs.readFileSync(`${_module.path}`, utf);

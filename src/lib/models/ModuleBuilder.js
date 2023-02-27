@@ -1,20 +1,22 @@
-const AppBuilder = require('./AppBuilder');
-const IdentifierTable = require('./IdentifierTable');
+const AppBuilder = require("./AppBuilder");
+const IdentifierTable = require("./IdentifierTable");
 
 module.exports = function () {
-  this.name = '';
-  this.path = '';
-  this.packagename = ''; // retrieve from package.json or module path?
-  this.packageversion = ''; // retrieve from package.json
+  this.name = "";
+  this.path = "";
+  this.packagename = ""; // retrieve from package.json or module path?
+  this.packageversion = ""; // retrieve from package.json
   this.attackSurface = 0;
   this.attackVectors = []; // object: {value:"fs", members:[]}
 
-  this.initialSrc = '';
+  this.type = "";
+
+  this.initialSrc = "";
   this.initialSloc = 0;
   this.ast = null;
 
   // reduction stats
-  this.finalSrc = '';
+  this.finalSrc = "";
   this.finalSloc = 0;
   this.removedFunctions = 0;
   this.removedVariables = 0;
@@ -36,7 +38,7 @@ module.exports = function () {
   this.dynamicRequire = 0;
   this.complexDynamicRequire = 0;
   this.dynamicUsage = 0;
-  
+
   this.staticExport = 0;
   this.dynamicExport = 0;
   this.dynamicExportUsage = 0;
@@ -69,5 +71,5 @@ module.exports = function () {
   this.requires = []; // stores the name of require functions. Example: var r = require;
   this.exporters = []; // stores the name of exporters. Example: var es = exports;
   this.memusages = {}; // member expression usages that are not declared. For example: console.log(), foo.a() (if foo is global)
-  this.identifiers = new IdentifierTable() // {"identifier": { complex: true|false, values: [literals only], links: [literals only]} }
+  this.identifiers = new IdentifierTable(); // {"identifier": { complex: true|false, values: [literals only], links: [literals only]} }
 };
