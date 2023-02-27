@@ -42,7 +42,7 @@ let entries = [];
     await init();
 
     console.info("[index.js] Started Traversing");
-    await traverseAndCreateModuleBuilderForEachJSFile(location);
+    await traverseAndCreateModuleBuilderForEachJSFile(location, _app.type);
     console.info("[index.js] Finished Traversing");
 
     console.info("[index.js] Started Detector");
@@ -304,29 +304,45 @@ async function readModule(modul) {
  * Traverses given directory and create ModuleBuilder object for each .js file
  * @returns {Boolean}
  * @param {String} directory
+ * @param {String} packageJsonType  Type of package.json. Can be modified if there's a child package.json.
  */
-async function traverseAndCreateModuleBuilderForEachJSFile(directory) {
+async function traverseAndCreateModuleBuilderForEachJSFile(
+  directory,
+  packageJsonType
+) {
   console.info(`[index.js] Traversing directory ${directory}`);
   try {
     var folderContent = fs.readdirSync(directory);
+
+    // override type if there's a package.json in this directory
+    if (!fs.existsSync(path.join(directory, "package.json"))) {
+      let content = fs.readFileSync(path.join(location, "package.json"), {
+        encoding: utf,
+      });
+      let packageJson = JSON.parse(content);
+      packageJsonType = packageJson.type;
+    }
+
     for (let item of folderContent) {
-      // Ignores .git directory.
-      // Better if we have some array of ignore list
+      // ignore list (configure for your use case)
       if (config.ignored.includes(item)) continue;
 
       itemPath = path.join(directory, item);
       let stat = fs.statSync(itemPath);
       if (stat.isDirectory()) {
-        await traverseAndCreateModuleBuilderForEachJSFile(itemPath);
+        await traverseAndCreateModuleBuilderForEachJSFile(
+          itemPath,
+          packageJsonType
+        );
       } else if (stat.isFile()) {
         let extension = path.extname(itemPath).toLowerCase();
         let isCommonJS = true;
         if (
-          _app.type === "commonjs" &&
+          packageJsonType === "commonjs" &&
           (extension === ".js" || extension === ".cjs" || extension === "")
         ) {
           isCommonJS = false;
-        } else if (_app.type === "module" && extension === ".cjs") {
+        } else if (packageJsonType === "module" && extension === ".cjs") {
           isCommonJS = false;
         }
 
@@ -336,9 +352,8 @@ async function traverseAndCreateModuleBuilderForEachJSFile(directory) {
           _module.name = path.basename(itemPath);
           _module.path = itemPath;
 
-          switch(_app.type) {
+          switch (_app.type) {
             case "commonjs":
-              
           }
 
           if (directory.indexOf("/node_modules", location.length - 1) === -1) {
