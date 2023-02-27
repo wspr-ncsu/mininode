@@ -336,14 +336,14 @@ async function traverseAndCreateModuleBuilderForEachJSFile(
         );
       } else if (stat.isFile()) {
         let extension = path.extname(itemPath).toLowerCase();
-        let isCommonJS = true;
+        let isCommonJS = false;
         if (
           packageJsonType === "commonjs" &&
           (extension === ".js" || extension === ".cjs" || extension === "")
         ) {
-          isCommonJS = false;
+          isCommonJS = true;
         } else if (packageJsonType === "module" && extension === ".cjs") {
-          isCommonJS = false;
+          isCommonJS = true;
         }
 
         if (isCommonJS) {
