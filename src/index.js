@@ -315,7 +315,7 @@ async function traverseAndCreateModuleBuilderForEachJSFile(
     var folderContent = fs.readdirSync(directory);
 
     // override type if there's a package.json in this directory
-    if (!fs.existsSync(path.join(directory, "package.json"))) {
+    if (fs.existsSync(path.join(directory, "package.json"))) {
       let content = fs.readFileSync(path.join(location, "package.json"), {
         encoding: utf,
       });
@@ -336,23 +336,8 @@ async function traverseAndCreateModuleBuilderForEachJSFile(
         );
       } else if (stat.isFile()) {
         let itemPathExtension = path.extname(itemPath).toLowerCase();
-        let isCommonJS = false;
-        let commonJSExtensions = [];
-        if (
-          packageJsonType === "commonjs" &&
-          [".js", ".cjs", ""].includes(itemPathExtension)
-        ) {
-          isCommonJS = true;
-          commonJSExtensions = [".js", ".cjs", ""];
-        } else if (
-          packageJsonType === "module" &&
-          itemPathExtension === ".cjs"
-        ) {
-          isCommonJS = true;
-          commonJSExtensions = [".cjs"];
-        }
 
-        if (isCommonJS) {
+        if ([".js", ".cjs", ".mjs", ""].includes(itemPathExtension)) {
           var _module = new ModuleBuilder();
           _module.app = _app;
           _module.name = path.basename(itemPath);
@@ -360,7 +345,7 @@ async function traverseAndCreateModuleBuilderForEachJSFile(
 
           switch (packageJsonType) {
             case "commonjs":
-              if (itemPathExtension === ".js") {
+              if ([".js", ""].includes(itemPathExtension)) {
                 _module.type = "commonjs";
               } else if (itemPathExtension === ".mjs") {
                 _module.type = "module";
@@ -369,13 +354,16 @@ async function traverseAndCreateModuleBuilderForEachJSFile(
               }
               break;
             case "module":
-              if (itemPathExtension === ".js") {
+              if ([".js", ""].includes(itemPathExtension)) {
                 _module.type = "module";
               } else if (itemPathExtension === ".cjs") {
                 _module.type = "commonjs";
               } else {
                 console.warn("File extention not supported");
               }
+              break;
+            default:
+              console.warn("Unsupported package.json type");
               break;
           }
 
