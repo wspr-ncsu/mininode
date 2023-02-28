@@ -335,15 +335,21 @@ async function traverseAndCreateModuleBuilderForEachJSFile(
           packageJsonType
         );
       } else if (stat.isFile()) {
-        let extension = path.extname(itemPath).toLowerCase();
+        let itemPathExtension = path.extname(itemPath).toLowerCase();
         let isCommonJS = false;
+        let commonJSExtensions = [];
         if (
           packageJsonType === "commonjs" &&
-          (extension === ".js" || extension === ".cjs" || extension === "")
+          [".js", ".cjs", ""].includes(itemPathExtension)
         ) {
           isCommonJS = true;
-        } else if (packageJsonType === "module" && extension === ".cjs") {
+          commonJSExtensions = [".js", ".cjs", ""];
+        } else if (
+          packageJsonType === "module" &&
+          itemPathExtension === ".cjs"
+        ) {
           isCommonJS = true;
+          commonJSExtensions = [".cjs"];
         }
 
         if (isCommonJS) {
@@ -352,8 +358,25 @@ async function traverseAndCreateModuleBuilderForEachJSFile(
           _module.name = path.basename(itemPath);
           _module.path = itemPath;
 
-          switch (_app.type) {
+          switch (packageJsonType) {
             case "commonjs":
+              if (itemPathExtension === ".js") {
+                _module.type = "commonjs";
+              } else if (itemPathExtension === ".mjs") {
+                _module.type = "module";
+              } else {
+                console.warn("File extention not supported");
+              }
+              break;
+            case "module":
+              if (itemPathExtension === ".js") {
+                _module.type = "module";
+              } else if (itemPathExtension === ".cjs") {
+                _module.type = "commonjs";
+              } else {
+                console.warn("File extention not supported");
+              }
+              break;
           }
 
           if (directory.indexOf("/node_modules", location.length - 1) === -1) {
