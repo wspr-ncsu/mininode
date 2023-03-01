@@ -175,7 +175,7 @@ async function init() {
 
   _app.appname = packageJson.name;
   _app.version = packageJson.version;
-  _app.type = packageJson.type;
+  _app.type = packageJson.type || 'commonjs';
   _app.path = location;
   _app.main = utils.entryPoint(location, packageJson.main);
 
@@ -354,6 +354,7 @@ async function traverseAndCreateModuleBuilderForEachJSFile(
               } else if (itemPathExtension === ".mjs") {
                 _module.type = "module";
               } else {
+                _module.type = packageJsonType;
                 console.warn(item + " :: File extention not supported");
               }
               break;
@@ -363,6 +364,7 @@ async function traverseAndCreateModuleBuilderForEachJSFile(
               } else if (itemPathExtension === ".cjs") {
                 _module.type = "commonjs";
               } else {
+                _module.type = packageJsonType;
                 console.warn(item + " :: File extention not supported");
               }
               break;
