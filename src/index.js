@@ -326,7 +326,6 @@ async function traverseAndCreateModuleBuilderForEachJSFile(
         packageJsonType = "commonjs";
       }
     }
-    console.log(packageJsonType)
 
     for (let item of folderContent) {
       // ignore list (configure for your use case)
