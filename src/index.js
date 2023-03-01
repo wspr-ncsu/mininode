@@ -341,7 +341,7 @@ async function traverseAndCreateModuleBuilderForEachJSFile(
       } else if (stat.isFile()) {
         let itemPathExtension = path.extname(itemPath).toLowerCase();
 
-        if ([".js", ".cjs", ".mjs", ""].includes(itemPathExtension)) {
+        if (isValidFile(itemPath)) {
           var _module = new ModuleBuilder();
           _module.app = _app;
           _module.name = path.basename(itemPath);
@@ -471,4 +471,16 @@ async function reduceModule(modul, extra = null) {
   }
 
   await Reducer.reduce(modul, additional);
+}
+
+function isValidFile(file) {
+  let extension = path.extname(itemPath).toLowerCase();
+  if ([".js", ".cjs", ".mjs", ""].includes(extension) === false) {
+    return false;
+  }
+  let fileSplitBySlash = file.split('/')
+  if (extension === "" && fileSplitBySlash[fileSplitBySlash.length - 1].startsWith(".")) {
+    return false;
+  }
+  return true;
 }
