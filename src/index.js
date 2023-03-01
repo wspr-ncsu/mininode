@@ -320,8 +320,13 @@ async function traverseAndCreateModuleBuilderForEachJSFile(
         encoding: utf,
       });
       let packageJson = JSON.parse(content);
-      packageJsonType = packageJson.type;
+      if (packageJson.hasOwnProperty("type")) {
+        packageJsonType = packageJson.type;
+      } else {
+        packageJsonType = "commonjs";
+      }
     }
+    console.log(packageJsonType)
 
     for (let item of folderContent) {
       // ignore list (configure for your use case)
@@ -345,12 +350,12 @@ async function traverseAndCreateModuleBuilderForEachJSFile(
 
           switch (packageJsonType) {
             case "commonjs":
-              if ([".js", ""].includes(itemPathExtension)) {
+              if ([".js", ".cjs", ""].includes(itemPathExtension)) {
                 _module.type = "commonjs";
               } else if (itemPathExtension === ".mjs") {
                 _module.type = "module";
               } else {
-                console.warn("File extention not supported");
+                console.warn(item + " :: File extention not supported");
               }
               break;
             case "module":
@@ -359,7 +364,7 @@ async function traverseAndCreateModuleBuilderForEachJSFile(
               } else if (itemPathExtension === ".cjs") {
                 _module.type = "commonjs";
               } else {
-                console.warn("File extention not supported");
+                console.warn(item + " :: File extention not supported");
               }
               break;
             default:
