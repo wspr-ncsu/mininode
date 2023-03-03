@@ -411,7 +411,7 @@ async function generateModuleStatistics(modul) {
       modul.initialSrc = modul.initialSrc.replace(/^#!(.*\n)/, ""); // removes hashbang value
     }
     let ast = es.parse(modul.initialSrc, {
-      sourceType: "commonjs",
+      sourceType: modul.type || "commonjs",
       ecmaVersion: 6,
       range: true,
       comment: true,
