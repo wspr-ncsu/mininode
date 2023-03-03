@@ -39,6 +39,7 @@ module.exports.reduce = async function (modul, extra = []) {
   await init(path.dirname(modul.path));
   await traverse(modul, extra);
 };
+
 /**
  * @param {ModuleBuilder} modul
  * @param {Array<String>} extra

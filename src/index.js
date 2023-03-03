@@ -42,7 +42,7 @@ let entries = [];
     await init();
 
     console.info("[index.js] Started Traversing");
-    await traverse(location);
+    await traverseAndCreateModuleBuilderForEachJSFile(location, _app.type);
     console.info("[index.js] Finished Traversing");
 
     console.info("[index.js] Started Detector");
@@ -164,7 +164,10 @@ async function init() {
     generator(location, config.destination);
     location = path.resolve(config.destination);
   }
-
+  if (!fs.existsSync(path.join(location, "package.json"))) {
+    console.error("Couldn't find package.json");
+    process.exit(1);
+  }
   let content = fs.readFileSync(path.join(location, "package.json"), {
     encoding: utf,
   });
@@ -172,10 +175,7 @@ async function init() {
 
   _app.appname = packageJson.name;
   _app.version = packageJson.version;
-  _app.type = packageJson.type;
-  if (_app.type === "module") {
-    throw new Error("ES6_NOT_SUPPORTED");
-  }
+  _app.type = packageJson.type || 'commonjs';
   _app.path = location;
   _app.main = utils.entryPoint(location, packageJson.main);
 
@@ -304,38 +304,85 @@ async function readModule(modul) {
  * Traverses given directory and create ModuleBuilder object for each .js file
  * @returns {Boolean}
  * @param {String} directory
+ * @param {String} packageJsonType  Type of package.json. Can be modified if there's a child package.json.
  */
-async function traverse(directory) {
+async function traverseAndCreateModuleBuilderForEachJSFile(
+  directory,
+  packageJsonType
+) {
   console.info(`[index.js] Traversing directory ${directory}`);
   try {
     var folderContent = fs.readdirSync(directory);
+
+    // override type if there's a package.json in this directory
+    if (fs.existsSync(path.join(directory, "package.json"))) {
+      let content = fs.readFileSync(path.join(location, "package.json"), {
+        encoding: utf,
+      });
+      let packageJson = JSON.parse(content);
+      if (packageJson.hasOwnProperty("type")) {
+        packageJsonType = packageJson.type;
+      } else {
+        packageJsonType = "commonjs";
+      }
+    }
+
     for (let item of folderContent) {
-      // Ignores .git directory.
-      // Better if we have some array of ignore list
+      // ignore list (configure for your use case)
       if (config.ignored.includes(item)) continue;
 
       itemPath = path.join(directory, item);
       let stat = fs.statSync(itemPath);
       if (stat.isDirectory()) {
-        await traverse(itemPath);
+        await traverseAndCreateModuleBuilderForEachJSFile(
+          itemPath,
+          packageJsonType
+        );
       } else if (stat.isFile()) {
-        let extension = path.extname(itemPath).toLowerCase();
-        if (extension === ".js" || extension === ".cjs" || extension === "") {
+        let itemPathExtension = path.extname(itemPath).toLowerCase();
+
+        if (isValidFile(itemPath)) {
           var _module = new ModuleBuilder();
           _module.app = _app;
           _module.name = path.basename(itemPath);
           _module.path = itemPath;
+
+          switch (packageJsonType) {
+            case "commonjs":
+              if ([".js", ".cjs", ""].includes(itemPathExtension)) {
+                _module.type = "commonjs";
+              } else if (itemPathExtension === ".mjs") {
+                _module.type = "module";
+              } else {
+                _module.type = packageJsonType;
+                console.warn(item + " :: File extention not supported");
+              }
+              break;
+            case "module":
+              if ([".js", ""].includes(itemPathExtension)) {
+                _module.type = "module";
+              } else if (itemPathExtension === ".cjs") {
+                _module.type = "commonjs";
+              } else {
+                _module.type = packageJsonType;
+                console.warn(item + " :: File extention not supported");
+              }
+              break;
+            default:
+              console.warn("Unsupported package.json type");
+              break;
+          }
 
           if (directory.indexOf("/node_modules", location.length - 1) === -1) {
             _module.isOwned = true;
             // should we add do not reduce here?
           } else {
             let arr = _module.path.split("/");
-            let lastIndex = arr.lastIndexOf("node_modules");
-            _module.packagename = arr[lastIndex + 1];
+            let lastIndexNodeModules = arr.lastIndexOf("node_modules");
+            _module.packagename = arr[lastIndexNodeModules + 1];
             // scoped packages packagename
             if (_module.packagename.startsWith("@")) {
-              _module.packagename += "/" + arr[lastIndex + 2];
+              _module.packagename += "/" + arr[lastIndexNodeModules + 2];
             }
           }
           _module.initialSrc = fs.readFileSync(`${_module.path}`, utf);
@@ -364,7 +411,7 @@ async function generateModuleStatistics(modul) {
       modul.initialSrc = modul.initialSrc.replace(/^#!(.*\n)/, ""); // removes hashbang value
     }
     let ast = es.parse(modul.initialSrc, {
-      sourceType: "commonjs",
+      sourceType: modul.type || "commonjs",
       ecmaVersion: 6,
       range: true,
       comment: true,
@@ -378,7 +425,7 @@ async function generateModuleStatistics(modul) {
     modul.finalSloc = modul.initialSloc;
   } catch (ex) {
     console.warn(
-      `[index.js] Error occured while parsing "${modul.path}". Error message: ${ex.message}`
+      `[index.js] Error occured while parsing "${modul.path}". Error message: ${ex.message}. Module type: ${modul.type}`
     );
     modul.parseError = true;
   } finally {
@@ -426,4 +473,16 @@ async function reduceModule(modul, extra = null) {
   }
 
   await Reducer.reduce(modul, additional);
+}
+
+function isValidFile(file) {
+  let extension = path.extname(itemPath).toLowerCase();
+  if ([".js", ".cjs", ".mjs", ""].includes(extension) === false) {
+    return false;
+  }
+  let fileSplitBySlash = file.split('/')
+  if (extension === "" && fileSplitBySlash[fileSplitBySlash.length - 1].startsWith(".")) {
+    return false;
+  }
+  return true;
 }
