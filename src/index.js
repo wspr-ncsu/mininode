@@ -425,7 +425,7 @@ async function generateModuleStatistics(modul) {
     modul.finalSloc = modul.initialSloc;
   } catch (ex) {
     console.warn(
-      `[index.js] Error occured while parsing "${modul.path}". Error message: ${ex.message}`
+      `[index.js] Error occured while parsing "${modul.path}". Error message: ${ex.message}. Module type: ${modul.type}`
     );
     modul.parseError = true;
   } finally {
