@@ -175,7 +175,7 @@ async function init() {
 
   _app.appname = packageJson.name;
   _app.version = packageJson.version;
-  _app.type = packageJson.type || 'commonjs';
+  _app.type = packageJson.type || "commonjs";
   _app.path = location;
   _app.main = utils.entryPoint(location, packageJson.main);
 
@@ -334,6 +334,12 @@ async function traverseAndCreateModuleBuilderForEachJSFile(
       itemPath = path.join(directory, item);
       let stat = fs.statSync(itemPath);
       if (stat.isDirectory()) {
+        if (
+          config.excludeTestFolders &&
+          item.toLowerCase().startsWith("test")
+        ) {
+          continue;
+        }
         await traverseAndCreateModuleBuilderForEachJSFile(
           itemPath,
           packageJsonType
@@ -480,8 +486,11 @@ function isValidFile(file) {
   if ([".js", ".cjs", ".mjs", ""].includes(extension) === false) {
     return false;
   }
-  let fileSplitBySlash = file.split('/')
-  if (extension === "" && fileSplitBySlash[fileSplitBySlash.length - 1].startsWith(".")) {
+  let fileSplitBySlash = file.split("/");
+  if (
+    extension === "" &&
+    fileSplitBySlash[fileSplitBySlash.length - 1].startsWith(".")
+  ) {
     return false;
   }
   return true;

@@ -52,6 +52,11 @@ const argv = require("yargs")
     describe: "Runs in verbose mode, i.e. prints debug statements",
     type: "boolean",
   })
+  .option("exclude-test-folders", {
+    alias: "e",
+    describe: "Whether to exclude test folders from debloating",
+    type: "boolean",
+  })
   .epilog("Thank you for checking out the project").argv;
 
 settings.origin = argv._[0];
@@ -66,6 +71,7 @@ settings.skipRemove = argv.skipRemove;
 settings.silent = argv.silent;
 settings.compressLog = argv.compressLog;
 settings.logOutput = argv.logOutput ? argv.logOutput : settings.logOutput;
+settings.excludeTestFolders = argv.excludeTestFolders
 
 settings.ignored = [".git", ".gitignore", "LICENSE", "Makefile", "Make"];
 
