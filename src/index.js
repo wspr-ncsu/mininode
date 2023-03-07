@@ -335,7 +335,7 @@ async function traverseAndCreateModuleBuilderForEachJSFile(
       let stat = fs.statSync(itemPath);
       if (stat.isDirectory()) {
         if (
-          config.excludeTestFolders &&
+          config.includeTestFolders === false &&
           item.toLowerCase().startsWith("test")
         ) {
           continue;
