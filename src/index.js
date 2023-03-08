@@ -329,7 +329,7 @@ async function traverseAndCreateModuleBuilderForEachJSFile(
 
     for (let item of folderContent) {
       // ignore list (configure for your use case)
-      if (config.ignored.includes(item)) continue;
+      if (config.ignored.includes(item.toLowerCase())) continue;
 
       itemPath = path.join(directory, item);
       let stat = fs.statSync(itemPath);

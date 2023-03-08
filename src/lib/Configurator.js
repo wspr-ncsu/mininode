@@ -73,7 +73,7 @@ settings.compressLog = argv.compressLog;
 settings.logOutput = argv.logOutput ? argv.logOutput : settings.logOutput;
 settings.includeTestFolders = argv.includeTestFolders
 
-settings.ignored = [".git", ".gitignore", "LICENSE", "Makefile", "Make"];
+settings.ignored = [".git", ".gitignore", "license", "makefile", "make"];
 
 if (argv.seeds) {
   let seeds = argv.seeds;
