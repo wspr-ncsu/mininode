@@ -73,7 +73,6 @@ try {
   const reExport = require("re-export");
   reExport.a;
   reExport.b;
-  // checkReductionStatus('re-export', reExport);
 } catch (error) {
   console.error("re-export", error);
 }
@@ -111,7 +110,6 @@ try {
   const objectDefExport = require("object-def-export");
   objectDefExport.a();
   objectDefExport.b();
-  // checkReductionStatus('object-def-export', objectDefExport);
 } catch (error) {
   console.log("object-def-export failed", error);
 }
