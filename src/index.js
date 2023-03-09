@@ -331,7 +331,7 @@ async function traverseAndCreateModuleBuilderForEachJSFile(
       // ignore list (configure for your use case)
       if (config.ignored.includes(item.toLowerCase())) continue;
 
-      itemPath = path.join(directory, item);
+      let itemPath = path.join(directory, item);
       let stat = fs.statSync(itemPath);
       if (stat.isDirectory()) {
         if (
@@ -347,7 +347,7 @@ async function traverseAndCreateModuleBuilderForEachJSFile(
       } else if (stat.isFile()) {
         let itemPathExtension = path.extname(itemPath).toLowerCase();
 
-        if (isValidFile(itemPath)) {
+        if (isValidJavascriptFile(itemPath)) {
           var _module = new ModuleBuilder();
           _module.app = _app;
           _module.name = path.basename(itemPath);
@@ -481,8 +481,10 @@ async function reduceModule(modul, extra = null) {
   await Reducer.reduce(modul, additional);
 }
 
-function isValidFile(file) {
-  let extension = path.extname(itemPath).toLowerCase();
+// Acceptable: .js, .cjs, .mjs files. Blank file extensions without the dot.
+// Unacceptable: dot files without extension. Like .gitignore, .eslintrc
+function isValidJavascriptFile(file) {
+  let extension = path.extname(file).toLowerCase();
   if ([".js", ".cjs", ".mjs", ""].includes(extension) === false) {
     return false;
   }
