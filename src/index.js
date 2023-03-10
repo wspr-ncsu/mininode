@@ -42,7 +42,7 @@ let entries = [];
     await init();
 
     console.info("[index.js] Started Traversing");
-    await traverseAndCreateModuleBuilderForEachJSFile(location, _app.type);
+    await traverseGenerateModule(location, _app.type);
     console.info("[index.js] Finished Traversing");
 
     console.info("[index.js] Started Detector");
@@ -306,7 +306,7 @@ async function readModule(modul) {
  * @param {String} directory
  * @param {String} packageJsonType  Type of package.json. Can be modified if there's a child package.json.
  */
-async function traverseAndCreateModuleBuilderForEachJSFile(
+async function traverseGenerateModule(
   directory,
   packageJsonType
 ) {
@@ -340,7 +340,7 @@ async function traverseAndCreateModuleBuilderForEachJSFile(
         ) {
           continue;
         }
-        await traverseAndCreateModuleBuilderForEachJSFile(
+        await traverseGenerateModule(
           itemPath,
           packageJsonType
         );
