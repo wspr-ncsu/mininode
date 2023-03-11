@@ -178,6 +178,7 @@ async function init() {
   _app.type = packageJson.type || "commonjs";
   _app.path = location;
   _app.main = utils.entryPoint(location, packageJson.main);
+  _app.testsDirectory = packageJson.directories.test || null;
 
   if (config.seeds.length === 0) {
     if (!_app.main) {
@@ -306,10 +307,7 @@ async function readModule(modul) {
  * @param {String} directory
  * @param {String} packageJsonType  Type of package.json. Can be modified if there's a child package.json.
  */
-async function traverseGenerateModule(
-  directory,
-  packageJsonType
-) {
+async function traverseGenerateModule(directory, packageJsonType) {
   console.info(`[index.js] Traversing directory ${directory}`);
   try {
     var folderContent = fs.readdirSync(directory);
@@ -334,16 +332,16 @@ async function traverseGenerateModule(
       let itemPath = path.join(directory, item);
       let stat = fs.statSync(itemPath);
       if (stat.isDirectory()) {
-        if (
-          config.includeTestFolders === false &&
-          item.toLowerCase().startsWith("test")
-        ) {
-          continue;
+        if (config.includeTestFolders === false) {
+          if (_app.testsDirectory) {
+            if (item === _app.testsDirectory) continue;
+          } else if (!_app.testsDirectory) {
+            if (item.toLowerCase().startsWith("test")) {
+              continue;
+            }
+          }
         }
-        await traverseGenerateModule(
-          itemPath,
-          packageJsonType
-        );
+        await traverseGenerateModule(itemPath, packageJsonType);
       } else if (stat.isFile()) {
         let itemPathExtension = path.extname(itemPath).toLowerCase();
 

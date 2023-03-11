@@ -1,9 +1,7 @@
 /**
  * @author Igibek Koishybayev
  * @abstract Marks AST nodes as used/unused depending on:
- *  - if exports is used/unused
- *  - variable is used/unused
- *  - function is used/unsed
+ *  - if exports is used/unused. Same with variables, functions
  */
 const estraverse = require("estraverse");
 const es = require("espree");
