@@ -74,9 +74,9 @@ let entries = [];
       }
 
       for (let modul of _app.modules) {
-        for (let glb of _app.globals) {
-          if (glb.path === modul.path) {
-            for (let m of glb.members) {
+        for (let globalVar of _app.globals) {
+          if (globalVar.path === modul.path) {
+            for (let m of globalVar.members) {
               modul.used.push(m);
             }
           }
@@ -178,7 +178,11 @@ async function init() {
   _app.type = packageJson.type || "commonjs";
   _app.path = location;
   _app.main = utils.entryPoint(location, packageJson.main);
-  _app.testsDirectory = packageJson.directories.test || null;
+  if (packageJson.hasOwnProperty('directories')) {
+    if (packageJson.directories.hasOwnProperty('test')) {
+      _app.directories = packageJson.directories.test
+    }
+  }
 
   if (config.seeds.length === 0) {
     if (!_app.main) {
@@ -335,7 +339,7 @@ async function traverseGenerateModule(directory, packageJsonType) {
         if (config.includeTestFolders === false) {
           if (_app.testsDirectory) {
             if (item === _app.testsDirectory) continue;
-          } else if (!_app.testsDirectory) {
+          } else {
             if (item.toLowerCase().startsWith("test")) {
               continue;
             }
