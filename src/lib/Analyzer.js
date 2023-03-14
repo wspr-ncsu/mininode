@@ -87,7 +87,6 @@ module.exports.analyze = async function analyze(modul) {
 };
 
 /**
- *
  * @param {ModuleBuilder} modul
  */
 async function traverse(modul) {
@@ -113,7 +112,6 @@ async function traverse(modul) {
           node.type === syntax.FunctionDeclaration ||
           node.type === syntax.FunctionExpression
         ) {
-          // || node.type === syntax.VariableDeclarator) {
           this.skip();
         } else if (
           node.type === syntax.MemberExpression &&
@@ -240,7 +238,7 @@ async function traverse(modul) {
                     variable.members.push(propStart);
                 }
               } else if (
-                !isDeclared(node.object.name) &&
+                !isDeclaredInCurrentScope(node.object.name) &&
                 node.object.name !== "constructor"
               ) {
                 let objname = node.object.name;
@@ -655,10 +653,9 @@ async function checkForLeaks() {
 }
 
 /**
- * Checks if the name is declared in the currentScope
  * @param {String} name
  */
-function isDeclared(name) {
+function isDeclaredInCurrentScope(name) {
   for (let i = 0; i < currentScope; i++) {
     for (let j in vars[i]) {
       if (vars[i][j].includes(name)) return true;

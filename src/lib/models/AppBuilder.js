@@ -5,6 +5,7 @@ module.exports = function () {
   this.type = '';
   this.path = '';
   this.main = '';
+  this.testsDirectory = null;
 
   this.attackSurface = 0;
   this.externalAttackSurface = 0;

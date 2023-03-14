@@ -21,7 +21,7 @@ let visited = [];
 async function run(modul) {
   if (modul.parseError === true) {
     console.error(
-      `[Detector.js] module ${modul.path} parsed with error. Returting without traversing`
+      `[Detector.js] module ${modul.path} parsed with error. Returning without traversing`
     );
     return;
   }

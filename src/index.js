@@ -42,7 +42,7 @@ let entries = [];
     await init();
 
     console.info("[index.js] Started Traversing");
-    await traverseAndCreateModuleBuilderForEachJSFile(location, _app.type);
+    await traverseGenerateModule(location, _app.type);
     console.info("[index.js] Finished Traversing");
 
     console.info("[index.js] Started Detector");
@@ -74,9 +74,9 @@ let entries = [];
       }
 
       for (let modul of _app.modules) {
-        for (let glb of _app.globals) {
-          if (glb.path === modul.path) {
-            for (let m of glb.members) {
+        for (let globalVar of _app.globals) {
+          if (globalVar.path === modul.path) {
+            for (let m of globalVar.members) {
               modul.used.push(m);
             }
           }
@@ -175,9 +175,14 @@ async function init() {
 
   _app.appname = packageJson.name;
   _app.version = packageJson.version;
-  _app.type = packageJson.type || 'commonjs';
+  _app.type = packageJson.type || "commonjs";
   _app.path = location;
   _app.main = utils.entryPoint(location, packageJson.main);
+  if (packageJson.hasOwnProperty('directories')) {
+    if (packageJson.directories.hasOwnProperty('test')) {
+      _app.directories = packageJson.directories.test
+    }
+  }
 
   if (config.seeds.length === 0) {
     if (!_app.main) {
@@ -306,10 +311,7 @@ async function readModule(modul) {
  * @param {String} directory
  * @param {String} packageJsonType  Type of package.json. Can be modified if there's a child package.json.
  */
-async function traverseAndCreateModuleBuilderForEachJSFile(
-  directory,
-  packageJsonType
-) {
+async function traverseGenerateModule(directory, packageJsonType) {
   console.info(`[index.js] Traversing directory ${directory}`);
   try {
     var folderContent = fs.readdirSync(directory);
@@ -329,19 +331,25 @@ async function traverseAndCreateModuleBuilderForEachJSFile(
 
     for (let item of folderContent) {
       // ignore list (configure for your use case)
-      if (config.ignored.includes(item)) continue;
+      if (config.ignored.includes(item.toLowerCase())) continue;
 
-      itemPath = path.join(directory, item);
+      let itemPath = path.join(directory, item);
       let stat = fs.statSync(itemPath);
       if (stat.isDirectory()) {
-        await traverseAndCreateModuleBuilderForEachJSFile(
-          itemPath,
-          packageJsonType
-        );
+        if (config.includeTestFolders === false) {
+          if (_app.testsDirectory) {
+            if (item === _app.testsDirectory) continue;
+          } else {
+            if (item.toLowerCase().startsWith("test")) {
+              continue;
+            }
+          }
+        }
+        await traverseGenerateModule(itemPath, packageJsonType);
       } else if (stat.isFile()) {
         let itemPathExtension = path.extname(itemPath).toLowerCase();
 
-        if (isValidFile(itemPath)) {
+        if (isValidJavascriptFile(itemPath)) {
           var _module = new ModuleBuilder();
           _module.app = _app;
           _module.name = path.basename(itemPath);
@@ -475,13 +483,18 @@ async function reduceModule(modul, extra = null) {
   await Reducer.reduce(modul, additional);
 }
 
-function isValidFile(file) {
-  let extension = path.extname(itemPath).toLowerCase();
+// Acceptable: .js, .cjs, .mjs files. Blank file extensions without the dot.
+// Unacceptable: dot files without extension. Like .gitignore, .eslintrc
+function isValidJavascriptFile(file) {
+  let extension = path.extname(file).toLowerCase();
   if ([".js", ".cjs", ".mjs", ""].includes(extension) === false) {
     return false;
   }
-  let fileSplitBySlash = file.split('/')
-  if (extension === "" && fileSplitBySlash[fileSplitBySlash.length - 1].startsWith(".")) {
+  let fileSplitBySlash = file.split("/");
+  if (
+    extension === "" &&
+    fileSplitBySlash[fileSplitBySlash.length - 1].startsWith(".")
+  ) {
     return false;
   }
   return true;
