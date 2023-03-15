@@ -299,7 +299,30 @@ async function initialPass(modul) {
           modul.functions += 1;
           break;
         case syntax.ImportDeclaration:
-          console.log(`node keys: ${Object.keys(node)}`);
+          // for ImportDeclaration in ES6
+          const modulePath = node.source.value;
+          node.specifiers.forEach(specifier => {
+            const alias = specifier.local.name;
+            let name;
+            switch (specifier.type) {
+              case 'ImportSpecifier':
+                name = specifier.imported.name;
+                this.break;
+              case 'ImportDefaultSpecifier':
+                name = 'default';
+                this.break;
+              case 'ImportNamespaceSpecifier':
+                name = '*';
+                this.break;
+            }
+            if (name) {
+              console.log('ImportDeclaration. modul name: ' + modul.name + ', alias: ' + alias + ', name: ' + name + ', modulePath: ' + modulePath);
+            }
+            else {
+              console.log('ImportDeclaration. Not supported cases. modul name: ' + modul.name + ', modulePath: ' + modulePath);
+              console.log(`node keys: ${Object.keys(node)}`);
+            }
+          })
           break;
       }
     },
