@@ -44,6 +44,8 @@ async function initialPass(modul) {
           } else if (callee === "Function") {
             modul.functionNew += 1;
             modul.functions += 1;
+          } else if (callee === "import") {
+            console.warn(`node import type: ${node.type}`)
           } else if (callee === "require" && node.arguments.length > 0) {
             let arg = node.arguments[0];
             if (arg.type !== syntax.Literal) {
@@ -295,6 +297,9 @@ async function initialPass(modul) {
           break;
         case syntax.FunctionDeclaration:
           modul.functions += 1;
+          break;
+        case syntax.ImportDeclaration:
+          console.log(`node keys: ${Object.keys(node)}`);
           break;
       }
     },
