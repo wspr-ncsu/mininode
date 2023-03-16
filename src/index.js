@@ -420,7 +420,7 @@ async function generateModuleStatistics(modul) {
     }
     let ast = es.parse(modul.initialSrc, {
       sourceType: modul.type || "commonjs",
-      ecmaVersion: 6,
+      ecmaVersion: 14,
       range: true,
       comment: true,
       tokens: true,

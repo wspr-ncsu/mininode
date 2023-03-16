@@ -44,8 +44,6 @@ async function initialPass(modul) {
           } else if (callee === "Function") {
             modul.functionNew += 1;
             modul.functions += 1;
-          } else if (callee === "import") {
-            console.warn(`node import type: ${node.type}`)
           } else if (callee === "require" && node.arguments.length > 0) {
             let arg = node.arguments[0];
             if (arg.type !== syntax.Literal) {
@@ -299,7 +297,7 @@ async function initialPass(modul) {
           modul.functions += 1;
           break;
         case syntax.ImportDeclaration:
-          // for ImportDeclaration in ES6
+          // for static import in ES6. TODO: update the information for the next step analysis
           const modulePath = node.source.value;
           node.specifiers.forEach(specifier => {
             const alias = specifier.local.name;
@@ -316,13 +314,16 @@ async function initialPass(modul) {
                 this.break;
             }
             if (name) {
-              console.log('ImportDeclaration. modul name: ' + modul.name + ', alias: ' + alias + ', name: ' + name + ', modulePath: ' + modulePath);
+              console.log(`Static Import: modul name: ${modul.name}, alias: ${alias}, name: ${name}, modulePath: ${modulePath}`);
             }
             else {
-              console.log('ImportDeclaration. Not supported cases. modul name: ' + modul.name + ', modulePath: ' + modulePath);
-              console.log(`node keys: ${Object.keys(node)}`);
+              console.log(`Static Import: NOT supported. modul name: ${modul.name}, modulePath: ${modulePath}`);
             }
           })
+          break;
+        case syntax.ImportExpression:
+          // for import() which is a dynamic import from an ESM module to a commonjs module. TODO: update the information for the next step analysis
+          console.log(`Dynamic Import. modul name: ${modul.name}, modulePath: ${node.source.value}`);
           break;
       }
     },
