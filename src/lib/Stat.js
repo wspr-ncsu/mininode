@@ -325,6 +325,31 @@ async function initialPass(modul) {
           // for import() which is a dynamic import from an ESM module to a commonjs module. TODO: update the information for the next step analysis
           console.log(`Dynamic Import. modul name: ${modul.name}, modulePath: ${node.source.value}`);
           break;
+        case syntax.ExportNamedDeclaration:
+          // example: export function a {} or export a
+          // ExportNamedDeclaration: ['declaration', 'specifiers', 'source']
+          //     declaration: Declaration | null
+          //     specifiers: [ ExportSpecifier ]. where ExportSpecifier: ['exported', 'local']
+          //     source: Literal | null
+          console.log(`ExportNamedDeclaration: modul name: ${modul.name}, declaration: ${node.declaration.kind}, ${node.declaration.type}, specifier: ...`);
+          node.specifiers.forEach(specifier => {
+            console.log(`Exported: ${specifier.exported}, Local: ${specifier.exported}`);
+          })
+          console.log(`..., source: ${node.source}`);
+          break;
+        case syntax.ExportDefaultDeclaration:
+          // example: export default function () {}; or export default 1; 
+          // ExportDefaultDeclaration: ['declaration']
+          //     declaration: OptFunctionDeclaration | OptClassDeclaration | Expression
+          console.log(`ExportDefaultDeclaration: modul name: ${modul.name}, declaration type: ${node.declaration.type}`);
+          break;
+        case syntax.ExportAllDeclaration:
+          // example: export * as a from 'mymodule'
+          // ExportAllDeclaration: ['source']
+          // TODO: to support alias?
+          console.log(`ExportAllDeclaration: modul name: ${modul.name}, source: ${node.source}`);
+          // TODO: this may need to go to 'source' to retrieve all related identifiers
+          break;       
       }
     },
     leave: function (node, parent) {
