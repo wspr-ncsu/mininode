@@ -22,7 +22,7 @@ function closestsNot(node, type) {
  * @returns {Boolean}
  * @param {*} node
  */
-function createsNewScope(node) {
+function shouldCreateNewScope(node) {
   if (!node) console.log(chalk.red(node));
   return (
     node.type === es.Syntax.Program ||
@@ -33,4 +33,4 @@ function createsNewScope(node) {
 
 module.exports.closests = closests;
 module.exports.closestsNot = closestsNot;
-module.exports.createsNewScope = createsNewScope;
+module.exports.shouldCreateNewScope = shouldCreateNewScope;

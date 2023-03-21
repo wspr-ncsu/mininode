@@ -298,32 +298,74 @@ async function initialPass(modul) {
           break;
         case syntax.ImportDeclaration:
           // for static import in ES6. TODO: update the information for the next step analysis
+
           const modulePath = node.source.value;
-          node.specifiers.forEach(specifier => {
+          node.specifiers.forEach((specifier) => {
             const alias = specifier.local.name;
             let name;
             switch (specifier.type) {
-              case 'ImportSpecifier':
+              case "ImportSpecifier":
                 name = specifier.imported.name;
-                this.break;
-              case 'ImportDefaultSpecifier':
-                name = 'default';
-                this.break;
-              case 'ImportNamespaceSpecifier':
-                name = '*';
-                this.break;
+                break;
+              case "ImportDefaultSpecifier":
+                name = "default";
+
+                modul.staticRequire += 1;
+                if (utils.hasKey(attack, node.source.value)) {
+                  helper.VariableAssignmentName(parent, (name) => {
+                    if (name) {
+                      if (Array.isArray(name)) {
+                        console.log(name);
+                      }
+                      tracker.push(name);
+                      let vector = {
+                        name: name,
+                        value: node.source.value,
+                        members: [],
+                      };
+                      modul.attackVectors.push(vector);
+                      if (parent.type === syntax.MemberExpression) {
+                        vector.members.push(parent.property.name);
+                      }
+                    }
+                  });
+                }
+                let vardeclarator = helper.closests(
+                  node,
+                  syntax.VariableDeclarator
+                );
+                if (vardeclarator) {
+                  modules.push(vardeclarator.id.name);
+                }
+                let assignment = helper.closests(
+                  node,
+                  syntax.AssignmentExpression
+                );
+                if (assignment && assignment.left.type === syntax.Identifier) {
+                  modules.push(assignment.left.name);
+                }
+
+                break;
+              case "ImportNamespaceSpecifier":
+                name = "*";
+                break;
             }
             if (name) {
-              console.log(`Static Import: modul name: ${modul.name}, alias: ${alias}, name: ${name}, modulePath: ${modulePath}`);
+              console.log(
+                `Static Import: modul name: ${modul.name}, alias: ${alias}, name: ${name}, modulePath: ${modulePath}`
+              );
+            } else {
+              console.log(
+                `Static Import: NOT supported. modul name: ${modul.name}, modulePath: ${modulePath}`
+              );
             }
-            else {
-              console.log(`Static Import: NOT supported. modul name: ${modul.name}, modulePath: ${modulePath}`);
-            }
-          })
+          });
           break;
         case syntax.ImportExpression:
           // for import() which is a dynamic import from an ESM module to a commonjs module. TODO: update the information for the next step analysis
-          console.log(`Dynamic Import. modul name: ${modul.name}, modulePath: ${node.source.value}`);
+          console.log(
+            `Dynamic Import. modul name: ${modul.name}, modulePath: ${node.source.value}`
+          );
           break;
         case syntax.ExportNamedDeclaration:
           // example: export function a {} or export a
@@ -331,25 +373,33 @@ async function initialPass(modul) {
           //     declaration: Declaration | null
           //     specifiers: [ ExportSpecifier ]. where ExportSpecifier: ['exported', 'local']
           //     source: Literal | null
-          console.log(`ExportNamedDeclaration: modul name: ${modul.name}, declaration: ${node.declaration.kind}, ${node.declaration.type}, specifier: ...`);
-          node.specifiers.forEach(specifier => {
-            console.log(`Exported: ${specifier.exported}, Local: ${specifier.exported}`);
-          })
+          console.log(
+            `ExportNamedDeclaration: modul name: ${modul.name}, declaration: ${node.declaration.kind}, ${node.declaration.type}, specifier: ...`
+          );
+          node.specifiers.forEach((specifier) => {
+            console.log(
+              `Exported: ${specifier.exported}, Local: ${specifier.exported}`
+            );
+          });
           console.log(`..., source: ${node.source}`);
           break;
         case syntax.ExportDefaultDeclaration:
-          // example: export default function () {}; or export default 1; 
+          // example: export default function () {}; or export default 1;
           // ExportDefaultDeclaration: ['declaration']
           //     declaration: OptFunctionDeclaration | OptClassDeclaration | Expression
-          console.log(`ExportDefaultDeclaration: modul name: ${modul.name}, declaration type: ${node.declaration.type}`);
+          console.log(
+            `ExportDefaultDeclaration: modul name: ${modul.name}, declaration type: ${node.declaration.type}`
+          );
           break;
         case syntax.ExportAllDeclaration:
           // example: export * as a from 'mymodule'
           // ExportAllDeclaration: ['source']
           // TODO: to support alias?
-          console.log(`ExportAllDeclaration: modul name: ${modul.name}, source: ${node.source}`);
+          console.log(
+            `ExportAllDeclaration: modul name: ${modul.name}, source: ${node.source}`
+          );
           // TODO: this may need to go to 'source' to retrieve all related identifiers
-          break;       
+          break;
       }
     },
     leave: function (node, parent) {

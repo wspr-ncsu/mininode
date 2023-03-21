@@ -43,7 +43,7 @@ function VariableAssignmentName(node, cb) {
  * @returns {Boolean}
  * @param {*} node
  */
-function createsNewScope(node) {
+function shouldCreateNewScope(node) {
   if (!node) console.log(chalk.red(node));
   return (
     node.type === es.Syntax.Program ||
@@ -264,7 +264,7 @@ function getMemberExpressionMeta(node) {
 }
 
 module.exports.VariableAssignmentName = VariableAssignmentName;
-module.exports.createsNewScope = createsNewScope;
+module.exports.shouldCreateNewScope = shouldCreateNewScope;
 module.exports.getObjectName = getObjectName;
 module.exports.getPropertyName = getPropertyName;
 module.exports.getMemberExpressionString = getMemberExpressionString;

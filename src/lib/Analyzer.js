@@ -94,7 +94,7 @@ async function traverse(modul) {
   estraverse.traverse(modul.ast, {
     enter: function (node, parent) {
       node["xParent"] = parent;
-      if (helper.createsNewScope(node)) {
+      if (helper.shouldCreateNewScope(node)) {
         currentScope += 1;
         if (vars[currentScope] === undefined) {
           vars.push([[]]);
@@ -360,7 +360,6 @@ async function traverse(modul) {
                       importPath,
                       true
                     );
-                    console.log(variable);
                     variable.members.push(p.key.name);
                     let propertyName = helper.getPropertyName(parent); // detects require('something').property
                     if (propertyName) variable.members.push(propertyName);
@@ -451,11 +450,14 @@ async function traverse(modul) {
             }
           }
           break;
+        case syntax.ImportDeclaration:
+          
+          break;
       }
     },
 
     leave: function (node, parent) {
-      if (helper.createsNewScope(node)) {
+      if (helper.shouldCreateNewScope(node)) {
         currentScope -= 1;
       }
       switch (node.type) {

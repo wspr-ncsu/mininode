@@ -46,7 +46,7 @@ async function traverse(modul, extra) {
   console.debug(`[Reducer.js] traversing AST of ${modul.path}`);
   estraverse.traverse(modul.ast, {
     enter: function (node, parent) {
-      if (helper.createsNewScope(node)) {
+      if (helper.shouldCreateNewScope(node)) {
         currentScope += 1;
         scope.create();
       }
@@ -246,7 +246,7 @@ async function traverse(modul, extra) {
       }
     },
     leave: function (node, parent) {
-      if (helper.createsNewScope(node)) {
+      if (helper.shouldCreateNewScope(node)) {
         // todo: remove idstr elements that is out of scope
         currentScope -= 1;
         scope.exit();
