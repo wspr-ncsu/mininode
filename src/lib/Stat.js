@@ -45,6 +45,7 @@ async function initialPass(modul) {
             modul.functionNew += 1;
             modul.functions += 1;
           } else if (callee === "require" && node.arguments.length > 0) {
+            console.log(`Line 48: modul name: ${modul.name}`);
             let arg = node.arguments[0];
             if (arg.type !== syntax.Literal) {
               modul.dynamicRequire += 1;
@@ -297,22 +298,55 @@ async function initialPass(modul) {
           modul.functions += 1;
           break;
         case syntax.ImportDeclaration:
-          // for static import in ES6. TODO: update the information for the next step analysis
+          // ImportDeclaration: static import in ES6. 
+          //     type: "ImportDeclaration"
+          //     specifiers: [ ImportSpecifier | ImportDefaultSpecifier | ImportNamespaceSpecifier ]
+          //     source: Literal
+          // TODO: update the information for the next step analysis
           const modulePath = node.source.value;
           node.specifiers.forEach(specifier => {
             const alias = specifier.local.name;
             let name;
             switch (specifier.type) {
               case 'ImportSpecifier':
+                //     type: "ImportSpecifier"
+                //     imported: Identifier
+                // example: {foo} in import {foo} from "mode", or {foo as bar} in import {foo as bar} from "mode"
+                // In the first example, imported and local are equivalent Identifier node. 
+                // In the second example, imported represents foo while local represents bar
                 name = specifier.imported.name;
-                this.break;
+                break;
               case 'ImportDefaultSpecifier':
+                //     type: "ImportDefaultSpecifier"
+                // example: foo in import foo from "mod.js"
                 name = 'default';
-                this.break;
+                modul.staticRequire += 1;
+                // attack surface marking. TODO: check the logic. 
+                if (utils.hasKey(attack, modulePath)) {
+                  helper.VariableAssignmentName(parent, (name) => {
+                    if (name) {
+                      if (Array.isArray(name)) {
+                        console.log(name);
+                      }
+                      tracker.push(name);
+                      let vector = { name: name, value: arg.value, members: [] };
+                      modul.attackVectors.push(vector);
+                      //if (parent.type === syntax.MemberExpression) {
+                      //  vector.members.push(parent.property.name);
+                      //}
+                    }
+                  });
+                }
+                modules.push(alias);
+                // ?? modul.requires?
+                break;
               case 'ImportNamespaceSpecifier':
+                //     type: "ImportNamespaceSpecifier"
+                // example: * as foo in import * as foo from "mod.js"
                 name = '*';
-                this.break;
+                break;
             }
+            // console.log below is for debugging only. They will be removed after the processing is done in the above three cases
             if (name) {
               console.log(`Static Import: modul name: ${modul.name}, alias: ${alias}, name: ${name}, modulePath: ${modulePath}`);
             }
@@ -322,7 +356,8 @@ async function initialPass(modul) {
           })
           break;
         case syntax.ImportExpression:
-          // for import() which is a dynamic import from an ESM module to a commonjs module. TODO: update the information for the next step analysis
+          // for import() which is a dynamic import from an ESM module to a commonjs module. 
+          // TODO: update the information for the next step analysis
           console.log(`Dynamic Import. modul name: ${modul.name}, modulePath: ${node.source.value}`);
           break;
         case syntax.ExportNamedDeclaration:
@@ -360,6 +395,7 @@ async function initialPass(modul) {
             modul.requires.includes(node.callee.name)) &&
           node.arguments.length > 0
         ) {
+          console.log(`Line 364: modul name: ${modul.name}`);
           let first = node.arguments[0];
           if (
             first.type === syntax.Identifier &&
