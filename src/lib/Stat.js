@@ -315,37 +315,49 @@ async function initialPass(modul) {
                 // In the first example, imported and local are equivalent Identifier node. 
                 // In the second example, imported represents foo while local represents bar
                 name = specifier.imported.name;
+                modul.staticRequire += 1;
+                modules.push(alias);
+                //modul.identifiers.addIdentifier(modulePath); // should we add identifier here?
+                //modul.requires.push(name); // we do not push requires at this stage
                 break;
               case 'ImportDefaultSpecifier':
                 //     type: "ImportDefaultSpecifier"
                 // example: foo in import foo from "mod.js"
                 name = 'default';
                 modul.staticRequire += 1;
-                // attack surface marking. TODO: check the logic. 
-                if (utils.hasKey(attack, modulePath)) {
-                  helper.VariableAssignmentName(parent, (name) => {
-                    if (name) {
-                      if (Array.isArray(name)) {
-                        console.log(name);
-                      }
-                      tracker.push(name);
-                      let vector = { name: name, value: arg.value, members: [] };
-                      modul.attackVectors.push(vector);
-                      //if (parent.type === syntax.MemberExpression) {
-                      //  vector.members.push(parent.property.name);
-                      //}
-                    }
-                  });
-                }
                 modules.push(alias);
-                // ?? modul.requires?
+                //modul.identifiers.addIdentifier(modulePath); // should we add identifier here?
+                //modul.requires.push(modulePath); // we do not push requires at this stage
                 break;
               case 'ImportNamespaceSpecifier':
                 //     type: "ImportNamespaceSpecifier"
                 // example: * as foo in import * as foo from "mod.js"
+                // TODO: document all functions in modulePath?
                 name = '*';
+                modul.staticRequire += 1;
+                modules.push(alias);
+                //modul.identifiers.addIdentifier(modulePath); // should we add identifier here?
+                //modul.requires.push(modulePath); // we do not push requires at this stage
                 break;
             }
+
+            // attack surface marking. TODO: check the logic. 
+            if (utils.hasKey(attack, modulePath)) {
+            helper.VariableAssignmentName(parent, (name) => {
+              if (name) {
+                if (Array.isArray(name)) {
+                  console.log(name);
+                }
+                tracker.push(name);
+                let vector = { name: name, value: arg.value, members: [] };
+                modul.attackVectors.push(vector);
+                //if (parent.type === syntax.MemberExpression) {
+                //  vector.members.push(parent.property.name);
+                //}
+              }
+              });
+            }
+            
             // console.log below is for debugging only. They will be removed after the processing is done in the above three cases
             if (name) {
               console.log(
@@ -362,6 +374,11 @@ async function initialPass(modul) {
           // for import() which is a dynamic import from an ESM module to a commonjs module. 
           // TODO: update the information for the next step analysis
           console.log(`Dynamic Import. modul name: ${modul.name}, modulePath: ${node.source.value}`);
+          // store value of the identifier. Note: this was assigned in the leave function for require() in commonjs.
+          //if (modul.identifiers.hasIdentifier(node.source.name)) {
+          //  // marking the identifier as a module
+          //  ModuleBuilder.identifiers.setIsModule(node.source.name, true);
+          //}
           break;
         case syntax.ExportNamedDeclaration:
           // example: export function a {} or export a
