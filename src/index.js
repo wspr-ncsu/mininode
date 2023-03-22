@@ -58,7 +58,7 @@ let entries = [];
       await buildDependency();
       console.info("[index.js] Finished building dependency graph");
       console.info("[index.js] Started final reduction");
-      // 1. iterate modules' memusage
+      // 1. iterate modules' memusage 
       // 2. map results to app.globals by name
       // 3. add to individual modules used globals.
       for (let modul of _app.modules) {
@@ -367,12 +367,13 @@ async function traverseGenerateModule(directory, packageJsonType) {
               }
               break;
             case "module":
-              if ([".js", ""].includes(itemPathExtension)) {
+              if ([".mjs",".js", ""].includes(itemPathExtension)) {
                 _module.type = "module";
               } else if (itemPathExtension === ".cjs") {
                 _module.type = "commonjs";
               } else {
                 _module.type = packageJsonType;
+                console.info(`${packageJsonType} :::: ${itemPathExtension}`);
                 console.warn(item + " :: File extention not supported");
               }
               break;
