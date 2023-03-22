@@ -45,7 +45,7 @@ async function initialPass(modul) {
             modul.functionNew += 1;
             modul.functions += 1;
           } else if (callee === "require" && node.arguments.length > 0) {
-            console.log(`Line 48: modul name: ${modul.name}`);
+            console.log(`require() in CallExpression: modul name: ${modul.name}`);
             let arg = node.arguments[0];
             if (arg.type !== syntax.Literal) {
               modul.dynamicRequire += 1;
@@ -108,6 +108,8 @@ async function initialPass(modul) {
           }
           break;
         case syntax.MemberExpression:
+          // TODO-Hui: this branch only tracks "exports". 
+          // We will see whether we need to handle case #3 in syntax.ImportExpression
           if (node.object.type === syntax.Identifier) {
             if (
               node.object.name === "Object" &&
@@ -217,6 +219,11 @@ async function initialPass(modul) {
                   modul.exporters.push(node.left.name);
                   break;
               }
+            } else if ( (node.right.type === syntax.ImportExpression) || 
+                        ( (node.right.type === syntax.AwaitExpression ) && (node.right.argument.type === syntax.ImportExpression) )
+                      ) {
+              // TODO-Hui: do we need this?
+              modul.requires.push(node.left.name);
             } else if (node.right.type === syntax.MemberExpression) {
               let meta = helper.getMemberExpressionMeta(node.right);
               if (
@@ -248,6 +255,7 @@ async function initialPass(modul) {
           }
           break;
         case syntax.VariableDeclarator:
+          // TODO-Hui: Need to add Case 5 in syntax.ImportExpression
           if (node.init && node.id.type === syntax.Identifier) {
             modul.variables += 1;
             if (node.init.type === syntax.Identifier) {
@@ -302,7 +310,6 @@ async function initialPass(modul) {
           //     type: "ImportDeclaration"
           //     specifiers: [ ImportSpecifier | ImportDefaultSpecifier | ImportNamespaceSpecifier ]
           //     source: Literal
-          // TODO: update the information for the next step analysis
           const modulePath = node.source.value;
           node.specifiers.forEach(specifier => {
             const alias = specifier.local.name;
@@ -332,7 +339,7 @@ async function initialPass(modul) {
               case 'ImportNamespaceSpecifier':
                 //     type: "ImportNamespaceSpecifier"
                 // example: * as foo in import * as foo from "mod.js"
-                // TODO: document all functions in modulePath?
+                // TODO-Hui: document all functions in modulePath?
                 name = '*';
                 modul.staticRequire += 1;
                 modules.push(alias);
@@ -341,7 +348,7 @@ async function initialPass(modul) {
                 break;
             }
 
-            // attack surface marking. TODO: check the logic. 
+            // attack surface marking. TODO: check the logic
             if (utils.hasKey(attack, modulePath)) {
             helper.VariableAssignmentName(parent, (name) => {
               if (name) {
@@ -368,14 +375,99 @@ async function initialPass(modul) {
           })
           break;
         case syntax.ImportExpression:
-          // for import() which is a dynamic import from an ESM module to a commonjs module. 
-          // TODO: update the information for the next step analysis
-          console.log(`Dynamic Import. modul name: ${modul.name}, modulePath: ${node.source.value}`);
-          // store value of the identifier. Note: this was assigned in the leave function for require() in commonjs.
-          //if (modul.identifiers.hasIdentifier(node.source.name)) {
-          //  // marking the identifier as a module
-          //  ModuleBuilder.identifiers.setIsModule(node.source.name, true);
-          //}
+          // This is for import() which is a import from an ESM module to a commonjs module. 
+          // It can be either static import or dynamic import, depending on the argument
+
+          // five cases to support as of 03/22/2023:
+          // 1: import("/my-module.mjs"); await import("/my-module.mjs");
+          // 2: import(1>0 ? "./mod1.js" : "./mod2.js"); await import(1>0 ? "./mod1.js" : "./mod2.js");
+          // 3: import("/my-module.mjs").init; await import("/my-module.mjs").init;
+          // 4: exs = import("/my-module.mjs"); exs = await import("/my-module.mjs");
+          // 5: const exs = import("/my-module.mjs");
+          // Note: 
+          // Case 1 & 2: these imports are not used by themselves in the application
+          // The processing of 3, 4 and 5 is in syntax.MemberExpression, syntax.AssignmentExpression and syntax.VariableDeclarator, respectively
+          // The ConditionalExpression is not supported yet: import(someCondition ? "./mod1.js" : "./mod2.js"); await import(someCondition ? "./mod1.js" : "./mod2.js");
+          
+          // The following is for debugging only
+          if ( (parent.type === syntax.ExpressionStatement) || 
+                ( (parent.type === syntax.AwaitExpression) && (parent.xParent.type === syntax.ExpressionStatement) ) 
+          ) {
+            if (node.source.type === syntax.Literal) {
+              // case 1 - either a standalone statement, or part of a IfStatement or BlockStatement
+              console.log(`Import() case 1. modul name: ${modul.name}, modulePath: ${node.source.value}, parent type: ${parent.type}, ${parent.xParent.type}`);
+            } else if (node.source.type === syntax.BinaryExpression) {
+              // case 2 - either a standalone statement, or part of a IfStatement or BlockStatement
+              console.log(`Import() case 2. modul name: ${modul.name}, modulePath: ${node.source.type}, parent type: ${parent.type}, ${parent.xParent.type}`);
+            } else {
+              // general case 2
+              console.log(`Import() general case 2. modul name: ${modul.name}, modulePath: ${node.source.type}, parent type: ${parent.type}, ${parent.xParent.type}`);
+            }
+          } else if (parent.type === syntax.MemberExpression) {
+            // case 3
+            console.log(`Import() case 3. modul name: ${modul.name}, modulePath: ${node.source.type}, parent type: ${parent.type}, ${parent.xParent.type}`);
+          } else if ( (parent.type === syntax.AssignmentExpression) ||
+                      ( (parent.type === syntax.AwaitExpression) && (parent.xParent.type === syntax.AssignmentExpression) )
+          ) {
+            // case 4
+            console.log(`Import() case 4. modul name: ${modul.name}, modulePath: ${node.source.type}, parent type: ${parent.type}, ${parent.xParent.type}`);
+          } else if ( (parent.type === syntax.VariableDeclarator) ||
+          ( (parent.type === syntax.AwaitExpression) && (parent.xParent.type === syntax.VariableDeclarator) )
+          ) {
+            // case 5
+            console.log(`Import() case 5. modul name: ${modul.name}, modulePath: ${node.source.type}, parent type: ${parent.type}, ${parent.xParent.type}`);
+          } else {
+            console.log(`Import() case unknown. modul name: ${modul.name}, modulePath: ${node.source.type}, parent type: ${parent.type}, ${parent.xParent.type}`);
+          }
+          // end of the debugging block
+
+          // Basic markings for each import(). Note this will be triggered once and only once for each import()
+          let arg = node.source;
+          if (arg !== syntax.Literal) {
+            modul.dynamicRequire += 1;
+            if (arg.type === syntax.BinaryExpression) {
+              let isDynamicBinaryExpression = utils.BinaryExpression.isDynamic(arg);
+              if (isDynamicBinaryExpression) modul.complexDynamicRequire += 1;
+            } else if (
+              arg.type === syntax.Identifier &&
+              (!modul.identifiers.hasIdentifier(arg.value) ||
+                (modul.identifiers.hasIdentifier(arg.value) &&
+                  modul.identifiers.isComplex(arg.value)))
+            ) {
+              modul.complexDynamicRequire += 1;
+            }
+          } else {
+            modul.staticRequire += 1;
+            if (utils.hasKey(attack, arg.value)) {
+              helper.VariableAssignmentName(parent, (name) => {
+                if (name) {
+                  if (Array.isArray(name)) {
+                    console.log(name);
+                  }
+                  tracker.push(name);
+                  let vector = { name: name, value: arg.value, members: [] };
+                  modul.attackVectors.push(vector);
+                  if (parent.type === syntax.MemberExpression) {
+                    vector.members.push(parent.property.name);
+                  }
+                }
+              });
+            }
+            let vardeclarator = helper.closests(
+              node,
+              syntax.VariableDeclarator
+            );
+            if (vardeclarator) {
+              modules.push(vardeclarator.id.name);
+            }
+            let assignment = helper.closests(
+              node,
+              syntax.AssignmentExpression
+            );
+            if (assignment && assignment.left.type === syntax.Identifier) {
+              modules.push(assignment.left.name);
+            }
+          }
           break;
         case syntax.ExportNamedDeclaration:
           // example: export function a {} or export a
@@ -383,7 +475,8 @@ async function initialPass(modul) {
           //     declaration: Declaration | null
           //     specifiers: [ ExportSpecifier ]. where ExportSpecifier: ['exported', 'local']
           //     source: Literal | null
-          console.log(`ExportNamedDeclaration: modul name: ${modul.name}, declaration: ${node.declaration.kind}, ${node.declaration.type}, specifier: ...`);
+          // node.declaration.kind can be null or const
+          console.log(`ExportNamedDeclaration: modul name: ${modul.name}, declaration: ${node.declaration.type}, specifier: ...`);
           node.specifiers.forEach(specifier => {
             console.log(`Exported: ${specifier.exported}, Local: ${specifier.exported}`);
           })
@@ -398,9 +491,9 @@ async function initialPass(modul) {
         case syntax.ExportAllDeclaration:
           // example: export * as a from 'mymodule'
           // ExportAllDeclaration: ['source']
-          // TODO: to support alias?
+          // TODO-Hui: to support alias?
           console.log(`ExportAllDeclaration: modul name: ${modul.name}, source: ${node.source}`);
-          // TODO: this may need to go to 'source' to retrieve all related identifiers
+          // TODO-Hui: this may need to go to 'source' to retrieve all related identifiers
           break;       
       }
     },
@@ -412,7 +505,7 @@ async function initialPass(modul) {
             modul.requires.includes(node.callee.name)) &&
           node.arguments.length > 0
         ) {
-          console.log(`Line 364: modul name: ${modul.name}`);
+          console.log(`leave function for require: modul name: ${modul.name}`);
           let first = node.arguments[0];
           if (
             first.type === syntax.Identifier &&
@@ -421,6 +514,18 @@ async function initialPass(modul) {
             // marking the identifier as a module
             modul.identifiers.setIsModule(first.name, true);
           }
+        }
+      }
+      // do the same thing for dynamic import (from ESM to CommonJS module)
+      // TODO-Hui: after the implementation of ImportExpression, check whether this is duplicate
+      if (node.type === syntax.ImportExpression) {
+        console.log(`leave function for dynamic import: modul name: ${modul.name}`);
+        if (
+          node.source.type === syntax.Identifier && 
+          modul.identifiers.hasIdentifier(node.source.value)
+        ) {
+          // marking the identifier as a module
+          modul.identifiers.setIsModule(node.source.value, true);
         }
       }
     },
