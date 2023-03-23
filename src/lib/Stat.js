@@ -45,7 +45,7 @@ async function initialPass(modul) {
             modul.functionNew += 1;
             modul.functions += 1;
           } else if (callee === "require" && node.arguments.length > 0) {
-            console.log(`require() in CallExpression: modul name: ${modul.name}`);
+            //console.log(`require() in CallExpression: modul name: ${modul.name}`);
             let arg = node.arguments[0];
             if (arg.type !== syntax.Literal) {
               modul.dynamicRequire += 1;
@@ -222,7 +222,8 @@ async function initialPass(modul) {
             } else if ( (node.right.type === syntax.ImportExpression) || 
                         ( (node.right.type === syntax.AwaitExpression ) && (node.right.argument.type === syntax.ImportExpression) )
                       ) {
-              // TODO-Hui: do we need this?
+              // TODO-Hui: do we need this? 
+              // add the support of Case 4 (see case syntax.ImportExpression) here
               modul.requires.push(node.left.name);
             } else if (node.right.type === syntax.MemberExpression) {
               let meta = helper.getMemberExpressionMeta(node.right);
@@ -255,7 +256,6 @@ async function initialPass(modul) {
           }
           break;
         case syntax.VariableDeclarator:
-          // TODO-Hui: Need to add Case 5 in syntax.ImportExpression
           if (node.init && node.id.type === syntax.Identifier) {
             modul.variables += 1;
             if (node.init.type === syntax.Identifier) {
@@ -274,7 +274,12 @@ async function initialPass(modul) {
               ) {
                 modul.exporters.push(node.id.name);
               }
+            } else if (node.init.type === syntax.ImportExpression) {
+              // TODO-Hui: do we need this? 
+              // add the support of Case 5 (see case syntax.ImportExpression) here
+              modul.requires.push(node.id.name);
             }
+
             // TODO: calculate the possible values of identifier
             // storing the modul.identifiers for simple dynamic resolution.
             let id = node.id.name;
@@ -505,7 +510,7 @@ async function initialPass(modul) {
             modul.requires.includes(node.callee.name)) &&
           node.arguments.length > 0
         ) {
-          console.log(`leave function for require: modul name: ${modul.name}`);
+          //console.log(`leave function for require: modul name: ${modul.name}`);
           let first = node.arguments[0];
           if (
             first.type === syntax.Identifier &&
