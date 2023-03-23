@@ -353,7 +353,7 @@ async function initialPass(modul) {
                 break;
             }
 
-            // attack surface marking. TODO: check the logic
+            // attack surface marking. TODO-Hui: check the logic
             if (utils.hasKey(attack, modulePath)) {
             helper.VariableAssignmentName(parent, (name) => {
               if (name) {
@@ -481,23 +481,67 @@ async function initialPass(modul) {
           //     specifiers: [ ExportSpecifier ]. where ExportSpecifier: ['exported', 'local']
           //     source: Literal | null
           // node.declaration.kind can be null or const
-          console.log(`ExportNamedDeclaration: modul name: ${modul.name}, declaration: ${node.declaration.type}, specifier: ...`);
-          node.specifiers.forEach(specifier => {
-            console.log(`Exported: ${specifier.exported}, Local: ${specifier.exported}`);
-          })
-          console.log(`..., source: ${node.source}`);
+          modul.staticExport += 1;
+          console.log(`ExportNamedDeclaration: modul name: ${modul.name}, source: ${node.source}`);
+          if (node.declaration) {
+            // for now I only see the following types in the declaration of ExportNamedDeclaration
+            console.log(`    declaration type: ${node.declaration.type}`);
+            if (node.declaration.type === syntax.VariableDeclaration) {
+              // this supports multiple VariableDeclarator in declaration.declarations
+              for (const declaElem of node.declaration.declarations) {
+                if ( (declaElem.type === syntax.VariableDeclarator) ) {
+                  if (declaElem.id.type === syntax.Identifier) {
+                    self.push(declaElem.id.name); // TODO-Hui: we may not need to use self to store this
+                    if (!modul.exporters.includes(declaElem.id.name)) { // TODO-Hui: do we need to check this?
+                      modul.exporters.push(declaElem.id.name);
+                    }
+                  } 
+
+                  // TODO-Hui: do we need to consider the init (e.g., MemberExpression)? perhaps not since the detail is only needed in Analyzer.js?
+                  // also, do we need to update attackVectors if tracker.includes(node.object.name) when syntax.MemberExpression? example: module.exports = _copy
+                  // Third, will there be dynamicExport in ES6? my answer is no. The same answer for dynamicUsage and monkeyPatching.
+                }
+                console.log(`    declaration.id.name: ${declaElem.id.name}`);
+              }
+            } else if ( (declaration.type === syntax.FunctionDeclaration) || 
+                        (declaration.type === syntax.ClassDeclaration)
+              ) {
+              // there is no declarations in the function or class declaration. Use declaration directly
+              // follow the same to-dos in syntax.VariableDeclaration
+              if (declaration.id.type === syntax.Identifier) {
+                self.push(declaration.id.name);
+                if (!modul.exporters.includes(declaration.id.name)) {
+                  modul.exporters.push(declaration.id.name);
+                }
+              }
+            } else {
+              // TODO-Hui: will there be MemberExpression or AssignmentExpression? The answer is no for now.
+              console.log(`    warning: this declaration.id.type ${node.declaration.type} is not supported!`);
+            }
+          }
+          
+          if (node.specifiers) {
+            // follow the same to-dos in syntax.VariableDeclaration
+            node.specifiers.forEach(specifier => {
+              console.log(`    specifier: Exported: ${specifier.exported.name}, Local: ${specifier.local.name}`);
+              self.push(specifier.local.name); 
+              if (!modul.includes(specifier.local.name)) {
+                modul.exporters.push(specifier.local.name);
+              }
+            })
+          }
           break;
         case syntax.ExportDefaultDeclaration:
           // example: export default function () {}; or export default 1; 
           // ExportDefaultDeclaration: ['declaration']
           //     declaration: OptFunctionDeclaration | OptClassDeclaration | Expression
-          console.log(`ExportDefaultDeclaration: modul name: ${modul.name}, declaration type: ${node.declaration.type}`);
+          console.log(`Warning: Not supported yet. ExportDefaultDeclaration: modul name: ${modul.name}, declaration type: ${node.declaration.type}`);
           break;
         case syntax.ExportAllDeclaration:
           // example: export * as a from 'mymodule'
           // ExportAllDeclaration: ['source']
-          // TODO-Hui: to support alias?
-          console.log(`ExportAllDeclaration: modul name: ${modul.name}, source: ${node.source}`);
+          // TODO-Hui: to support alias? This is also called re-exporting since the exported is from another file. Does this make our analysis task easier?
+          console.log(`Warning: Not supported yet. ExportAllDeclaration: modul name: ${modul.name}, source: ${node.source}`);
           // TODO-Hui: this may need to go to 'source' to retrieve all related identifiers
           break;       
       }
