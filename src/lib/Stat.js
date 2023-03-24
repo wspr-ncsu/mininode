@@ -475,12 +475,19 @@ async function initialPass(modul) {
           }
           break;
         case syntax.ExportNamedDeclaration:
-          // example: export function a {} or export a
           // ExportNamedDeclaration: ['declaration', 'specifiers', 'source']
           //     declaration: Declaration | null
           //     specifiers: [ ExportSpecifier ]. where ExportSpecifier: ['exported', 'local']
           //     source: Literal | null
-          // node.declaration.kind can be null or const
+          // Check the Declaraion options listed in the ExportDefaultDeclaration syntax
+          // Examples:
+          //     export var foo
+          //     export class MyClass{}
+          //     export function myfunc() {}
+          //     export {_copy, _empty} // _copy and _empty are stored in specifiers instead of declarations
+          //     export const copy = _copy.copy, copySync = _copy.copySync
+          //     export const move = _move.move
+
           modul.staticExport += 1;
           console.log(`ExportNamedDeclaration: modul name: ${modul.name}, source: ${node.source}`);
           if (node.declaration) {
@@ -499,19 +506,20 @@ async function initialPass(modul) {
 
                   // TODO-Hui: do we need to consider the init (e.g., MemberExpression)? perhaps not since the detail is only needed in Analyzer.js?
                   // also, do we need to update attackVectors if tracker.includes(node.object.name) when syntax.MemberExpression? example: module.exports = _copy
+                  // perhaps attackVectors are already covered when processing imports?
                   // Third, will there be dynamicExport in ES6? my answer is no. The same answer for dynamicUsage and monkeyPatching.
                 }
                 console.log(`    declaration.id.name: ${declaElem.id.name}`);
               }
-            } else if ( (declaration.type === syntax.FunctionDeclaration) || 
-                        (declaration.type === syntax.ClassDeclaration)
+            } else if ( (node.declaration.type === syntax.FunctionDeclaration) || 
+                        (node.declaration.type === syntax.ClassDeclaration)
               ) {
               // there is no declarations in the function or class declaration. Use declaration directly
               // follow the same to-dos in syntax.VariableDeclaration
-              if (declaration.id.type === syntax.Identifier) {
-                self.push(declaration.id.name);
-                if (!modul.exporters.includes(declaration.id.name)) {
-                  modul.exporters.push(declaration.id.name);
+              if (node.declaration.id.type === syntax.Identifier) {
+                self.push(node.declaration.id.name);
+                if (!modul.exporters.includes(node.declaration.id.name)) {
+                  modul.exporters.push(node.declaration.id.name);
                 }
               }
             } else {
@@ -525,24 +533,78 @@ async function initialPass(modul) {
             node.specifiers.forEach(specifier => {
               console.log(`    specifier: Exported: ${specifier.exported.name}, Local: ${specifier.local.name}`);
               self.push(specifier.local.name); 
-              if (!modul.includes(specifier.local.name)) {
+              if (!modul.exporters.includes(specifier.local.name)) {
                 modul.exporters.push(specifier.local.name);
               }
             })
           }
           break;
         case syntax.ExportDefaultDeclaration:
-          // example: export default function () {}; or export default 1; 
           // ExportDefaultDeclaration: ['declaration']
           //     declaration: OptFunctionDeclaration | OptClassDeclaration | Expression
-          console.log(`Warning: Not supported yet. ExportDefaultDeclaration: modul name: ${modul.name}, declaration type: ${node.declaration.type}`);
+          // Examples:
+          //     export default {..._copy, ..._empty, ..._ensure, ..._json, ..._mkdirs, ..._move, ..._outputFile, ..._pathExists, ..._remove}
+          //     export default foo
+          //     export default class MyClass{}, export default class {}
+          //     export default function myfunc2() {}, export default function () {}
+          // Note: export default Literal is not considered here. I believe it does not have impact on our debloating.
+          
+          // TODO-Hui: follow the same to-dos in syntax.ExportNamedDeclaration
+          modul.staticExport += 1;
+          console.log(`ExportDefaultDeclaration: modul name: ${modul.name}, declaration type: ${node.declaration.type}`);
+          switch (node.declaration.type) {
+            case syntax.Identifier:
+              self.push(node.declaration.name);
+              if (!modul.exporters.includes(node.declaration.name)) {
+                modul.exporters.push(node.declaration.name);
+              }
+              console.log(`    declaration.name: ${node.declaration.name}`);
+              break;
+            case syntax.ClassDeclaration:
+              if (node.declaration.id && (node.declaration.id.type === syntax.Identifier) ) {
+                self.push(node.declaration.id.name);
+                if (!modul.exporters.includes(node.declaration.id.name)) {
+                  modul.exporters.push(node.declaration.id.name);
+                }
+                console.log(`    declaration.id.name: ${node.declaration.id.name}`);
+              }
+              break;
+            case syntax.FunctionDeclaration:
+              if (node.declaration.id && (node.declaration.id.type === syntax.Identifier) ) {
+                self.push(node.declaration.id.name);
+                if (!modul.exporters.includes(node.declaration.id.name)) {
+                  modul.exporters.push(node.declaration.id.name);
+                }
+                console.log(`    declaration.id.name: ${node.declaration.id.name}`);
+              }
+              break;
+            case syntax.ObjectExpression:
+              // I only see ObjectExpression from the specification/examples. 
+              // The peroperties of ObjectExpression include SpreadElements. The argument of each SpreadElement is an identifier
+              if (node.declaration.properties) {
+                for (const spreadElem of node.declaration.properties) {
+                  if ( spreadElem.argument && (spreadElem.argument.type === syntax.Identifier) ) {
+                    self.push(spreadElem.argument.name); 
+                    if (!modul.exporters.includes(spreadElem.argument.name)) {
+                      modul.exporters.push(spreadElem.argument.name);
+                    }
+                  } 
+                  console.log(`    declaration.properties.element.argument: ${spreadElem.argument.name}`);
+                }
+              }
+              break;
+            default:
+              // in case there is other Expression type
+              console.log(`Warning: Not supported node.declaration.type ${node.declaration.type} in ExportDefaultDeclaration.`);
+          }
           break;
         case syntax.ExportAllDeclaration:
           // example: export * as a from 'mymodule'
           // ExportAllDeclaration: ['source']
-          // TODO-Hui: to support alias? This is also called re-exporting since the exported is from another file. Does this make our analysis task easier?
-          console.log(`Warning: Not supported yet. ExportAllDeclaration: modul name: ${modul.name}, source: ${node.source}`);
-          // TODO-Hui: this may need to go to 'source' to retrieve all related identifiers
+          // TODO-Hui: This is also called re-exporting since the exported is from another file. Does this make our analysis task easier?
+          // To get the detail, this may need to go to 'source' to retrieve all related identifiers
+          // Note: in commonjs modules, to support the same function, we need module.exports = {a function to loop all items in the source and then require(item)}
+          console.log(`ExportAllDeclaration: modul name: ${modul.name}, source: ${node.source}`);
           break;       
       }
     },
