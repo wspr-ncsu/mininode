@@ -4,7 +4,8 @@ module.exports = function () {
   this.version = '';
   this.type = '';
   this.path = '';
-  this.main = '';
+  // Hui Zeng: in Node.js v19.8.1, "exports" provides a modern alternative to "main" allowing multiple entry points to defined
+  this.main = [];
   this.testsDirectory = null;
 
   this.attackSurface = 0;

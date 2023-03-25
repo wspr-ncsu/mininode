@@ -76,6 +76,61 @@ async function run(modul) {
             }
           }
           break;
+        case syntax.ImportDeclaration:
+          // static imports
+          // TODO-Hui: after testing, add a new function that parse uri. This new function will be called four times in Detector.js
+          const modulePath = node.source.value;
+          let uri = rsv(modulePath);
+          if (uri && !utils.hasKey(modul.children, uri)) {
+            modul.children[uri] = { ref: null, used: [] };
+            if (utils.hasKey(node, "xModule")) {
+              node["xModule"].push(uri);
+            } else {
+              node["xModule"] = [uri];
+            }
+          }
+          //node.specifiers.forEach(specifier => {
+          //  const alias = specifier.local.name;
+            // parse value
+          //});
+          break;
+        case syntax.ImportExpression:
+          // import()
+          let arg = node.source;
+          if (arg.type === syntax.Literal) {
+            let uri = rsv(arg);
+            if (uri && !utils.hasKey(modul.children, uri)) {
+              modul.children[uri] = { ref: null, used: [] };
+              if (utils.hasKey(node, "xModule")) {
+                node["xModule"].push(uri);
+              } else {
+                node["xModule"] = [uri];
+              }
+            }
+          } else if (arg.type === syntax.Identifier) {
+            _app.usedDynamicImport = true;
+            // identifiers are calculated during stat phase
+            if (
+              modul.identifiers.hasIdentifier(arg.value) &&
+              !modul.identifiers.isComplex(arg.value)
+            ) {
+              let values = modul.identifiers.getValues(arg.value);
+              for (let v of values) {
+                let uri = rsv(v);
+                if (uri && !utils.hasKey(modul.children, uri)) {
+                  modul.children[uri] = { ref: null, used: [] };
+                  if (utils.hasKey(node, "xModule")) {
+                    node["xModule"].push(uri);
+                  } else {
+                    node["xModule"] = [uri];
+                  }
+                }
+              }
+            } else {
+              _app.usedComplicatedDynamicImport = true;
+            }
+          }
+          break;
       }
     },
   });

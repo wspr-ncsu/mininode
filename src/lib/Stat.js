@@ -428,7 +428,7 @@ async function initialPass(modul) {
 
           // Basic markings for each import(). Note this will be triggered once and only once for each import()
           let arg = node.source;
-          if (arg !== syntax.Literal) {
+          if (arg.type !== syntax.Literal) {
             modul.dynamicRequire += 1;
             if (arg.type === syntax.BinaryExpression) {
               let isDynamicBinaryExpression = utils.BinaryExpression.isDynamic(arg);

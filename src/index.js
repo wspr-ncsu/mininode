@@ -177,7 +177,15 @@ async function init() {
   _app.version = packageJson.version;
   _app.type = packageJson.type || "commonjs";
   _app.path = location;
-  _app.main = utils.entryPoint(location, packageJson.main);
+  if (packageJson.exports) {
+    for (var key in packageJson.exports) {
+      // for now we do not consider difference among these multiple entrypoints
+      _app.main.push(packageJson.exports[key]);
+    }
+  } else {
+    _app.main.push(utils.entryPoint(location, packageJson.main));
+  }
+  
   if (packageJson.hasOwnProperty('directories')) {
     if (packageJson.directories.hasOwnProperty('test')) {
       _app.directories = packageJson.directories.test
@@ -188,7 +196,9 @@ async function init() {
     if (!_app.main) {
       throw new Error("NO_ENTRY_POINT");
     }
-    entries.push(path.join(_app.path, _app.main));
+    _app.main.forEach(entryP => {
+      entries.push(path.join(_app.path, entryP));
+    })
   } else {
     for (let seed of config.seeds) {
       let s = utils.entryPoint(location, seed);

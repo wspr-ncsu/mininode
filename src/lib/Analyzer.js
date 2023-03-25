@@ -148,6 +148,9 @@ async function traverse(modul) {
           VariableDeclarator(node);
           break;
         case syntax.MemberExpression:
+          // TODO-Hui: the following if-block is for commonjs AND export. We can use (modul.type === "commonjs") for this if-block, 
+          // and add another else-if block for ES6 exports right before the current else block
+          // Question: do we need to exclude es6 imports and commonjs import()
           if (node.object.type === syntax.Identifier) {
             // makes sure that this will be called only for top memberexpression
             let isComputed = helper.isComputed(node);
