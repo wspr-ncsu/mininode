@@ -91,7 +91,7 @@ async function run(modul) {
           }
           //node.specifiers.forEach(specifier => {
           //  const alias = specifier.local.name;
-            // parse value
+          // parse value
           //});
           break;
         case syntax.ImportExpression:

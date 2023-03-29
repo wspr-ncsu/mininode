@@ -63,10 +63,10 @@ let entries = [];
       // 3. add to individual modules used globals.
       for (let modul of _app.modules) {
         for (let mem in modul.memusages) {
-          _app.globals.forEach((i) => {
-            if (i.name === mem) {
+          _app.globals.forEach((globalVar) => {
+            if (globalVar.name === mem) {
               for (let m of modul.memusages[mem]) {
-                i.members.push(m);
+                globalVar.members.push(m);
               }
             }
           });
@@ -185,10 +185,11 @@ async function init() {
   } else {
     _app.main.push(utils.entryPoint(location, packageJson.main));
   }
-  
-  if (packageJson.hasOwnProperty('directories')) {
-    if (packageJson.directories.hasOwnProperty('test')) {
-      _app.directories = packageJson.directories.test
+  _app.parsedBlacklist = parseScriptsGetBlacklistFiles(packageJson);
+
+  if (packageJson.hasOwnProperty("directories")) {
+    if (packageJson.directories.hasOwnProperty("test")) {
+      _app.directories = packageJson.directories.test;
     }
   }
 
@@ -196,9 +197,9 @@ async function init() {
     if (!_app.main) {
       throw new Error("NO_ENTRY_POINT");
     }
-    _app.main.forEach(entryP => {
+    _app.main.forEach((entryP) => {
       entries.push(path.join(_app.path, entryP));
-    })
+    });
   } else {
     for (let seed of config.seeds) {
       let s = utils.entryPoint(location, seed);
@@ -377,7 +378,7 @@ async function traverseGenerateModule(directory, packageJsonType) {
               }
               break;
             case "module":
-              if ([".js", ""].includes(itemPathExtension)) {
+              if ([".js", ".mjs", ""].includes(itemPathExtension)) {
                 _module.type = "module";
               } else if (itemPathExtension === ".cjs") {
                 _module.type = "commonjs";
@@ -508,4 +509,27 @@ function isValidJavascriptFile(file) {
     return false;
   }
   return true;
+}
+
+function parseScriptsGetBlacklistFiles(packageJson) {
+  let result = [];
+  if (packageJson.hasOwnProperty("scripts")) {
+    let scripts = packageJson.scripts;
+    for (let key in scripts) {
+      let stringToDealWith = scripts[key];
+      let words = stringToDealWith.split(" ");
+      for (let wPotentialFile of words) {
+        let splitWordArr = wPotentialFile.split(".");
+        if (splitWordArr.length > 1) {
+          if (
+            [".js", ".mjs", ".cjs"].includes(
+              splitWordArr[splitWordArr.length - 1]
+            )
+          ) {
+            result.push(wPotentialFile);
+          }
+        }
+      }
+    }
+  } else return [];
 }
