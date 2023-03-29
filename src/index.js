@@ -185,6 +185,18 @@ async function init() {
   } else {
     _app.main.push(utils.entryPoint(location, packageJson.main));
   }
+
+  // add more entry points from test scripts
+  let testEntryPoints = getJSFilenamesInScriptsField(packageJson);
+  if (testEntryPoints && testEntryPoints.length > 0) {
+    //TODO-Hui: here do we need to find the path to these test entry points?
+    //TODO-Hui: also, with these test entry points, perhaps we should not block test directories?
+    testEntryPoints.forEach(entryP => {
+      if (!_app.main.includes(entryP)) {
+        _app.main.push(entryP);
+      }
+    })
+  }
   
   if (packageJson.hasOwnProperty('directories')) {
     if (packageJson.directories.hasOwnProperty('test')) {
@@ -377,7 +389,7 @@ async function traverseGenerateModule(directory, packageJsonType) {
               }
               break;
             case "module":
-              if ([".js", ""].includes(itemPathExtension)) {
+              if ([".js", ".mjs", ""].includes(itemPathExtension)) {
                 _module.type = "module";
               } else if (itemPathExtension === ".cjs") {
                 _module.type = "commonjs";
@@ -508,4 +520,32 @@ function isValidJavascriptFile(file) {
     return false;
   }
   return true;
+}
+
+// parse a field in Package.JSON to retrieve the names of valid JavaScript files
+function getJSFilenamesInScriptsField(packageJson) {
+  let result = [];
+  if (packageJson.hasOwnProperty("scripts")) {
+    let scripts = packageJson.scripts;
+    for (let key in scripts) {
+      let stringToDealWith = scripts[key];
+      let words = stringToDealWith.split(" ");
+      for (let wPotentialFile of words) {
+        if (wPotentialFile.indexOf('*') > -1) {
+          continue;
+        }
+        let splitWordArr = wPotentialFile.split(".");
+        if (splitWordArr.length > 1) {
+          if (
+            ["js", "mjs", "cjs"].includes(
+              splitWordArr[splitWordArr.length - 1]
+            )
+          ) {
+            result.push(wPotentialFile);
+          }
+        }
+      }
+    }
+  } 
+  return result;
 }

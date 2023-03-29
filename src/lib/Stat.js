@@ -308,6 +308,10 @@ async function initialPass(modul) {
           }
           break;
         case syntax.FunctionDeclaration:
+          if (parent.type === syntax.ExportNamedDeclaration ||
+              parent.type === syntax.ExportDefaultDeclaration) {
+                console.debug(`modul name: ${modul.name}`);
+              }
           modul.functions += 1;
           break;
         case syntax.ImportDeclaration:
@@ -372,10 +376,10 @@ async function initialPass(modul) {
             
             // console.log below is for debugging only. They will be removed after the processing is done in the above three cases
             if (name) {
-              console.log(`Static Import: modul name: ${modul.name}, alias: ${alias}, name: ${name}, modulePath: ${modulePath}`);
+              console.debug(`Static Import: modul name: ${modul.name}, alias: ${alias}, name: ${name}, modulePath: ${modulePath}`);
             }
             else {
-              console.log(`Static Import: NOT supported. modul name: ${modul.name}, modulePath: ${modulePath}`);
+              console.debug(`Static Import: NOT supported. modul name: ${modul.name}, modulePath: ${modulePath}`);
             }
           })
           break;
@@ -400,29 +404,29 @@ async function initialPass(modul) {
           ) {
             if (node.source.type === syntax.Literal) {
               // case 1 - either a standalone statement, or part of a IfStatement or BlockStatement
-              console.log(`Import() case 1. modul name: ${modul.name}, modulePath: ${node.source.value}, parent type: ${parent.type}, ${parent.xParent.type}`);
+              console.debug(`Import() case 1. modul name: ${modul.name}, modulePath: ${node.source.value}, parent type: ${parent.type}, ${parent.xParent.type}`);
             } else if (node.source.type === syntax.BinaryExpression) {
               // case 2 - either a standalone statement, or part of a IfStatement or BlockStatement
-              console.log(`Import() case 2. modul name: ${modul.name}, modulePath: ${node.source.type}, parent type: ${parent.type}, ${parent.xParent.type}`);
+              console.debug(`Import() case 2. modul name: ${modul.name}, modulePath: ${node.source.type}, parent type: ${parent.type}, ${parent.xParent.type}`);
             } else {
               // general case 2
-              console.log(`Import() general case 2. modul name: ${modul.name}, modulePath: ${node.source.type}, parent type: ${parent.type}, ${parent.xParent.type}`);
+              console.debug(`Import() general case 2. modul name: ${modul.name}, modulePath: ${node.source.type}, parent type: ${parent.type}, ${parent.xParent.type}`);
             }
           } else if (parent.type === syntax.MemberExpression) {
             // case 3
-            console.log(`Import() case 3. modul name: ${modul.name}, modulePath: ${node.source.type}, parent type: ${parent.type}, ${parent.xParent.type}`);
+            console.debug(`Import() case 3. modul name: ${modul.name}, modulePath: ${node.source.type}, parent type: ${parent.type}, ${parent.xParent.type}`);
           } else if ( (parent.type === syntax.AssignmentExpression) ||
                       ( (parent.type === syntax.AwaitExpression) && (parent.xParent.type === syntax.AssignmentExpression) )
           ) {
             // case 4
-            console.log(`Import() case 4. modul name: ${modul.name}, modulePath: ${node.source.type}, parent type: ${parent.type}, ${parent.xParent.type}`);
+            console.debug(`Import() case 4. modul name: ${modul.name}, modulePath: ${node.source.type}, parent type: ${parent.type}, ${parent.xParent.type}`);
           } else if ( (parent.type === syntax.VariableDeclarator) ||
           ( (parent.type === syntax.AwaitExpression) && (parent.xParent.type === syntax.VariableDeclarator) )
           ) {
             // case 5
-            console.log(`Import() case 5. modul name: ${modul.name}, modulePath: ${node.source.type}, parent type: ${parent.type}, ${parent.xParent.type}`);
+            console.debug(`Import() case 5. modul name: ${modul.name}, modulePath: ${node.source.type}, parent type: ${parent.type}, ${parent.xParent.type}`);
           } else {
-            console.log(`Import() case unknown. modul name: ${modul.name}, modulePath: ${node.source.type}, parent type: ${parent.type}, ${parent.xParent.type}`);
+            console.debug(`Import() case unknown. modul name: ${modul.name}, modulePath: ${node.source.type}, parent type: ${parent.type}, ${parent.xParent.type}`);
           }
           // end of the debugging block
 
