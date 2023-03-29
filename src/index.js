@@ -185,11 +185,22 @@ async function init() {
   } else {
     _app.main.push(utils.entryPoint(location, packageJson.main));
   }
-  _app.parsedBlacklist = parseScriptsGetBlacklistFiles(packageJson);
 
-  if (packageJson.hasOwnProperty("directories")) {
-    if (packageJson.directories.hasOwnProperty("test")) {
-      _app.directories = packageJson.directories.test;
+  // add more entry points from test scripts
+  let testEntryPoints = getJSFilenamesInScriptsField(packageJson);
+  if (testEntryPoints && testEntryPoints.length > 0) {
+    //TODO-Hui: here do we need to find the path to these test entry points?
+    //TODO-Hui: also, with these test entry points, perhaps we should not block test directories?
+    testEntryPoints.forEach(entryP => {
+      if (!_app.main.includes(entryP)) {
+        _app.main.push(entryP);
+      }
+    })
+  }
+  
+  if (packageJson.hasOwnProperty('directories')) {
+    if (packageJson.directories.hasOwnProperty('test')) {
+      _app.directories = packageJson.directories.test
     }
   }
 
@@ -511,7 +522,8 @@ function isValidJavascriptFile(file) {
   return true;
 }
 
-function parseScriptsGetBlacklistFiles(packageJson) {
+// parse a field in Package.JSON to retrieve the names of valid JavaScript files
+function getJSFilenamesInScriptsField(packageJson) {
   let result = [];
   if (packageJson.hasOwnProperty("scripts")) {
     let scripts = packageJson.scripts;
@@ -519,10 +531,13 @@ function parseScriptsGetBlacklistFiles(packageJson) {
       let stringToDealWith = scripts[key];
       let words = stringToDealWith.split(" ");
       for (let wPotentialFile of words) {
+        if (wPotentialFile.indexOf('*') > -1) {
+          continue;
+        }
         let splitWordArr = wPotentialFile.split(".");
         if (splitWordArr.length > 1) {
           if (
-            [".js", ".mjs", ".cjs"].includes(
+            ["js", "mjs", "cjs"].includes(
               splitWordArr[splitWordArr.length - 1]
             )
           ) {
@@ -531,5 +546,6 @@ function parseScriptsGetBlacklistFiles(packageJson) {
         }
       }
     }
-  } else return [];
+  } 
+  return result;
 }

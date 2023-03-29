@@ -124,6 +124,9 @@ async function traverse(modul) {
             this.skip();
           }
         }
+        // skip unused function in export declarations
+        // FunctionDeclaration inside ExportNamedDeclaration or ExportDefaultDeclaration have already been handled above
+        // TODO-Hui: check function declaration inside ExportAllDeclaration
       }
 
       switch (node.type) {
@@ -149,7 +152,7 @@ async function traverse(modul) {
           break;
         case syntax.MemberExpression:
           // TODO-Hui: the following if-block is for commonjs AND export. We can use (modul.type === "commonjs") for this if-block, 
-          // and add another else-if block for ES6 exports right before the current else block
+          // and add another else-if block for ES6 exports right before the current else block if needed
           // Question: do we need to exclude es6 imports and commonjs import()
           if (node.object.type === syntax.Identifier) {
             // makes sure that this will be called only for top memberexpression
@@ -454,6 +457,62 @@ async function traverse(modul) {
             }
           }
           break;
+          case syntax.ImportDeclaration:
+            // ImportDeclaration: static import in ES6. 
+            //     type: "ImportDeclaration"
+            //     specifiers: [ ImportSpecifier | ImportDefaultSpecifier | ImportNamespaceSpecifier ]
+            //     source: Literal
+            // static imports
+            importPath = resolve(node.source.value);
+            //node.specifiers.forEach(specifier => {
+            //  const alias = specifier.local.name;
+              // parse value
+            //});
+            
+            /* node.specifiers.forEach(specifier => {
+              const alias = specifier.local.name;
+              let name;
+              switch (specifier.type) {
+                case 'ImportSpecifier':
+                  //     type: "ImportSpecifier"
+                  //     imported: Identifier
+                  // example: {foo} in import {foo} from "mode", or {foo as bar} in import {foo as bar} from "mode"
+                  // In the first example, imported and local are equivalent Identifier node. 
+                  // In the second example, imported represents foo while local represents bar
+                  name = specifier.imported.name;
+                  //modul.identifiers.addIdentifier(modulePath); // should we add identifier here?
+                  //modul.requires.push(name); // we do not push requires at this stage
+                  break;
+                case 'ImportDefaultSpecifier':
+                  //     type: "ImportDefaultSpecifier"
+                  // example: foo in import foo from "mod.js"
+                  name = 'default';
+                  //modul.identifiers.addIdentifier(modulePath); // should we add identifier here?
+                  //modul.requires.push(modulePath); // we do not push requires at this stage
+                  break;
+                case 'ImportNamespaceSpecifier':
+                  //     type: "ImportNamespaceSpecifier"
+                  // example: * as foo in import * as foo from "mod.js"
+                  // TODO-Hui: document all functions in modulePath?
+                  name = '*';
+                  //modul.identifiers.addIdentifier(modulePath); // should we add identifier here?
+                  //modul.requires.push(modulePath); // we do not push requires at this stage
+                  break;
+              }
+            }) */
+            break;
+          case syntax.ImportExpression:
+            //TODO-Hui future
+            break;
+          case syntax.ExportNamedDeclaration:
+            //TODO-Hui
+            break;
+          case syntax.ExportDefaultDeclaration:
+            //TODO-Hui
+            break;
+          case syntax.ExportAllDeclaration:
+            //TODO-Hui future
+            break;
       }
     },
 
