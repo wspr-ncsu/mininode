@@ -153,7 +153,7 @@ async function traverse(modul) {
         case syntax.MemberExpression:
           // TODO-Hui: the following if-block is for commonjs AND export. We can use (modul.type === "commonjs") for this if-block, 
           // and add another else-if block for ES6 exports right before the current else block if needed
-          // Question: do we need to exclude es6 imports and commonjs import()
+          // Question: do we need to exclude es6 imports and commonjs import()?
           if (node.object.type === syntax.Identifier) {
             // makes sure that this will be called only for top memberexpression
             let isComputed = helper.isComputed(node);
@@ -356,7 +356,9 @@ async function traverse(modul) {
                 if (propertyName) variable.members.push(propertyName);
                 trackids.push(variable.name);
                 variables.push(variable);
-                if (vardeclarator.xUsed || oprop) variable.members.push(".");
+                if (vardeclarator.xUsed || oprop) {
+                  variable.members.push(".");
+                }
               } else if (vardeclarator.id.type === syntax.ObjectPattern) {
                 let objectPattern = vardeclarator.id;
                 for (let p of objectPattern.properties) {
@@ -464,14 +466,11 @@ async function traverse(modul) {
             //     source: Literal
             // static imports
             importPath = resolve(node.source.value);
-            //node.specifiers.forEach(specifier => {
-            //  const alias = specifier.local.name;
-              // parse value
-            //});
-            
-            /* node.specifiers.forEach(specifier => {
-              const alias = specifier.local.name;
-              let name;
+            console.debug(`Analyzer-ImportDeclaration: modul name: ${modul.name}, importPath: ${node.source.value}`);
+            node.specifiers.forEach(specifier => {
+              const localIdName = specifier.local.name; // the name of the identifier used in current module
+              // one new variable for each specifier
+              let variable = new VariableBuilder(localIdName, importPath, true);
               switch (specifier.type) {
                 case 'ImportSpecifier':
                   //     type: "ImportSpecifier"
@@ -479,39 +478,243 @@ async function traverse(modul) {
                   // example: {foo} in import {foo} from "mode", or {foo as bar} in import {foo as bar} from "mode"
                   // In the first example, imported and local are equivalent Identifier node. 
                   // In the second example, imported represents foo while local represents bar
-                  name = specifier.imported.name;
-                  //modul.identifiers.addIdentifier(modulePath); // should we add identifier here?
-                  //modul.requires.push(name); // we do not push requires at this stage
+                  // This ES6 syntax is like bar = require("mode.js").foo
+                  variable.members.push(specifier.imported.name); // imported ID name
+                  
                   break;
                 case 'ImportDefaultSpecifier':
                   //     type: "ImportDefaultSpecifier"
                   // example: foo in import foo from "mod.js"
-                  name = 'default';
-                  //modul.identifiers.addIdentifier(modulePath); // should we add identifier here?
-                  //modul.requires.push(modulePath); // we do not push requires at this stage
+                  // This ES6 syntax is like foo = require("mod.js").foo
+                  variable.members.push(localIdName); // imported ID has the same name as the local one. 
+                  // QUESTION: would the imported name be empty in the corresponding export declaration? for example: export default function () {}
+                  
                   break;
                 case 'ImportNamespaceSpecifier':
                   //     type: "ImportNamespaceSpecifier"
                   // example: * as foo in import * as foo from "mod.js"
-                  // TODO-Hui: document all functions in modulePath?
-                  name = '*';
-                  //modul.identifiers.addIdentifier(modulePath); // should we add identifier here?
-                  //modul.requires.push(modulePath); // we do not push requires at this stage
+                  // This ES6 syntax is like foo = require("mod.js") used in the commonjs module
+                  console.debug(`Analyzer-ImportNamespaceSpecifier: this case will be removed. modul name: ${modul.name}, importPath: ${node.source.type}`);
                   break;
               }
-            }) */
+
+              trackids.push(variable.name);
+              variables.push(variable);
+              // TODO-Hui: is there a way to know whether this variable is used? In commonjs, we can find the VarDeclarator and check its xUsed
+              modul.requires.push(importPath); // TODO-Hui: check whether this will break the logic in commonjs
+            });
             break;
           case syntax.ImportExpression:
             //TODO-Hui future
             break;
           case syntax.ExportNamedDeclaration:
-            //TODO-Hui
+            // ExportNamedDeclaration: ['declaration', 'specifiers', 'source']
+            //     declaration: Declaration | null
+            //     specifiers: [ ExportSpecifier ]. where ExportSpecifier: ['exported', 'local']
+            //     source: Literal | null
+            // Check the Declaraion options listed in the ExportDefaultDeclaration syntax
+            // Examples:
+            //     export var foo
+            //     export class MyClass{}
+            //     export function myfunc() {}
+            //     export {_copy, _empty} // _copy and _empty are stored in specifiers instead of declarations
+            //     export const copy = _copy.copy, copySync = _copy.copySync. 
+            //     export const move = _move.move
+            
+            console.log(`ExportNamedDeclaration: modul name: ${modul.name}, source: ${node.source}`);
+            if (node.declaration) {
+              // for now I only see the following types in the declaration of ExportNamedDeclaration
+              console.log(`    declaration type: ${node.declaration.type}`);
+              if (node.declaration.type === syntax.VariableDeclaration) {
+                // this supports multiple VariableDeclarator in declaration.declarations
+                for (const declaElem of node.declaration.declarations) {
+                  if ( (declaElem.type === syntax.VariableDeclarator) ) {
+                    // TODO-Hui: store the variable exported in members, and internal names in selfUsed
+                    // in the above example export const move = _move.move, _move and _move.move are stored in selfUsed, while copy is stored in members
+                    // QUESTION: shall we store ("export." + ${variable}) in modul.members instead of the variable?
+                    // QUESTION 2: does selfUsed mean "exposed and can be used internally" or "already used internally"?
+                    if (declaElem.id.type === syntax.Identifier) {
+                      if (!modul.members.includes(declaElem.id.name)) {
+                        modul.members.push(declaElem.id.name);
+                      }
+                    }
+                    if (declaElem.init && declaElem.init.type === syntax.Identifier) {
+                      if (!modul.selfUsed.includes(declaElem.init.name)) {
+                        modul.selfUsed.push(declaElem.init.name);
+                      }                   
+                    }
+                    if (declaElem.init && declaElem.init.type === syntax.MemberExpression) {
+                      //TODO-Hui: Need to debug this to see whether it gets the string correctly
+                      let right = helper.getMemberExpressionString(declaElem.init);
+                      if (right) {
+                        right = right.object + "." + rightproperty;
+                        if (!modul.selfUsed.includes(right)) {
+                          modul.selfUsed.push(right);
+                        }
+                      }
+                      // Instead of using getPropertyStart(), I directly add the top level name
+                      if (declaElem.init.object === syntax.Identifier) {
+                        if (!modul.selfUsed.includes(declaElem.init.object.name)) {
+                          modul.selfUsed.push(declaElem.init.object.name);
+                        }
+                      }
+                    }
+                  }
+
+                  console.log(`    declaration.id.name: ${declaElem.id.name}`);
+                }
+              } else if ( (node.declaration.type === syntax.FunctionDeclaration) || 
+                          (node.declaration.type === syntax.ClassDeclaration)
+                ) {
+                // there is no declarations in the function or class declaration. Use declaration directly
+                // follow the same to-dos in syntax.VariableDeclaration
+                if (node.declaration.id.type === syntax.Identifier) {
+                  if (!modul.members.includes(node.declaration.id.name)) {
+                    modul.members.push(node.declaration.id.name);
+                  }
+                  // my understanding is: 1) we do not know whether this function or class is self used or not
+                  // 2) if this function or class is used, it will be detected later on
+                  // TODO-Hui: check the "xUsed" field of the variable, function and class
+                }
+              } else {
+                // TODO-Hui: will there be MemberExpression or AssignmentExpression? The answer is no for now.
+                  console.log(`    warning: this declaration.id.type ${node.declaration.type} is not supported!`);
+              }
+            }
+            
+            if (node.specifiers && node.specifiers.length > 0) {
+              // follow the same to-dos in syntax.VariableDeclaration
+              node.specifiers.forEach(specifier => {
+                console.log(`    specifier: Exported: ${specifier.exported.name}, Local: ${specifier.local.name}`);
+                if (!modul.members.includes(specifier.exported.name)) {
+                  modul.members.push(specifier.exported.name);
+                }
+                if (!modul.selfUsed.includes(specifier.local.name)) {
+                  modul.selfUsed.push(specifier.local.name);
+                }
+              })
+            }
+            
+            // detecting descendents (i.e., importing from the other file) for future analysis in index.js
+            if (node.source && node.source === syntax.Literal) {
+              if (!modul.descendents.include(node.source.value)) {
+                modul.descendents.push(node.source.value);
+              }
+            }
             break;
           case syntax.ExportDefaultDeclaration:
-            //TODO-Hui
+            // ExportDefaultDeclaration: ['declaration']
+            //     declaration: OptFunctionDeclaration | OptClassDeclaration | Expression
+            // Examples:
+            //     export default {..._copy, ..._empty, ..._ensure, ..._json, ..._mkdirs, ..._move, ..._outputFile, ..._pathExists, ..._remove}
+            //     export default foo
+            //     export default class MyClass{}, export default class {}
+            //     export default function myfunc2() {}, export default function () {}
+            // Note: export default Literal is not considered here. I believe it does not have big impact on our debloating.  
+
+            // should use "module.exports" to align with the commonjs modules, or simply use "default"? 
+            // we can use "default" to distinguish with "module.exports". "default" and "module.exports" will not occur in the same file anyway
+            // right now, we use the variable if exists; otherwise "default"
+            
+            // TODO-Hui: follow the same to-dos in syntax.ExportNamedDeclaration
+            console.log(`ExportDefaultDeclaration: modul name: ${modul.name}, declaration type: ${node.declaration.type}`);
+            let name = "UNDEFINED";
+            switch (node.declaration.type) {
+              case syntax.Identifier:
+                // export default foo
+                if (!modul.members.includes(node.declaration.name)) {
+                  modul.members.push(node.declaration.name);
+                }
+                if (!modul.selfUsed.icludes(node.declaration.name)) {
+                  modul.selfUsed.push(node.declaration.name);
+                }
+                name = node.declaration.name;
+                console.log(`    declaration.id.name: ${name}`);
+                break;
+              case syntax.ClassDeclaration:
+                if (node.declaration.id) {
+                  // export default class MyClass{}
+                  if (node.declaration.id.type === syntax.Identifier) {
+                    if (!modul.members.includes(node.declaration.id.name)) {
+                      modul.members.push(node.declaration.id.name);
+                    }
+                    if (!modul.selfUsed.includes(node.declaration.id.name)) {
+                      modul.selfUsed.push(node.declaration.id.name);
+                    }
+                    name = node.declaration.id.name;
+                  }
+                } else {
+                  // export default class {}
+                  name = "default";
+                  if (!modul.members.includes(name)) {
+                    modul.members.push(name);
+                  }
+                  // not exposed internally
+                }
+                console.log(`    declaration.id.name: ${name}`);
+                break;
+              case syntax.FunctionDeclaration:
+                if (node.declaration.id) {
+                  // export default function myfunc2() {}
+                  if (node.declaration.id.type === syntax.Identifier) {
+                    if (!modul.members.includes(node.declaration.id.name)) {
+                      modul.members.push(node.declaration.id.name);
+                    }
+                    if (!modul.selfUsed.includes(node.declaration.id.name)) {
+                      modul.selfUsed.push(node.declaration.id.name);
+                    }
+                    name = node.declaration.id.name;
+                  }
+                } else {
+                  // export default function () {}
+                  name = "default";
+                  if (!modul.members.includes(name)) {
+                    modul.members.push(name);
+                  }
+                  // not exposed internally
+                }
+                console.log(`    declaration.id.name: ${name}`);
+                break;
+              case syntax.ObjectExpression:
+                // I only see ObjectExpression from the specification/examples. 
+                // The peroperties of ObjectExpression include SpreadElements. The argument of each SpreadElement is an identifier
+                if (node.declaration.properties) {
+                  for (const spreadElem of node.declaration.properties) {
+                    if ( spreadElem.argument && (spreadElem.argument.type === syntax.Identifier) ) {
+                      if (!modul.members.includes(spreadElem.argument.name)) {
+                        modul.members.push(spreadElem.argument.name);
+                      }
+                      if (!modul.selfUsed.includes(spreadElem.argument.name)) {
+                        modul.selfUsed.push(spreadElem.argument.name);
+                      }
+                      name = spreadElem.argument.name;
+                    } 
+                    console.log(`    declaration.properties.element.argument: ${name}`);
+                  }
+                }
+                break;
+              default:
+                // in case there is other Expression type
+                console.log(`Warning: Not supported node.declaration.type ${node.declaration.type} in ExportDefaultDeclaration.`);
+              }
             break;
           case syntax.ExportAllDeclaration:
-            //TODO-Hui future
+            // ExportAllDeclaration: ['source']
+            // example: export * as a from 'mymodule'
+
+            // TODO-Hui: This is also called re-exporting since the exported is from another file, like an import + export. 
+            // The modules are not exposed or used internally 
+            // To support chaining using descendents
+            // To get the detail, this may need to go to 'source' to retrieve all related identifiers
+
+            // detecting descendents (i.e., importing from the other file) for future analysis in index.js
+            if (node.source && node.source === syntax.Literal) {
+              if (!modul.descendents.include(node.source.value)) {
+                modul.descendents.push(node.source.value);
+              }
+            }
+            // TODO-Hui: do we need to track node.exported if it is an identifier? It is not exposed in this file
+            console.log(`ExportAllDeclaration: modul name: ${modul.name}, source: ${node.source}`);
             break;
       }
     },

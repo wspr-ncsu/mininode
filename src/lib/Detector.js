@@ -89,10 +89,6 @@ async function run(modul) {
               node["xModule"] = [uri];
             }
           }
-          //node.specifiers.forEach(specifier => {
-          //  const alias = specifier.local.name;
-          // parse value
-          //});
           break;
         case syntax.ImportExpression:
           // import()
