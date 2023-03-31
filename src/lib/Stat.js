@@ -407,10 +407,10 @@ async function initialPass(modul) {
               console.debug(`Import() case 1. modul name: ${modul.name}, modulePath: ${node.source.value}, parent type: ${parent.type}, ${parent.xParent.type}`);
             } else if (node.source.type === syntax.BinaryExpression) {
               // case 2 - either a standalone statement, or part of a IfStatement or BlockStatement
-              console.debug(`Import() case 2. modul name: ${modul.name}, modulePath: ${node.source.type}, parent type: ${parent.type}, ${parent.xParent.type}`);
+              console.debug(`Import() case 2. modul name: ${modul.name}, modulePath: ${node.source.value}, parent type: ${parent.type}, ${parent.xParent.type}`);
             } else {
               // general case 2
-              console.debug(`Import() general case 2. modul name: ${modul.name}, modulePath: ${node.source.type}, parent type: ${parent.type}, ${parent.xParent.type}`);
+              console.debug(`Import() general case 2. modul name: ${modul.name}, modulePath: ${node.source.value}, parent type: ${parent.type}, ${parent.xParent.type}`);
             }
           } else if (parent.type === syntax.MemberExpression) {
             // case 3
@@ -419,14 +419,14 @@ async function initialPass(modul) {
                       ( (parent.type === syntax.AwaitExpression) && (parent.xParent.type === syntax.AssignmentExpression) )
           ) {
             // case 4
-            console.debug(`Import() case 4. modul name: ${modul.name}, modulePath: ${node.source.type}, parent type: ${parent.type}, ${parent.xParent.type}`);
+            console.debug(`Import() case 4. modul name: ${modul.name}, modulePath: ${node.source.value}, parent type: ${parent.type}, ${parent.xParent.type}`);
           } else if ( (parent.type === syntax.VariableDeclarator) ||
           ( (parent.type === syntax.AwaitExpression) && (parent.xParent.type === syntax.VariableDeclarator) )
           ) {
             // case 5
-            console.debug(`Import() case 5. modul name: ${modul.name}, modulePath: ${node.source.type}, parent type: ${parent.type}, ${parent.xParent.type}`);
+            console.debug(`Import() case 5. modul name: ${modul.name}, modulePath: ${node.source.value}, parent type: ${parent.type}, ${parent.xParent.type}`);
           } else {
-            console.debug(`Import() case unknown. modul name: ${modul.name}, modulePath: ${node.source.type}, parent type: ${parent.type}, ${parent.xParent.type}`);
+            console.debug(`Import() case unknown. modul name: ${modul.name}, modulePath: ${node.source.value}, parent type: ${parent.type}, ${parent.xParent.type}`);
           }
           // end of the debugging block
 
@@ -532,7 +532,7 @@ async function initialPass(modul) {
             }
           }
           
-          if (node.specifiers) {
+          if (node.specifiers && node.specifiers.length > 0) {
             // follow the same to-dos in syntax.VariableDeclaration
             node.specifiers.forEach(specifier => {
               console.log(`    specifier: Exported: ${specifier.exported.name}, Local: ${specifier.local.name}`);
@@ -603,8 +603,8 @@ async function initialPass(modul) {
           }
           break;
         case syntax.ExportAllDeclaration:
-          // example: export * as a from 'mymodule'
           // ExportAllDeclaration: ['source']
+          // example: export * as a from 'mymodule'
           // TODO-Hui: This is also called re-exporting since the exported is from another file. Does this make our analysis task easier?
           // To get the detail, this may need to go to 'source' to retrieve all related identifiers
           // Note: in commonjs modules, to support the same function, we need module.exports = {a function to loop all items in the source and then require(item)}
