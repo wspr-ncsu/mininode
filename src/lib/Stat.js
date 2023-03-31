@@ -108,7 +108,7 @@ async function initialPass(modul) {
           }
           break;
         case syntax.MemberExpression:
-          // TODO-Hui: this branch only tracks "exports". 
+          // TODO-Hui: this branch only tracks "exports".
           // We will see whether we need to handle case #3 in syntax.ImportExpression
           if (node.object.type === syntax.Identifier) {
             if (
@@ -219,10 +219,12 @@ async function initialPass(modul) {
                   modul.exporters.push(node.left.name);
                   break;
               }
-            } else if ( (node.right.type === syntax.ImportExpression) || 
-                        ( (node.right.type === syntax.AwaitExpression ) && (node.right.argument.type === syntax.ImportExpression) )
-                      ) {
-              // TODO-Hui: do we need this? 
+            } else if (
+              node.right.type === syntax.ImportExpression ||
+              (node.right.type === syntax.AwaitExpression &&
+                node.right.argument.type === syntax.ImportExpression)
+            ) {
+              // TODO-Hui: do we need this?
               // add the support of Case 4 (see case syntax.ImportExpression) here
               modul.requires.push(node.left.name);
             } else if (node.right.type === syntax.MemberExpression) {
@@ -275,7 +277,7 @@ async function initialPass(modul) {
                 modul.exporters.push(node.id.name);
               }
             } else if (node.init.type === syntax.ImportExpression) {
-              // TODO-Hui: do we need this? 
+              // TODO-Hui: do we need this?
               // add the support of Case 5 (see case syntax.ImportExpression) here
               modul.requires.push(node.id.name);
             }
@@ -315,20 +317,20 @@ async function initialPass(modul) {
           modul.functions += 1;
           break;
         case syntax.ImportDeclaration:
-          // ImportDeclaration: static import in ES6. 
+          // ImportDeclaration: static import in ES6.
           //     type: "ImportDeclaration"
           //     specifiers: [ ImportSpecifier | ImportDefaultSpecifier | ImportNamespaceSpecifier ]
           //     source: Literal
           const modulePath = node.source.value;
-          node.specifiers.forEach(specifier => {
+          node.specifiers.forEach((specifier) => {
             const alias = specifier.local.name;
             let name;
             switch (specifier.type) {
-              case 'ImportSpecifier':
+              case "ImportSpecifier":
                 //     type: "ImportSpecifier"
                 //     imported: Identifier
                 // example: {foo} in import {foo} from "mode", or {foo as bar} in import {foo as bar} from "mode"
-                // In the first example, imported and local are equivalent Identifier node. 
+                // In the first example, imported and local are equivalent Identifier node.
                 // In the second example, imported represents foo while local represents bar
                 name = specifier.imported.name;
                 modul.staticRequire += 1;
@@ -336,20 +338,20 @@ async function initialPass(modul) {
                 //modul.identifiers.addIdentifier(modulePath); // should we add identifier here?
                 //modul.requires.push(name); // we do not push requires at this stage
                 break;
-              case 'ImportDefaultSpecifier':
+              case "ImportDefaultSpecifier":
                 //     type: "ImportDefaultSpecifier"
                 // example: foo in import foo from "mod.js"
-                name = 'default';
+                name = "default";
                 modul.staticRequire += 1;
                 modules.push(alias);
                 //modul.identifiers.addIdentifier(modulePath); // should we add identifier here?
                 //modul.requires.push(modulePath); // we do not push requires at this stage
                 break;
-              case 'ImportNamespaceSpecifier':
+              case "ImportNamespaceSpecifier":
                 //     type: "ImportNamespaceSpecifier"
                 // example: * as foo in import * as foo from "mod.js"
                 // TODO-Hui: document all functions in modulePath?
-                name = '*';
+                name = "*";
                 modul.staticRequire += 1;
                 modules.push(alias);
                 //modul.identifiers.addIdentifier(modulePath); // should we add identifier here?
@@ -359,21 +361,21 @@ async function initialPass(modul) {
 
             // attack surface marking. TODO-Hui: check the logic
             if (utils.hasKey(attack, modulePath)) {
-            helper.VariableAssignmentName(parent, (name) => {
-              if (name) {
-                if (Array.isArray(name)) {
-                  console.log(name);
+              helper.VariableAssignmentName(parent, (name) => {
+                if (name) {
+                  if (Array.isArray(name)) {
+                    console.log(name);
+                  }
+                  tracker.push(name);
+                  let vector = { name: name, value: arg.value, members: [] };
+                  modul.attackVectors.push(vector);
+                  //if (parent.type === syntax.MemberExpression) {
+                  //  vector.members.push(parent.property.name);
+                  //}
                 }
-                tracker.push(name);
-                let vector = { name: name, value: arg.value, members: [] };
-                modul.attackVectors.push(vector);
-                //if (parent.type === syntax.MemberExpression) {
-                //  vector.members.push(parent.property.name);
-                //}
-              }
               });
             }
-            
+
             // console.log below is for debugging only. They will be removed after the processing is done in the above three cases
             if (name) {
               console.debug(`Static Import: modul name: ${modul.name}, alias: ${alias}, name: ${name}, modulePath: ${modulePath}`);
@@ -384,7 +386,7 @@ async function initialPass(modul) {
           })
           break;
         case syntax.ImportExpression:
-          // This is for import() which is a import from an ESM module to a commonjs module. 
+          // This is for import() which is a import from an ESM module to a commonjs module.
           // It can be either static import or dynamic import, depending on the argument
 
           // five cases to support as of 03/22/2023:
@@ -393,14 +395,16 @@ async function initialPass(modul) {
           // 3: import("/my-module.mjs").init; await import("/my-module.mjs").init;
           // 4: exs = import("/my-module.mjs"); exs = await import("/my-module.mjs");
           // 5: const exs = import("/my-module.mjs");
-          // Note: 
+          // Note:
           // Case 1 & 2: these imports are not used by themselves in the application
           // The processing of 3, 4 and 5 is in syntax.MemberExpression, syntax.AssignmentExpression and syntax.VariableDeclarator, respectively
           // The ConditionalExpression is not supported yet: import(someCondition ? "./mod1.js" : "./mod2.js"); await import(someCondition ? "./mod1.js" : "./mod2.js");
-          
+
           // The following is for debugging only
-          if ( (parent.type === syntax.ExpressionStatement) || 
-                ( (parent.type === syntax.AwaitExpression) && (parent.xParent.type === syntax.ExpressionStatement) ) 
+          if (
+            parent.type === syntax.ExpressionStatement ||
+            (parent.type === syntax.AwaitExpression &&
+              parent.xParent.type === syntax.ExpressionStatement)
           ) {
             if (node.source.type === syntax.Literal) {
               // case 1 - either a standalone statement, or part of a IfStatement or BlockStatement
@@ -435,7 +439,8 @@ async function initialPass(modul) {
           if (arg.type !== syntax.Literal) {
             modul.dynamicRequire += 1;
             if (arg.type === syntax.BinaryExpression) {
-              let isDynamicBinaryExpression = utils.BinaryExpression.isDynamic(arg);
+              let isDynamicBinaryExpression =
+                utils.BinaryExpression.isDynamic(arg);
               if (isDynamicBinaryExpression) modul.complexDynamicRequire += 1;
             } else if (
               arg.type === syntax.Identifier &&
@@ -469,10 +474,7 @@ async function initialPass(modul) {
             if (vardeclarator) {
               modules.push(vardeclarator.id.name);
             }
-            let assignment = helper.closests(
-              node,
-              syntax.AssignmentExpression
-            );
+            let assignment = helper.closests(node, syntax.AssignmentExpression);
             if (assignment && assignment.left.type === syntax.Identifier) {
               modules.push(assignment.left.name);
             }
@@ -493,20 +495,23 @@ async function initialPass(modul) {
           //     export const move = _move.move
 
           modul.staticExport += 1;
-          console.log(`ExportNamedDeclaration: modul name: ${modul.name}, source: ${node.source}`);
+          console.log(
+            `ExportNamedDeclaration: modul name: ${modul.name}, source: ${node.source}`
+          );
           if (node.declaration) {
             // for now I only see the following types in the declaration of ExportNamedDeclaration
             console.log(`    declaration type: ${node.declaration.type}`);
             if (node.declaration.type === syntax.VariableDeclaration) {
               // this supports multiple VariableDeclarator in declaration.declarations
               for (const declaElem of node.declaration.declarations) {
-                if ( (declaElem.type === syntax.VariableDeclarator) ) {
+                if (declaElem.type === syntax.VariableDeclarator) {
                   if (declaElem.id.type === syntax.Identifier) {
                     self.push(declaElem.id.name); // TODO-Hui: we may not need to use self to store this
-                    if (!modul.exporters.includes(declaElem.id.name)) { // TODO-Hui: do we need to check this?
+                    if (!modul.exporters.includes(declaElem.id.name)) {
+                      // TODO-Hui: do we need to check this?
                       modul.exporters.push(declaElem.id.name);
                     }
-                  } 
+                  }
 
                   // TODO-Hui: do we need to consider the init (e.g., MemberExpression)? perhaps not since the detail is only needed in Analyzer.js?
                   // also, do we need to update attackVectors if tracker.includes(node.object.name) when syntax.MemberExpression? example: module.exports = _copy
@@ -515,9 +520,10 @@ async function initialPass(modul) {
                 }
                 console.log(`    declaration.id.name: ${declaElem.id.name}`);
               }
-            } else if ( (node.declaration.type === syntax.FunctionDeclaration) || 
-                        (node.declaration.type === syntax.ClassDeclaration)
-              ) {
+            } else if (
+              node.declaration.type === syntax.FunctionDeclaration ||
+              node.declaration.type === syntax.ClassDeclaration
+            ) {
               // there is no declarations in the function or class declaration. Use declaration directly
               // follow the same to-dos in syntax.VariableDeclaration
               if (node.declaration.id.type === syntax.Identifier) {
@@ -528,19 +534,24 @@ async function initialPass(modul) {
               }
             } else {
               // TODO-Hui: will there be MemberExpression or AssignmentExpression? The answer is no for now.
-              console.log(`    warning: this declaration.id.type ${node.declaration.type} is not supported!`);
+              console.log(
+                `    warning: this declaration.id.type ${node.declaration.type} is not supported!`
+              );
             }
           }
           
           if (node.specifiers && node.specifiers.length > 0) {
             // follow the same to-dos in syntax.VariableDeclaration
-            node.specifiers.forEach(specifier => {
-              console.log(`    specifier: Exported: ${specifier.exported.name}, Local: ${specifier.local.name}`);
+            // specifier.exported.name is the alias, specifier.local.name is the actual
+            node.specifiers.forEach((specifier) => {
+              console.log(
+                `    specifier: Exported: ${specifier.exported.name}, Local: ${specifier.local.name}`
+              );
               self.push(specifier.local.name); 
               if (!modul.exporters.includes(specifier.local.name)) {
-                modul.exporters.push(specifier.local.name);
+                modul.exporters.push(specifier.local.name); 
               }
-            })
+            });
           }
           break;
         case syntax.ExportDefaultDeclaration:
@@ -552,10 +563,12 @@ async function initialPass(modul) {
           //     export default class MyClass{}, export default class {}
           //     export default function myfunc2() {}, export default function () {}
           // Note: export default Literal is not considered here. I believe it does not have impact on our debloating.
-          
+
           // TODO-Hui: follow the same to-dos in syntax.ExportNamedDeclaration
           modul.staticExport += 1;
-          console.log(`ExportDefaultDeclaration: modul name: ${modul.name}, declaration type: ${node.declaration.type}`);
+          console.log(
+            `ExportDefaultDeclaration: modul name: ${modul.name}, declaration type: ${node.declaration.type}`
+          );
           switch (node.declaration.type) {
             case syntax.Identifier:
               self.push(node.declaration.name);
@@ -565,41 +578,58 @@ async function initialPass(modul) {
               console.log(`    declaration.name: ${node.declaration.name}`);
               break;
             case syntax.ClassDeclaration:
-              if (node.declaration.id && (node.declaration.id.type === syntax.Identifier) ) {
+              if (
+                node.declaration.id &&
+                node.declaration.id.type === syntax.Identifier
+              ) {
                 self.push(node.declaration.id.name);
                 if (!modul.exporters.includes(node.declaration.id.name)) {
                   modul.exporters.push(node.declaration.id.name);
                 }
-                console.log(`    declaration.id.name: ${node.declaration.id.name}`);
+                console.log(
+                  `    declaration.id.name: ${node.declaration.id.name}`
+                );
               }
               break;
             case syntax.FunctionDeclaration:
-              if (node.declaration.id && (node.declaration.id.type === syntax.Identifier) ) {
+              if (
+                node.declaration.id &&
+                node.declaration.id.type === syntax.Identifier
+              ) {
                 self.push(node.declaration.id.name);
                 if (!modul.exporters.includes(node.declaration.id.name)) {
                   modul.exporters.push(node.declaration.id.name);
                 }
-                console.log(`    declaration.id.name: ${node.declaration.id.name}`);
+                console.log(
+                  `    declaration.id.name: ${node.declaration.id.name}`
+                );
               }
               break;
             case syntax.ObjectExpression:
-              // I only see ObjectExpression from the specification/examples. 
+              // I only see ObjectExpression from the specification/examples.
               // The peroperties of ObjectExpression include SpreadElements. The argument of each SpreadElement is an identifier
               if (node.declaration.properties) {
                 for (const spreadElem of node.declaration.properties) {
-                  if ( spreadElem.argument && (spreadElem.argument.type === syntax.Identifier) ) {
-                    self.push(spreadElem.argument.name); 
+                  if (
+                    spreadElem.argument &&
+                    spreadElem.argument.type === syntax.Identifier
+                  ) {
+                    self.push(spreadElem.argument.name);
                     if (!modul.exporters.includes(spreadElem.argument.name)) {
                       modul.exporters.push(spreadElem.argument.name);
                     }
-                  } 
-                  console.log(`    declaration.properties.element.argument: ${spreadElem.argument.name}`);
+                  }
+                  console.log(
+                    `    declaration.properties.element.argument: ${spreadElem.argument.name}`
+                  );
                 }
               }
               break;
             default:
               // in case there is other Expression type
-              console.log(`Warning: Not supported node.declaration.type ${node.declaration.type} in ExportDefaultDeclaration.`);
+              console.log(
+                `Warning: Not supported node.declaration.type ${node.declaration.type} in ExportDefaultDeclaration.`
+              );
           }
           break;
         case syntax.ExportAllDeclaration:
@@ -608,8 +638,10 @@ async function initialPass(modul) {
           // TODO-Hui: This is also called re-exporting since the exported is from another file. Does this make our analysis task easier?
           // To get the detail, this may need to go to 'source' to retrieve all related identifiers
           // Note: in commonjs modules, to support the same function, we need module.exports = {a function to loop all items in the source and then require(item)}
-          console.log(`ExportAllDeclaration: modul name: ${modul.name}, source: ${node.source}`);
-          break;       
+          console.log(
+            `ExportAllDeclaration: modul name: ${modul.name}, source: ${node.source}`
+          );
+          break;
       }
     },
     leave: function (node, parent) {
@@ -634,9 +666,11 @@ async function initialPass(modul) {
       // do the same thing for dynamic import (from ESM to CommonJS module)
       // TODO-Hui: after the implementation of ImportExpression, check whether this is duplicate
       if (node.type === syntax.ImportExpression) {
-        console.log(`leave function for dynamic import: modul name: ${modul.name}`);
+        console.log(
+          `leave function for dynamic import: modul name: ${modul.name}`
+        );
         if (
-          node.source.type === syntax.Identifier && 
+          node.source.type === syntax.Identifier &&
           modul.identifiers.hasIdentifier(node.source.value)
         ) {
           // marking the identifier as a module
