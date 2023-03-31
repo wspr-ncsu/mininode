@@ -547,7 +547,7 @@ async function traverse(modul) {
                       //TODO-Hui: Need to debug this to see whether it gets the string correctly
                       let right = helper.getMemberExpressionString(declaElem.init);
                       if (right) {
-                        right = right.object + "." + rightproperty;
+                        right = right.object + "." + right.property;
                         if (!modul.selfUsed.includes(right)) {
                           modul.selfUsed.push(right);
                         }

@@ -191,16 +191,16 @@ async function init() {
   if (testEntryPoints && testEntryPoints.length > 0) {
     //TODO-Hui: here do we need to find the path to these test entry points?
     //TODO-Hui: also, with these test entry points, perhaps we should not block test directories?
-    testEntryPoints.forEach(entryP => {
+    testEntryPoints.forEach((entryP) => {
       if (!_app.main.includes(entryP)) {
         _app.main.push(entryP);
       }
-    })
+    });
   }
-  
-  if (packageJson.hasOwnProperty('directories')) {
-    if (packageJson.directories.hasOwnProperty('test')) {
-      _app.directories = packageJson.directories.test
+
+  if (packageJson.hasOwnProperty("directories")) {
+    if (packageJson.directories.hasOwnProperty("test")) {
+      _app.directories = packageJson.directories.test;
     }
   }
 
@@ -358,15 +358,6 @@ async function traverseGenerateModule(directory, packageJsonType) {
       let itemPath = path.join(directory, item);
       let stat = fs.statSync(itemPath);
       if (stat.isDirectory()) {
-        if (config.includeTestFolders === false) {
-          if (_app.testsDirectory) {
-            if (item === _app.testsDirectory) continue;
-          } else {
-            if (item.toLowerCase().startsWith("test")) {
-              continue;
-            }
-          }
-        }
         await traverseGenerateModule(itemPath, packageJsonType);
       } else if (stat.isFile()) {
         let itemPathExtension = path.extname(itemPath).toLowerCase();
@@ -531,21 +522,19 @@ function getJSFilenamesInScriptsField(packageJson) {
       let stringToDealWith = scripts[key];
       let words = stringToDealWith.split(" ");
       for (let wPotentialFile of words) {
-        if (wPotentialFile.indexOf('*') > -1) {
+        if (wPotentialFile.indexOf("*") > -1) {
           continue;
         }
         let splitWordArr = wPotentialFile.split(".");
         if (splitWordArr.length > 1) {
           if (
-            ["js", "mjs", "cjs"].includes(
-              splitWordArr[splitWordArr.length - 1]
-            )
+            ["js", "mjs", "cjs"].includes(splitWordArr[splitWordArr.length - 1])
           ) {
             result.push(wPotentialFile);
           }
         }
       }
     }
-  } 
+  }
   return result;
 }
