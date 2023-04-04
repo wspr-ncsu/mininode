@@ -275,11 +275,12 @@ async function readModule(modul) {
     }
 
     // Analyzer part
-    console.info("[index.js] Started analysis of ", modul.path);
+    console.info(`[index.js] Started analysis of ${modul.path}`);
     let result = await Analyzer.analyze(modul);
-    console.debug(`[index.js] Analysis of ${modul.path} returned ${result}`);
-    console.info("[index.js] Finished analysis of", modul.path);
+    console.debug(`[index.js] Analysis of ${modul.name} returned ${result}`);
+    console.info(`[index.js] Finished analysis of ${modul.path}`);
 
+    // for chaining. Analyze the descendent module if available
     for (let i of modul.descendents) {
       let descendent = _app.modules.find((m) => {
         return m.path === i;
@@ -358,7 +359,7 @@ async function traverseGenerateModule(directory, packageJsonType) {
       let itemPath = path.join(directory, item);
       let stat = fs.statSync(itemPath);
       if (stat.isDirectory()) {
-        if (config.includeTestFolders === false) {
+        /* if (config.includeTestFolders === false) {
           if (_app.testsDirectory) {
             if (item === _app.testsDirectory) continue;
           } else {
@@ -366,7 +367,7 @@ async function traverseGenerateModule(directory, packageJsonType) {
               continue;
             }
           }
-        }
+        } */
         await traverseGenerateModule(itemPath, packageJsonType);
       } else if (stat.isFile()) {
         let itemPathExtension = path.extname(itemPath).toLowerCase();
