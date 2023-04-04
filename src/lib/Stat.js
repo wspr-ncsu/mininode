@@ -560,6 +560,7 @@ async function initialPass(modul) {
           // Examples:
           //     export default {..._copy, ..._empty, ..._ensure, ..._json, ..._mkdirs, ..._move, ..._outputFile, ..._pathExists, ..._remove}
           //     export default foo
+          //     export default foo = mem, export default foo = mem.me, export default foo = 3
           //     export default class MyClass{}, export default class {}
           //     export default function myfunc2() {}, export default function () {}
           // Note: export default Literal is not considered here. I believe it does not have impact on our debloating.
@@ -571,11 +572,21 @@ async function initialPass(modul) {
           );
           switch (node.declaration.type) {
             case syntax.Identifier:
+              // export default foo
               self.push(node.declaration.name);
               if (!modul.exporters.includes(node.declaration.name)) {
                 modul.exporters.push(node.declaration.name);
               }
               console.log(`    declaration.name: ${node.declaration.name}`);
+              break;
+            case syntax.AssignmentExpression:
+              // export default foo = mem, or export default foo = mem.me
+              // note that right can be Identifier, MemberExpression, or literal
+              self.push(node.declaration.left.name); // left must be an Identifier
+              if (!modul.exporters.includes(node.declaration.left.name)) {
+                modul.exporters.push(node.declaration.left.name);
+              }
+              console.log(`    declaration.left.name: ${node.declaration.left.name}`);
               break;
             case syntax.ClassDeclaration:
               if (

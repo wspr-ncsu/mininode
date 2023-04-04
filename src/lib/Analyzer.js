@@ -48,6 +48,7 @@ module.exports.analyze = async function analyze(modul) {
   console.debug(`[Analyzer.js] ${modul.path} global leaks ${leaks}`);
   variables.forEach((item, index) => {
     if (item.isModule && item.value) {
+      // marking used. children identified in load dependency analysis in detector.js
       if (utils.hasKey(modul.children, item.value)) {
         for (var member of item.members) {
           if (!modul.children[item.value].used.includes(member)) {
@@ -505,7 +506,8 @@ async function traverse(modul) {
             });
             break;
           case syntax.ImportExpression:
-            //TODO-Hui future
+            //TODO-Hui to support in the future
+            console.log(`Warning in Analyzer: ImportExpression not supported! modul name: ${modul.name}, modulePath: ${node.source.value}, parent type: ${parent.type}, ${parent.xParent.type}`);
             break;
           case syntax.ExportNamedDeclaration:
             // ExportNamedDeclaration: ['declaration', 'specifiers', 'source']
@@ -521,10 +523,10 @@ async function traverse(modul) {
             //     export const copy = _copy.copy, copySync = _copy.copySync. 
             //     export const move = _move.move
             
-            console.log(`ExportNamedDeclaration: modul name: ${modul.name}, source: ${node.source}`);
+            console.debug(`ExportNamedDeclaration: modul name: ${modul.name}, source: ${node.source}`);
             if (node.declaration) {
               // for now I only see the following types in the declaration of ExportNamedDeclaration
-              console.log(`    declaration type: ${node.declaration.type}`);
+              console.debug(`    declaration type: ${node.declaration.type}`);
               if (node.declaration.type === syntax.VariableDeclaration) {
                 // this supports multiple VariableDeclarator in declaration.declarations
                 for (const declaElem of node.declaration.declarations) {
@@ -532,7 +534,8 @@ async function traverse(modul) {
                     // TODO-Hui: store the variable exported in members, and internal names in selfUsed
                     // in the above example export const move = _move.move, _move and _move.move are stored in selfUsed, while copy is stored in members
                     // QUESTION: shall we store ("export." + ${variable}) in modul.members instead of the variable?
-                    // QUESTION 2: does selfUsed mean "exposed and can be used internally" or "already used internally"?
+                    // QUESTION 2: does selfUsed mean "exposed and can be used internally" or "already used internally"? Our implementation is based on
+                    // the former
                     if (declaElem.id.type === syntax.Identifier) {
                       if (!modul.members.includes(declaElem.id.name)) {
                         modul.members.push(declaElem.id.name);
@@ -544,7 +547,7 @@ async function traverse(modul) {
                       }                   
                     }
                     if (declaElem.init && declaElem.init.type === syntax.MemberExpression) {
-                      //TODO-Hui: Need to debug this to see whether it gets the string correctly
+                      // example: export const copy = _copy.copy1.copy2
                       let right = helper.getMemberExpressionString(declaElem.init);
                       if (right) {
                         right = right.object + "." + right.property;
@@ -552,22 +555,21 @@ async function traverse(modul) {
                           modul.selfUsed.push(right);
                         }
                       }
-                      // Instead of using getPropertyStart(), I directly add the top level name
-                      if (declaElem.init.object === syntax.Identifier) {
-                        if (!modul.selfUsed.includes(declaElem.init.object.name)) {
-                          modul.selfUsed.push(declaElem.init.object.name);
-                        }
+                      // add the top level
+                      let rightStart = getPropertyStart(right);
+                      if (rightStart && !modul.selfUsed.includes(rightStart)) {
+                        modul.selfUsed.push(rightStart);
                       }
                     }
                   }
-
-                  console.log(`    declaration.id.name: ${declaElem.id.name}`);
+                  console.debug(`    declaration.id.name: ${declaElem.id.name}`);
                 }
               } else if ( (node.declaration.type === syntax.FunctionDeclaration) || 
                           (node.declaration.type === syntax.ClassDeclaration)
                 ) {
                 // there is no declarations in the function or class declaration. Use declaration directly
                 // follow the same to-dos in syntax.VariableDeclaration
+                // example: export class MyClass{}, export function myfunc() {}
                 if (node.declaration.id.type === syntax.Identifier) {
                   if (!modul.members.includes(node.declaration.id.name)) {
                     modul.members.push(node.declaration.id.name);
@@ -584,8 +586,9 @@ async function traverse(modul) {
             
             if (node.specifiers && node.specifiers.length > 0) {
               // follow the same to-dos in syntax.VariableDeclaration
+              // example:  export {_copy, _empty} 
               node.specifiers.forEach(specifier => {
-                console.log(`    specifier: Exported: ${specifier.exported.name}, Local: ${specifier.local.name}`);
+                console.debug(`    specifier: Exported: ${specifier.exported.name}, Local: ${specifier.local.name}`);
                 if (!modul.members.includes(specifier.exported.name)) {
                   modul.members.push(specifier.exported.name);
                 }
@@ -596,7 +599,7 @@ async function traverse(modul) {
             }
             
             // detecting descendents (i.e., importing from the other file) for future analysis in index.js
-            if (node.source && node.source === syntax.Literal) {
+            if (node.source && node.source.type === syntax.Literal) {
               if (!modul.descendents.include(node.source.value)) {
                 modul.descendents.push(node.source.value);
               }
@@ -617,7 +620,7 @@ async function traverse(modul) {
             // right now, we use the variable if exists; otherwise "default"
             
             // TODO-Hui: follow the same to-dos in syntax.ExportNamedDeclaration
-            console.log(`ExportDefaultDeclaration: modul name: ${modul.name}, declaration type: ${node.declaration.type}`);
+            console.debug(`ExportDefaultDeclaration: modul name: ${modul.name}, declaration type: ${node.declaration.type}`);
             let name = "UNDEFINED";
             switch (node.declaration.type) {
               case syntax.Identifier:
@@ -625,11 +628,41 @@ async function traverse(modul) {
                 if (!modul.members.includes(node.declaration.name)) {
                   modul.members.push(node.declaration.name);
                 }
-                if (!modul.selfUsed.icludes(node.declaration.name)) {
+                if (!modul.selfUsed.includes(node.declaration.name)) {
                   modul.selfUsed.push(node.declaration.name);
                 }
                 name = node.declaration.name;
-                console.log(`    declaration.id.name: ${name}`);
+                console.debug(`    declaration.id.name: ${name}`);
+                break;
+              case syntax.AssignmentExpression:
+                // export default foo = mem, export default foo = mem.me
+                // left must be an Identifier
+                if (!modul.members.includes(node.declaration.left.name)) {
+                  modul.members.push(node.declaration.left.name);
+                }
+                // note that right can be Identifier, MemberExpression, or literal
+                if (node.declaration.right.type === syntax.Identifier){
+                  // export default foo = mem
+                  if (!modul.selfUsed.includes(node.declaration.right.name)) {
+                    modul.selfUsed.includes(node.declaration.right.name);
+                  }
+                } else if (node.declaration.right.type === syntax.MemberExpression) {
+                  // export default foo = mem.me
+                  //TODO-Hui: Need to debug this to see whether it gets the string correctly
+                  let right = helper.getMemberExpressionString(node.declaration.right);
+                  if (right) {
+                    right = right.object + "." + right.property;
+                    if (!modul.selfUsed.includes(right)) {
+                      modul.selfUsed.push(right);
+                    }
+                  }
+                  // add the top level name
+                  let rightStart = getPropertyStart(right);
+                  if (rightStart && !modul.selfUsed.includes(rightStart)) {
+                    modul.selfUsed.push(rightStart);
+                  }
+                }
+                console.debug(`    declaration.left.name: ${node.declaration.left.name}`);
                 break;
               case syntax.ClassDeclaration:
                 if (node.declaration.id) {
@@ -651,7 +684,7 @@ async function traverse(modul) {
                   }
                   // not exposed internally
                 }
-                console.log(`    declaration.id.name: ${name}`);
+                console.debug(`    declaration.id.name: ${name}`);
                 break;
               case syntax.FunctionDeclaration:
                 if (node.declaration.id) {
@@ -673,7 +706,7 @@ async function traverse(modul) {
                   }
                   // not exposed internally
                 }
-                console.log(`    declaration.id.name: ${name}`);
+                console.debug(`    declaration.id.name: ${name}`);
                 break;
               case syntax.ObjectExpression:
                 // I only see ObjectExpression from the specification/examples. 
@@ -689,7 +722,7 @@ async function traverse(modul) {
                       }
                       name = spreadElem.argument.name;
                     } 
-                    console.log(`    declaration.properties.element.argument: ${name}`);
+                    console.debug(`    declaration.properties.element.argument: ${name}`);
                   }
                 }
                 break;
@@ -708,12 +741,13 @@ async function traverse(modul) {
             // To get the detail, this may need to go to 'source' to retrieve all related identifiers
 
             // detecting descendents (i.e., importing from the other file) for future analysis in index.js
-            if (node.source && node.source === syntax.Literal) {
+            if (node.source && node.source.type === syntax.Literal) {
               if (!modul.descendents.include(node.source.value)) {
                 modul.descendents.push(node.source.value);
               }
             }
             // TODO-Hui: do we need to track node.exported if it is an identifier? It is not exposed in this file
+            // For example, track it in index.js when dealing with descendents
             console.log(`ExportAllDeclaration: modul name: ${modul.name}, source: ${node.source}`);
             break;
       }
