@@ -454,7 +454,7 @@ async function traverse(modul, extra) {
             }
           });
           break;
-        case syntax.ImportExpression:
+        case es.Syntax.ImportExpression:
           //TODO-Hui to support in the future. Import() could be in different scopes
           console.log(`Warning in Reducer: ImportExpression not supported! modul name: ${modul.name}, modulePath: ${node.source.value}, parent type: ${parent.type}, ${parent.xParent.type}`);
           break;
