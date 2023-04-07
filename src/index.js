@@ -180,7 +180,16 @@ async function init() {
   if (packageJson.exports) {
     for (var key in packageJson.exports) {
       // for now we do not consider difference among these multiple entrypoints
-      _app.main.push(packageJson.exports[key]);
+      let tempVal = packageJson.exports[key];
+      if ( (key !== 'types') && (typeof tempVal === 'string') ) {
+        _app.main.push(tempVal);
+      } else if (typeof tempVal === 'object') {
+        for (var nestedKey in tempVal) {
+          if ((nestedKey !== 'types') && (typeof tempVal[nestedKey] === 'string') ) {
+            _app.main.push(tempVal[nestedKey]);
+          }
+        }
+      }
     }
   } else {
     _app.main.push(utils.entryPoint(location, packageJson.main));

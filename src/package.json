@@ -26,7 +26,7 @@
     "log-to-file": "^3.0.3",
     "resolve-from": "^4.0.0",
     "safe-regex": "^2.0.0",
-    "sloc": "^0.2.0",
+    "sloc": "^0.1.11",
     "winston": "^3.8.2",
     "yargs": "^17.2.1"
   }
