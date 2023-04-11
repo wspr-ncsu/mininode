@@ -310,10 +310,12 @@ async function initialPass(modul) {
           }
           break;
         case syntax.FunctionDeclaration:
-          if (parent.type === syntax.ExportNamedDeclaration ||
-              parent.type === syntax.ExportDefaultDeclaration) {
-                console.debug(`modul name: ${modul.name}`);
-              }
+          if (
+            parent.type === syntax.ExportNamedDeclaration ||
+            parent.type === syntax.ExportDefaultDeclaration
+          ) {
+            console.debug(`modul name: ${modul.name}`);
+          }
           modul.functions += 1;
           break;
         case syntax.ImportDeclaration:
@@ -378,12 +380,15 @@ async function initialPass(modul) {
 
             // console.log below is for debugging only. They will be removed after the processing is done in the above three cases
             if (name) {
-              console.debug(`Static Import: modul name: ${modul.name}, alias: ${alias}, name: ${name}, modulePath: ${modulePath}`);
+              console.debug(
+                `Static Import: modul name: ${modul.name}, alias: ${alias}, name: ${name}, modulePath: ${modulePath}`
+              );
+            } else {
+              console.debug(
+                `Static Import: NOT supported. modul name: ${modul.name}, modulePath: ${modulePath}`
+              );
             }
-            else {
-              console.debug(`Static Import: NOT supported. modul name: ${modul.name}, modulePath: ${modulePath}`);
-            }
-          })
+          });
           break;
         case syntax.ImportExpression:
           // This is for import() which is a import from an ESM module to a commonjs module.
@@ -408,29 +413,47 @@ async function initialPass(modul) {
           ) {
             if (node.source.type === syntax.Literal) {
               // case 1 - either a standalone statement, or part of a IfStatement or BlockStatement
-              console.debug(`Import() case 1. modul name: ${modul.name}, modulePath: ${node.source.value}, parent type: ${parent.type}, ${parent.xParent.type}`);
+              console.debug(
+                `Import() case 1. modul name: ${modul.name}, modulePath: ${node.source.value}, parent type: ${parent.type}, ${parent.xParent.type}`
+              );
             } else if (node.source.type === syntax.BinaryExpression) {
               // case 2 - either a standalone statement, or part of a IfStatement or BlockStatement
-              console.debug(`Import() case 2. modul name: ${modul.name}, modulePath: ${node.source.value}, parent type: ${parent.type}, ${parent.xParent.type}`);
+              console.debug(
+                `Import() case 2. modul name: ${modul.name}, modulePath: ${node.source.value}, parent type: ${parent.type}, ${parent.xParent.type}`
+              );
             } else {
               // general case 2
-              console.debug(`Import() general case 2. modul name: ${modul.name}, modulePath: ${node.source.value}, parent type: ${parent.type}, ${parent.xParent.type}`);
+              console.debug(
+                `Import() general case 2. modul name: ${modul.name}, modulePath: ${node.source.value}, parent type: ${parent.type}, ${parent.xParent.type}`
+              );
             }
           } else if (parent.type === syntax.MemberExpression) {
             // case 3
-            console.debug(`Import() case 3. modul name: ${modul.name}, modulePath: ${node.source.type}, parent type: ${parent.type}, ${parent.xParent.type}`);
-          } else if ( (parent.type === syntax.AssignmentExpression) ||
-                      ( (parent.type === syntax.AwaitExpression) && (parent.xParent.type === syntax.AssignmentExpression) )
+            console.debug(
+              `Import() case 3. modul name: ${modul.name}, modulePath: ${node.source.type}, parent type: ${parent.type}, ${parent.xParent.type}`
+            );
+          } else if (
+            parent.type === syntax.AssignmentExpression ||
+            (parent.type === syntax.AwaitExpression &&
+              parent.xParent.type === syntax.AssignmentExpression)
           ) {
             // case 4
-            console.debug(`Import() case 4. modul name: ${modul.name}, modulePath: ${node.source.value}, parent type: ${parent.type}, ${parent.xParent.type}`);
-          } else if ( (parent.type === syntax.VariableDeclarator) ||
-          ( (parent.type === syntax.AwaitExpression) && (parent.xParent.type === syntax.VariableDeclarator) )
+            console.debug(
+              `Import() case 4. modul name: ${modul.name}, modulePath: ${node.source.value}, parent type: ${parent.type}, ${parent.xParent.type}`
+            );
+          } else if (
+            parent.type === syntax.VariableDeclarator ||
+            (parent.type === syntax.AwaitExpression &&
+              parent.xParent.type === syntax.VariableDeclarator)
           ) {
             // case 5
-            console.debug(`Import() case 5. modul name: ${modul.name}, modulePath: ${node.source.value}, parent type: ${parent.type}, ${parent.xParent.type}`);
+            console.debug(
+              `Import() case 5. modul name: ${modul.name}, modulePath: ${node.source.value}, parent type: ${parent.type}, ${parent.xParent.type}`
+            );
           } else {
-            console.debug(`Import() case unknown. modul name: ${modul.name}, modulePath: ${node.source.value}, parent type: ${parent.type}, ${parent.xParent.type}`);
+            console.debug(
+              `Import() case unknown. modul name: ${modul.name}, modulePath: ${node.source.value}, parent type: ${parent.type}, ${parent.xParent.type}`
+            );
           }
           // end of the debugging block
 
@@ -539,7 +562,7 @@ async function initialPass(modul) {
               );
             }
           }
-          
+
           if (node.specifiers && node.specifiers.length > 0) {
             // follow the same to-dos in syntax.VariableDeclaration
             // specifier.exported.name is the alias, specifier.local.name is the actual
@@ -547,9 +570,9 @@ async function initialPass(modul) {
               console.log(
                 `    specifier: Exported: ${specifier.exported.name}, Local: ${specifier.local.name}`
               );
-              self.push(specifier.local.name); 
+              self.push(specifier.local.name);
               if (!modul.exporters.includes(specifier.local.name)) {
-                modul.exporters.push(specifier.local.name); 
+                modul.exporters.push(specifier.local.name);
               }
             });
           }
@@ -586,7 +609,9 @@ async function initialPass(modul) {
               if (!modul.exporters.includes(node.declaration.left.name)) {
                 modul.exporters.push(node.declaration.left.name);
               }
-              console.log(`    declaration.left.name: ${node.declaration.left.name}`);
+              console.log(
+                `    declaration.left.name: ${node.declaration.left.name}`
+              );
               break;
             case syntax.ClassDeclaration:
               if (
