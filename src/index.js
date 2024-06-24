@@ -63,10 +63,10 @@ let entries = [];
       // 3. add to individual modules used globals.
       for (let modul of _app.modules) {
         for (let mem in modul.memusages) {
-          _app.globals.forEach((i) => {
-            if (i.name === mem) {
+          _app.globals.forEach((globalVar) => {
+            if (globalVar.name === mem) {
               for (let m of modul.memusages[mem]) {
-                i.members.push(m);
+                globalVar.members.push(m);
               }
             }
           });
@@ -200,16 +200,16 @@ async function init() {
   if (testEntryPoints && testEntryPoints.length > 0) {
     //TODO-Hui: here do we need to find the path to these test entry points?
     //TODO-Hui: also, with these test entry points, perhaps we should not block test directories?
-    testEntryPoints.forEach(entryP => {
+    testEntryPoints.forEach((entryP) => {
       if (!_app.main.includes(entryP)) {
         _app.main.push(entryP);
       }
-    })
+    });
   }
-  
-  if (packageJson.hasOwnProperty('directories')) {
-    if (packageJson.directories.hasOwnProperty('test')) {
-      _app.directories = packageJson.directories.test
+
+  if (packageJson.hasOwnProperty("directories")) {
+    if (packageJson.directories.hasOwnProperty("test")) {
+      _app.directories = packageJson.directories.test;
     }
   }
 
@@ -217,9 +217,9 @@ async function init() {
     if (!_app.main) {
       throw new Error("NO_ENTRY_POINT");
     }
-    _app.main.forEach(entryP => {
+    _app.main.forEach((entryP) => {
       entries.push(path.join(_app.path, entryP));
-    })
+    });
   } else {
     for (let seed of config.seeds) {
       let s = utils.entryPoint(location, seed);
@@ -541,21 +541,19 @@ function getJSFilenamesInScriptsField(packageJson) {
       let stringToDealWith = scripts[key];
       let words = stringToDealWith.split(" ");
       for (let wPotentialFile of words) {
-        if (wPotentialFile.indexOf('*') > -1) {
+        if (wPotentialFile.indexOf("*") > -1) {
           continue;
         }
         let splitWordArr = wPotentialFile.split(".");
         if (splitWordArr.length > 1) {
           if (
-            ["js", "mjs", "cjs"].includes(
-              splitWordArr[splitWordArr.length - 1]
-            )
+            ["js", "mjs", "cjs"].includes(splitWordArr[splitWordArr.length - 1])
           ) {
             result.push(wPotentialFile);
           }
         }
       }
     }
-  } 
+  }
   return result;
 }
